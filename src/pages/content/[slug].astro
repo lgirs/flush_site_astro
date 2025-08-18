@@ -1,15 +1,18 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
 
-const slug = Astro.params.slug!;
-const entries = await getCollection('pages');
-const entry = entries.find(e => e.slug === slug);
-
-if (!entry) {
-  throw new Error(`Not found: ${slug}`);
+// Tell Astro which content pages to build at /content/<slug>/
+export async function getStaticPaths() {
+  const entries = await getCollection("pages");
+  return entries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
 }
 
+// Receive the entry from getStaticPaths
+const { entry } = Astro.props;
 const { Content } = await entry.render();
 const tags = entry.data.tags || [];
 ---
