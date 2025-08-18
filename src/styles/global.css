@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600;700&display=swap');
+
+:root{
+  --flush-red: #962800;
+  --flush-black: #0f0d0d;
+  --flush-light: #e9e8f1;
+  /* Optional highlight you mentioned; tweak later if needed */
+  --flush-accent: #e9e8f1;
+}
+
+*{box-sizing:border-box}
+
+html,body{
+  margin:0; padding:0;
+  background: var(--flush-black);
+  color: var(--flush-light);
+  font-family: 'Oswald', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+a{ color: var(--flush-red); text-decoration: none; }
+a:hover{ text-decoration: underline; }
+
+.page{
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 16px 64px;
+}
+
+h1,h2,h3{
+  letter-spacing: 0.5px;
+  margin: 0.8em 0 0.4em;
+}
+
+h1{ font-weight:700; font-size: clamp(2rem, 6vw, 3rem); }
+h2{ font-weight:600; font-size: clamp(1.5rem, 4.5vw, 2rem); }
+p, li { line-height: 1.6; font-weight: 400; }
+
+.tag{
+  display:inline-block;
+  border:1px solid var(--flush-light);
+  padding: 4px 10px;
+  margin: 4px 6px 0 0;
+  font-size: 0.9rem;
+  border-radius: 999px;
+}
+
+.header{
+  border-bottom: 1px solid rgba(233,232,241,0.2);
+  background: #000;
+}
+.header-inner{
+  max-width: 960px; margin: 0 auto; padding: 10px 16px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.nav a{ color: var(--flush-light); margin-left: 14px; }
+.nav a.active{ color: var(--flush-red); }
+
+.footer{
+  border-top: 1px solid rgba(233,232,241,0.2);
+  opacity: .9;
+  font-size: .9rem;
+}
+
+.logo { height: 40px; width:auto; display:block; }
+.centered { text-align:center; }
