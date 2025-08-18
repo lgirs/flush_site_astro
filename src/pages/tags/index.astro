@@ -1,0 +1,15 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('pages');
+const all = new Set<string>();
+posts.forEach(p => (p.data.tags || []).forEach((t:string) => all.add(t.toLowerCase())));
+const tags = Array.from(all).sort();
+---
+<BaseLayout title="All Tags" description="Browse by tags">
+  <h1>Tags</h1>
+  <ul>
+    {tags.map(t => <li><a href={`/tags/${encodeURIComponent(t)}/`}>{t}</a></li>)}
+  </ul>
+</BaseLayout>
