@@ -1,0 +1,12 @@
+---
+export interface Props { tags: string[] }
+const { tags = [] } = Astro.props as Props;
+---
+{tags.length > 0 && (
+  <section aria-label="Tags">
+    <h2>Tags</h2>
+    <div>
+      {tags.map(t => <a class="tag" href={`/tags/${encodeURIComponent(t.toLowerCase())}/`}>{t}</a>)}
+    </div>
+  </section>
+)}
