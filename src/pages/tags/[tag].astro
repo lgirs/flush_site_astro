@@ -1,0 +1,21 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from 'astro:content';
+
+const tag = Astro.params.tag?.toLowerCase() || '';
+const items = (await getCollection('pages'))
+  .filter(p => (p.data.tags || []).map((t:string)=>t.toLowerCase()).includes(tag));
+---
+<BaseLayout title={`#${tag}`} description={`Posts tagged ${tag}`}>
+  <h1>#{tag}</h1>
+  {items.length === 0 ? <p>No items yet.</p> : (
+    <ul>
+      {items.map(p => (
+        <li>
+          <a href={`/content/${p.slug}/`}>{p.data.title}</a>
+          {p.data.tags?.length ? <small> — {p.data.tags.join(', ')}</small> : null}
+        </li>
+      ))}
+    </ul>
+  )}
+</BaseLayout>
