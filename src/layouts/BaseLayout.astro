@@ -1,0 +1,37 @@
+---
+const { title = "Flush", description = "Let’s do some entertainment", tags = [] } = Astro.props;
+import TagList from "../components/TagList.astro";
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title} | Flush</title>
+    <meta name="description" content={description} />
+    <link rel="stylesheet" href="/src/styles/global.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-inner">
+        <a href="/"><img src="/images/logo-flush-white.png" alt="Flush" class="logo" /></a>
+        <nav class="nav">
+          <a href="/" class={Astro.url.pathname === '/' ? 'active' : ''}>Home</a>
+          <a href="/about" class={Astro.url.pathname.startsWith('/about') ? 'active' : ''}>About</a>
+          <a href="/blog" class={Astro.url.pathname.startsWith('/blog') ? 'active' : ''}>Blog</a>
+          <a href="/arcade" class={Astro.url.pathname.startsWith('/arcade') ? 'active' : ''}>Arcade</a>
+          <a href="/gigs" class={Astro.url.pathname.startsWith('/gigs') ? 'active' : ''}>Gigs</a>
+          <a href="/tags" class={Astro.url.pathname.startsWith('/tags') ? 'active' : ''}>Tags</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page">
+      <slot />
+      {tags.length ? <TagList tags={tags} /> : null}
+    </main>
+
+    <footer class="footer page">
+      <div class="centered">© Flush. All rights reserved.</div>
+    </footer>
+  </body>
+</html>
