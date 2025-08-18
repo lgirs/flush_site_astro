@@ -1,10 +1,10 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
-import netlify from '@astrojs/netlify/functions';
+import netlify from '@astrojs/netlify';
 
 export default defineConfig({
   integrations: [mdx()],
-  output: 'static',
   adapter: netlify(),
+  output: 'static',
   markdown: { shikiConfig: { theme: 'css-variables' } }
 });
