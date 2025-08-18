@@ -1,0 +1,20 @@
+{
+  "name": "flush-astro",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "astro": "^4.13.3",
+    "@astrojs/mdx": "^3.1.1",
+    "@astrojs/netlify": "^5.3.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3"
+  }
+}
