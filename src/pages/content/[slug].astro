@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from 'astro:content';
+
+const slug = Astro.params.slug!;
+const entries = await getCollection('pages');
+const entry = entries.find(e => e.slug === slug);
+
+if (!entry) {
+  throw new Error(`Not found: ${slug}`);
+}
+
+const { Content } = await entry.render();
+const tags = entry.data.tags || [];
+---
+<BaseLayout title={entry.data.title} description={entry.data.description} tags={tags}>
+  <h1>{entry.data.title}</h1>
+  <Content />
+</BaseLayout>
