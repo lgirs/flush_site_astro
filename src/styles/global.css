@@ -1,40 +1,54 @@
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600;700&display=swap');
+/* Fonts: Oswald (headings/short copy), Lora (longer body text) */
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Oswald:wght@300;400;600;700&display=swap');
 
 :root{
-  --flush-red: #962800;
-  --flush-black: #0f0d0d;
-  --flush-light: #e9e8f1;
-  /* Optional highlight you mentioned; tweak later if needed */
-  --flush-accent: #e9e8f1;
+  --flush-red: #962800;       /* brand red */
+  --flush-black: #0f0d0d;     /* near-black */
+  --flush-light: #e9e8f1;     /* light gray */
+  --flush-yellow: #f5d547;    /* highlight (from your Eleventy work) */
 }
 
-*{box-sizing:border-box}
+*{ box-sizing:border-box }
 
 html,body{
   margin:0; padding:0;
   background: var(--flush-black);
   color: var(--flush-light);
-  font-family: 'Oswald', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-family: "Lora", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; /* default: long reads */
+  line-height: 1.6;
 }
 
-a{ color: var(--flush-red); text-decoration: none; }
-a:hover{ text-decoration: underline; }
-
-.page{
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 24px 16px 64px;
-}
-
-h1,h2,h3{
-  letter-spacing: 0.5px;
+/* Headings use Oswald for punch */
+h1,h2,h3,h4,h5,h6{
+  font-family: "Oswald", Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  letter-spacing: .5px;
   margin: 0.8em 0 0.4em;
 }
-
 h1{ font-weight:700; font-size: clamp(2rem, 6vw, 3rem); }
 h2{ font-weight:600; font-size: clamp(1.5rem, 4.5vw, 2rem); }
-p, li { line-height: 1.6; font-weight: 400; }
 
+/* Links & emphasis */
+a{ color: var(--flush-red); text-decoration: none; }
+a:hover{ color: var(--flush-yellow); text-decoration: underline; }
+
+/* Page shell */
+.page{
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 24px 16px 72px;
+}
+.content{
+  display: grid;
+  gap: 1rem;
+}
+
+/* Optional “short, punchy copy” block in Oswald if you want that vibe inside body */
+.short-copy{
+  font-family: "Oswald", Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  letter-spacing: .25px;
+}
+
+/* Tag chips */
 .tag{
   display:inline-block;
   border:1px solid var(--flush-light);
@@ -44,22 +58,50 @@ p, li { line-height: 1.6; font-weight: 400; }
   border-radius: 999px;
 }
 
+/* Header / Nav */
 .header{
-  border-bottom: 1px solid rgba(233,232,241,0.2);
+  border-bottom: 1px solid rgba(233,232,241,0.15);
   background: #000;
 }
 .header-inner{
-  max-width: 960px; margin: 0 auto; padding: 10px 16px;
+  max-width: 1040px; margin: 0 auto; padding: 10px 16px;
   display:flex; align-items:center; justify-content:space-between;
 }
 .nav a{ color: var(--flush-light); margin-left: 14px; }
-.nav a.active{ color: var(--flush-red); }
+.nav a.active{ color: var(--flush-yellow); }
 
+/* Footer */
 .footer{
-  border-top: 1px solid rgba(233,232,241,0.2);
+  border-top: 1px solid rgba(233,232,241,0.15);
   opacity: .9;
   font-size: .9rem;
+  text-align:center;
 }
 
+/* Buttons / highlights */
+.button{
+  display:inline-block;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--flush-yellow);
+  color: var(--flush-yellow);
+  background: transparent;
+}
+.button:hover{ background: var(--flush-yellow); color: #000; }
+
+/* Pull quote / highlight block */
+.highlight{
+  border-left: 4px solid var(--flush-yellow);
+  padding: 0.75rem 1rem;
+  background: rgba(245,213,71,0.08);
+  font-style: italic;
+}
+
+/* Media */
+img,video{ max-width: 100%; height: auto; display:block; border-radius: 6px; }
+
+/* Logo */
 .logo { height: 40px; width:auto; display:block; }
+
+/* Helpers */
 .centered { text-align:center; }
