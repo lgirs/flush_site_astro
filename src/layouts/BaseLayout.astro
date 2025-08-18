@@ -1,6 +1,9 @@
 ---
 const { title = "Flush", description = "Let’s do some entertainment", tags = [] } = Astro.props;
 import TagList from "../components/TagList.astro";
+
+// ✅ Load CSS the Astro way (no <link href="/src/...">)
+import "../styles/global.css";
 ---
 <html lang="en">
   <head>
@@ -8,7 +11,6 @@ import TagList from "../components/TagList.astro";
     <meta name="viewport" content="width=device-width" />
     <title>{title} | Flush</title>
     <meta name="description" content={description} />
-    <link rel="stylesheet" href="/src/styles/global.css" />
   </head>
   <body>
     <header class="header">
