@@ -1,8 +1,8 @@
 ---
-const { title = "Flush", description = "Let’s do some entertainment", tags = [] } = Astro.props;
+const { title = "Flush", description = "Let’s do some entertainment", tags = [], leadImage } = Astro.props;
 import TagList from "../components/TagList.astro";
 
-// ✅ Load CSS the Astro way (no <link href="/src/...">)
+/* Load CSS (don’t use <link href="/src/...">) */
 import "../styles/global.css";
 ---
 <html lang="en">
@@ -28,12 +28,15 @@ import "../styles/global.css";
     </header>
 
     <main class="page">
-      <slot />
+      {leadImage && <img src={leadImage} alt="" />}
+      <article class="content">
+        <slot />
+      </article>
       {tags.length ? <TagList tags={tags} /> : null}
     </main>
 
     <footer class="footer page">
-      <div class="centered">© Flush. All rights reserved.</div>
+      <div>© Flush. All rights reserved.</div>
     </footer>
   </body>
 </html>
