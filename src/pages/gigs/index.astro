@@ -1,8 +1,146 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-const tags = ['gigs'];
+import gigs from "../../data/gigs.json";
+
+// Helpers
+type Gig = {
+  date: string; // YYYY-MM-DD
+  event: string;
+  venue: string;
+  city: string;
+  country?: string;
+  link?: string;
+  notes?: string;
+};
+
+// Parse date safely
+const toDate = (s: string) => new Date(`${s}T00:00:00Z`); // treat as UTC midnight
+
+// Today (build time)
+const today = new Date();
+// Normalize to date-only for comparison
+const y = today.getUTCFullYear();
+const m = today.getUTCMonth();
+const d = today.getUTCDate();
+const todayDateOnly = new Date(Date.UTC(y, m, d));
+
+// Partition
+const upcoming: Gig[] = [];
+const past: Gig[] = [];
+
+(gigs as Gig[]).forEach((g) => {
+  const gd = toDate(g.date);
+  if (gd >= todayDateOnly) upcoming.push(g);
+  else past.push(g);
+});
+
+// Sort: upcoming ascending, past descending
+upcoming.sort((a, b) => toDate(a.date).getTime() - toDate(b.date).getTime());
+past.sort((a, b) => toDate(b.date).getTime() - toDate(a.date).getTime());
+
+// Format
+const fmt = (s: string) => {
+  const d = toDate(s);
+  // Render as YYYY-MM-DD to keep it clean; change if you want a different format
+  const y = d.getUTCFullYear();
+  const m = String(d.getUTCMonth() + 1).padStart(2, "0");
+  const da = String(d.getUTCDate()).padStart(2, "0");
+  return `${y}-${m}-${da}`;
+};
 ---
-<BaseLayout title="Gigs" description="Live shows" tags={tags}>
-  <h1>Gigs</h1>
-  <p>Gig tracker will live here. We’ll add venue parsers and listings later.</p>
+<BaseLayout title="Gigs" description="Upcoming and past gigs by Flush">
+  <section class="gigs">
+    <h1>Gigs</h1>
+
+    <div class="block">
+      <h2>Upcoming</h2>
+      {upcoming.length === 0 ? (
+        <p class="muted">No upcoming gigs yet. Check back soon.</p>
+      ) : (
+        <ul class="list">
+          {upcoming.map((g) => (
+            <li class="item">
+              <span class="date">{fmt(g.date)}</span>
+              <span class="sep">—</span>
+              <span class="event">{g.event}</span>
+              <span class="at">@</span>
+              <span class="venue">{g.venue}</span>
+              <span class="loc">
+                {g.city}{g.country ? `, ${g.country}` : ""}
+              </span>
+              {g.link && <a class="link" href={g.link} target="_blank" rel="noopener">Details</a>}
+              {g.notes && <span class="notes">{g.notes}</span>}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+
+    <div class="block">
+      <h2>Past</h2>
+      {past.length === 0 ? (
+        <p class="muted">No past gigs yet.</p>
+      ) : (
+        <ul class="list">
+          {past.map((g) => (
+            <li class="item">
+              <span class="date">{fmt(g.date)}</span>
+              <span class="sep">—</span>
+              <span class="event">{g.event}</span>
+              <span class="at">@</span>
+              <span class="venue">{g.venue}</span>
+              <span class="loc">
+                {g.city}{g.country ? `, ${g.country}` : ""}
+              </span>
+              {g.link && <a class="link" href={g.link} target="_blank" rel="noopener">Details</a>}
+              {g.notes && <span class="notes">{g.notes}</span>}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </section>
 </BaseLayout>
+
+<style>
+  .gigs { display: grid; gap: 1.5rem; }
+  h1 { margin-top: .25rem; }
+  h2 { margin-top: .5rem; }
+
+  .block { display: grid; gap: .75rem; }
+
+  .list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: .5rem;
+  }
+
+  .item {
+    display: grid;
+    align-items: baseline;
+    gap: .35rem .5rem;
+    grid-template-columns: auto auto 1fr auto auto;
+  }
+
+  /* Compact, single-column on small screens */
+  @media (max-width: 640px){
+    .item { grid-template-columns: auto 1fr; }
+    .sep, .at { display: none; }
+    .venue::before { content: "@ "; opacity: .8; }
+  }
+
+  .date { opacity: .9; min-width: 7ch; }
+  .event { font-weight: 700; letter-spacing: .3px; text-transform: uppercase; }
+  .venue { }
+  .loc { opacity: .85; margin-left: .5rem; }
+  .notes { opacity: .85; margin-left: .5rem; font-style: italic; }
+
+  .link {
+    margin-left: .75rem;
+    white-space: nowrap;
+  }
+
+  .muted { opacity: .8; }
+</style>
