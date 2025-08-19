@@ -1,14 +1,98 @@
 ---
-const handle = 'flushrocks'; // TODO: change to your real handle
+/**
+ * SocialFeed.astro
+ * Props:
+ *  - igProfile?: string   (Instagram handle without @, e.g. "flush_music")
+ *  - igPosts?: string[]   (array of Instagram post/reel URLs)
+ *  - fbPage?: string      (full Facebook Page URL, e.g. "https://www.facebook.com/flushmusic")
+ */
+const {
+  igProfile = "",
+  igPosts = [],
+  fbPage = "",
+} = Astro.props;
+
+// Build Facebook Page Plugin URL if a page is provided
+const fbSrc = fbPage
+  ? `https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(
+      fbPage
+    )}&tabs=timeline&width=500&height=600&adapt_container_width=true&hide_cover=false&show_facepile=false&small_header=true`
+  : "";
 ---
 <section aria-label="Social">
   <h2>Social</h2>
-  <div class="centered">
-    <a class="tag" href={`https://x.com/${handle}`} target="_blank" rel="noopener">Follow @{handle}</a>
+
+  <!-- Instagram -->
+  <div class="social-block">
+    <div class="social-header">
+      <span>Instagram</span>
+      {igProfile && (
+        <a class="button" href={`https://instagram.com/${igProfile}`} target="_blank" rel="noopener">
+          Follow @{igProfile}
+        </a>
+      )}
+    </div>
+
+    {igPosts.length === 0 ? (
+      <p class="muted">Add Instagram post or reel URLs to show embeds.</p>
+    ) : (
+      <div class="ig-grid">
+        {igPosts.map((url) => (
+          <blockquote
+            class="instagram-media"
+            data-instgrm-permalink={url}
+            data-instgrm-version="14"
+            style="background:#000; border:0; margin:0 auto; max-width:540px; width:100%;"
+          ></blockquote>
+        ))}
+      </div>
+    )}
   </div>
-  <!-- X/Twitter timeline embed -->
-  <div class="centered" style="margin-top:16px">
-    <a class="twitter-timeline" data-theme="dark" href={`https://x.com/${handle}`}>Tweets by @{handle}</a>
+
+  <!-- Facebook Page -->
+  <div class="social-block">
+    <div class="social-header">
+      <span>Facebook</span>
+      {fbPage && (
+        <a class="button" href={fbPage} target="_blank" rel="noopener">
+          Open Page
+        </a>
+      )}
+    </div>
+
+    {fbPage ? (
+      <div class="fb-wrap">
+        <iframe
+          title="Facebook Page Plugin"
+          src={fbSrc}
+          width="500"
+          height="600"
+          style="border:none;overflow:hidden;width:100%;max-width:700px;height:600px;"
+          scrolling="no"
+          frameborder="0"
+          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+        ></iframe>
+      </div>
+    ) : (
+      <p class="muted">Add your Facebook Page URL to show the timeline.</p>
+    )}
   </div>
-  <script async src="https://platform.twitter.com/widgets.js"></script>
 </section>
+
+<!-- Instagram embed script (required for rendering blockquotes) -->
+<script async src="https://www.instagram.com/embed.js"></script>
+
+<style>
+  .social-block { margin: 1.25rem 0 2rem; }
+  .social-header {
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom: .75rem;
+  }
+  .social-header span { font-weight:700; letter-spacing:.5px; }
+  .ig-grid { display:grid; gap: 1rem; }
+  @media (min-width: 720px){
+    .ig-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .fb-wrap { display:grid; place-items:center; }
+  .muted { opacity:.8; }
+</style>
