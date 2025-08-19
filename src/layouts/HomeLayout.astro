@@ -1,10 +1,5 @@
 ---
-const {
-  title = "Flush",
-  description = "Let’s do some entertainment",
-} = Astro.props;
-
-// Global styles (Oswald default, Archivo via .long-text if needed)
+const { title = "Flush", description = "Let’s do some entertainment", leadImage } = Astro.props;
 import "../styles/global.css";
 ---
 <html lang="en">
@@ -20,11 +15,11 @@ import "../styles/global.css";
         <a href="/"><img src="/images/logo-flush-white.png" alt="Flush" class="logo" /></a>
         <nav>
           <a href="/">Home</a>
-          <a href="/about">About</a>
-          <a href="/blog">Blog</a>
-          <a href="/arcade">Arcade</a>
           <a href="/gigs">Gigs</a>
-          <a href="/tags">Tags</a>
+          <a href="/music">Music</a>
+          <a href="/content/lyrics/">Lyrics</a>
+          <a href="/video">Video</a>
+          <a href="/about">About</a>
         </nav>
       </div>
     </header>
@@ -49,7 +44,7 @@ import "../styles/global.css";
 </html>
 
 <style>
-/* Full-bleed hero with centered content over your image */
+/* Hero styles unchanged */
 .hero{
   position: relative;
   min-height: 55vh;
@@ -57,46 +52,17 @@ import "../styles/global.css";
   display: grid;
   place-items: center;
   text-align: center;
-  /* Use the provided image from /public/images */
   background-image: url("/images/logo-flush-white-orange_vex.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-/* Subtle overlay for contrast against the image */
 .hero__overlay{
   position: absolute; inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(0,0,0,0.45) 0%,
-    rgba(0,0,0,0.55) 40%,
-    rgba(0,0,0,0.65) 100%
-  );
+  background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.65) 100%);
 }
-
-.hero__inner{
-  position: relative;
-  padding: 2rem 1rem;
-  max-width: 900px;
-}
-
-.hero__title {
-  font-family: "Oswald", sans-serif;
-  font-size: clamp(2.5rem, 8vw, 4.25rem);
-  font-weight: 700;
-  color: var(--flush-light);
-  letter-spacing: 0.5px;
-  margin: 0 0 0.5rem 0;
-  text-transform: uppercase;
-}
-
-.hero__sub {
-  font-family: "Oswald", sans-serif;  /* ✅ ensure Oswald */
-  font-weight: 400;                   /* lighter than title */
-  font-size: clamp(1.05rem, 2.5vw, 1.35rem);
-  color: var(--flush-yellow);
-  margin: 0;
-}
-
-/* Slightl*
+.hero__inner{ position: relative; padding: 2rem 1rem; max-width: 900px; }
+.hero__title { font-family: "Oswald", sans-serif; font-size: clamp(2.5rem, 8vw, 4.25rem); font-weight: 700; color: var(--flush-light); text-transform: uppercase; letter-spacing: .5px; margin: 0 0 .5rem 0; }
+.hero__sub   { font-family: "Oswald", sans-serif; font-weight: 400; font-size: clamp(1.05rem, 2.5vw, 1.35rem); color: var(--flush-yellow); margin: 0; }
+</style>
