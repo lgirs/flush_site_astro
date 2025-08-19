@@ -35,8 +35,10 @@ const fmt = (s: string) => {
 
 const place = (g: Gig) => `${g.city}${g.country ? `, ${g.country}` : ""}`;
 ---
-<BaseLayout title="Gigs" description="Upcoming and past gigs by Flush">
-tags={["Gigs"]}
+<BaseLayout   
+title="Gigs" 
+  description="Upcoming and past gigs by Flush"
+  tags={["Gigs"]}
   <section class="gigs">
     <h1>Gigs</h1>
 
@@ -102,15 +104,24 @@ tags={["Gigs"]}
   h2 { margin-top: .5rem; }
   .block { display: grid; gap: .75rem; }
 
-  .list { list-style: none; padding: 0; margin: 0; display: grid; gap: .5rem; }
+    .list { 
+    list-style: none; 
+    padding: 0; 
+    margin: 0; 
+    display: grid; 
+    gap: 0; /* separators will create the spacing */
+  }
 
-  /* New compact row layout */
   .item {
     display: grid;
     align-items: baseline;
     gap: .35rem 1rem;
-    grid-template-columns: 9ch 1fr auto auto; /* date | details (flex) | location | link */
+    grid-template-columns: 9ch 1fr auto auto;
+    padding: .5rem 0;
+    border-bottom: 1px solid rgba(233,232,241,0.2); /* thin gray divider */
   }
+
+  .item:last-child { border-bottom: none; }
 
   .date { opacity: .9; font-variant-numeric: tabular-nums; }
   .details {
