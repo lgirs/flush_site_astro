@@ -1,5 +1,5 @@
 /* Fonts: Oswald (headings/short copy), Lora (longer body text) */
-@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Oswald:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Oswald:wght@300;400;600;700&display=swap');
 
 :root{
   --flush-red: #962800;       /* brand red */
@@ -14,7 +14,7 @@ html,body{
   margin:0; padding:0;
   background: var(--flush-black);
   color: var(--flush-light);
-  font-family: "Lora", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; /* default: long reads */
+  font-family: "Archivo", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   line-height: 1.6;
 }
 
