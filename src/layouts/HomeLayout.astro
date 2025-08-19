@@ -81,16 +81,19 @@ import "../styles/global.css";
   max-width: 900px;
 }
 
-.hero__title{
-  font-weight: 700;
+.hero__title {
+  font-family: "Oswald", sans-serif;
   font-size: clamp(2.5rem, 8vw, 4.25rem);
+  font-weight: 700;
   color: var(--flush-light);
   letter-spacing: 0.5px;
   margin: 0 0 0.5rem 0;
   text-transform: uppercase;
 }
 
-.hero__sub{
+.hero__sub {
+  font-family: "Oswald", sans-serif;  /* ✅ ensure Oswald */
+  font-weight: 400;                   /* lighter than title */
   font-size: clamp(1.05rem, 2.5vw, 1.35rem);
   color: var(--flush-yellow);
   margin: 0;
