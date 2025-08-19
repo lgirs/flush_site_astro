@@ -76,6 +76,14 @@ main a:hover {
 }
 
 /* Header / Nav */
+/* Header navigation uses Oswald */
+.header nav a {
+  font-family: "Oswald", Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
 .header{
   border-bottom: 1px solid rgba(233,232,241,0.15);
   background: #000;
