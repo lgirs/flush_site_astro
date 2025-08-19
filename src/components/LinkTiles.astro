@@ -1,0 +1,91 @@
+---
+/**
+ * LinkTiles.astro
+ * Usage:
+ *  <LinkTiles items={[{ type:'instagram', href:'https://...', label:'Instagram' }, ... ]} />
+ *
+ * Supported types:
+ *  instagram, facebook, spotify, youtube, email, album, apple, bandcamp
+ *  (fallback icon used if type is unknown)
+ */
+const { items = [] } = Astro.props;
+
+// Simple inline icons (use currentColor so hover color works)
+const icons: Record<string, string> = {
+  instagram: `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.25" fill="currentColor"/></svg>`,
+  facebook: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 9h3V6h-3c-1.7 0-3 1.3-3 3v2H8v3h3v7h3v-7h3l.5-3H14V9c0-.6.4-1 1-1z" fill="currentColor"/></svg>`,
+  spotify: `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 10.5c3.2-1 6.8-.8 10 0M7.5 13.5c2.6-.8 5.7-.6 8.1 0M8 16.5c2-.6 4.4-.5 6.2 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+  youtube: `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M11 10l4 2-4 2v-4z" fill="currentColor"/></svg>`,
+  email: `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="2"/></svg>`,
+  album: `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg>`,
+  apple: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.2 12.3c0-2.2 1.8-3 1.8-3-1-.1-2 .6-2.5 1.3-.5.6-1.1 1.3-2 1.3-.9 0-1.5-.7-2-1.3-.6-.7-1.5-1.4-2.5-1.3 0 0 1.8.8 1.8 3s-1.4 3.7-1.4 3.7S8 18.7 10 19.2c.8.2 1.5-.2 2.1-.2s1.3.4 2.1.2c2-.5 2.6-3.2 2.6-3.2s-1.4-1.5-1.4-3.7z" fill="currentColor"/></svg>`,
+  bandcamp: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l5.5-10H21l-5.5 10H3z" fill="currentColor"/></svg>`,
+  link: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14l4-4M7 17a4 4 0 010-6l2-2m6 0a4 4 0 010 6l-2 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+};
+const getIcon = (t: string) => icons[t] ?? icons.link;
+
+// Render only items with a real URL
+const visible = items.filter((it) => it?.href && it.href.trim() !== "");
+---
+<section aria-label="Follow & Listen">
+  <h2>Find us</h2>
+  {visible.length === 0 ? (
+    <p class="muted">Add links when you’re ready.</p>
+  ) : (
+    <div class="tiles">
+      {visible.map((it) => (
+        <a
+          class="tile"
+          href={it.href}
+          target={it.href.startsWith("mailto:") ? "_self" : "_blank"}
+          rel={it.href.startsWith("mailto:") ? undefined : "noopener"}
+          aria-label={it.label || it.type}
+        >
+          <span class="icon" set:html={getIcon(it.type)} />
+          <span class="label">{it.label || it.type}</span>
+        </a>
+      ))}
+    </div>
+  )}
+</section>
+
+<style>
+  .muted { opacity:.8; }
+  .tiles {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr 1fr;
+  }
+  @media (min-width: 720px){ .tiles { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 1000px){ .tiles { grid-template-columns: repeat(4, 1fr); } }
+
+  .tile {
+    display: grid;
+    place-items: center;
+    gap: .5rem;
+    padding: 16px 14px;
+    background: #000;
+    color: var(--flush-light);
+    border: 1px solid rgba(233,232,241,0.25);
+    border-radius: 14px;
+    text-align: center;
+    transition: transform .15s ease, border-color .15s ease, color .15s ease, box-shadow .15s ease;
+  }
+  .tile:hover {
+    border-color: var(--flush-yellow);
+    color: var(--flush-yellow);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,.35);
+    text-decoration: none; /* keep links without underline */
+  }
+
+  .icon svg {
+    width: 36px; height: 36px;
+    display:block;
+  }
+  .label {
+    font-weight: 600;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+  }
+</style>
