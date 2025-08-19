@@ -1,5 +1,10 @@
 ---
-const { title = "Flush", description = "Let’s do some entertainment", leadImage } = Astro.props;
+const {
+  title = "Flush",
+  description = "Let’s do some entertainment",
+} = Astro.props;
+
+// Global styles (Oswald default, Archivo via .long-text if needed)
 import "../styles/global.css";
 ---
 <html lang="en">
@@ -24,11 +29,13 @@ import "../styles/global.css";
       </div>
     </header>
 
-    <!-- Hero section -->
-    <section class="hero">
-      {leadImage && <img src={leadImage} alt="" class="hero-img" />}
-      <h1 class="hero-title">{title}</h1>
-      <p class="hero-sub">{description}</p>
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__overlay"></div>
+      <div class="hero__inner">
+        <h1 id="hero-title" class="hero__title">{title}</h1>
+        <p class="hero__sub">{description}</p>
+      </div>
     </section>
 
     <main class="page">
@@ -42,20 +49,51 @@ import "../styles/global.css";
 </html>
 
 <style>
-.hero {
+/* Full-bleed hero with centered content over your image */
+.hero{
+  position: relative;
+  min-height: 55vh;
+  width: 100%;
+  display: grid;
+  place-items: center;
   text-align: center;
-  margin: 2rem 0;
+  /* Use the provided image from /public/images */
+  background-image: url("/images/logo-flush-white-orange_vex.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
-.hero-img {
-  max-width: 300px;
-  margin: 0 auto 1.5rem;
+
+/* Subtle overlay for contrast against the image */
+.hero__overlay{
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,0.45) 0%,
+    rgba(0,0,0,0.55) 40%,
+    rgba(0,0,0,0.65) 100%
+  );
 }
-.hero-title {
-  font-family: "Oswald", sans-serif;
-  font-size: clamp(2.5rem, 8vw, 4rem);
+
+.hero__inner{
+  position: relative;
+  padding: 2rem 1rem;
+  max-width: 900px;
+}
+
+.hero__title{
   font-weight: 700;
+  font-size: clamp(2.5rem, 8vw, 4.25rem);
   color: var(--flush-light);
+  letter-spacing: 0.5px;
+  margin: 0 0 0.5rem 0;
+  text-transform: uppercase;
 }
-.hero-sub {
-  font-size: 1.2rem;
+
+.hero__sub{
+  font-size: clamp(1.05rem, 2.5vw, 1.35rem);
   color: var(--flush-yellow);
+  margin: 0;
+}
+
+/* Slightl*
