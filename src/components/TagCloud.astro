@@ -1,0 +1,119 @@
+---
+/**
+ * TagCloud.astro
+ * Shows tags as a word-cloud-style box.
+ *
+ * Props (all optional):
+ *  - maxTags: number   => how many tags to show (default 60)
+ *  - seed: string      => makes randomness stable across builds (default "flush")
+ *  - minSize: number   => smallest scale (default 0.9)
+ *  - maxSize: number   => largest scale (default 1.9)
+ */
+import { getCollection } from "astro:content";
+
+const {
+  maxTags = 60,
+  seed = "flush",
+  minSize = 0.9,
+  maxSize = 1.9,
+} = Astro.props;
+
+// --- collect tags + counts ---
+const entries = await getCollection("pages");
+const counts = new Map<string, number>();
+for (const e of entries) {
+  (e.data.tags || []).forEach((t: string) => {
+    const key = t.toLowerCase().trim();
+    counts.set(key, (counts.get(key) || 0) + 1);
+  });
+}
+const items = [...counts.entries()]
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, maxTags);
+
+// --- helpers: seeded RNG (deterministic per build) ---
+function hash(s: string) {
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+function rngFor(key: string) {
+  let x = (hash(seed + "|" + key) || 1) >>> 0;
+  return () => {
+    // xorshift32
+    x ^= x << 13; x >>>= 0;
+    x ^= x >> 17; x >>>= 0;
+    x ^= x << 5;  x >>>= 0;
+    return (x >>> 0) / 0xffffffff;
+  };
+}
+
+// --- map to visual props ---
+const maxCount = items.length ? Math.max(...items.map(([, c]) => c)) : 1;
+const minCount = items.length ? Math.min(...items.map(([, c]) => c)) : 1;
+
+const cloud = items.map(([tag, c]) => {
+  // scale by frequency
+  const pct = (c - minCount) / Math.max(1, (maxCount - minCount));
+  const scale = minSize + pct * (maxSize - minSize);
+
+  // small random rotation (-10..10 deg), stable via seed
+  const rnd = rngFor(tag);
+  const rot = Math.round((rnd() * 20 - 10) * 10) / 10;
+
+  // slight random emphasis
+  const weight = rnd() > 0.65 ? 700 : 600;
+
+  return { tag, count: c, scale, rot, weight };
+});
+---
+<section class="cloud-wrap" aria-label="Tags cloud">
+  <h2>Explore by tags</h2>
+  <div class="cloud">
+    {cloud.map((t) => (
+      <a
+        href={`/tags/${encodeURIComponent(t.tag)}/`}
+        class="cloud-tag"
+        style={`--scale:${t.scale}; --rot:${t.rot}deg; --w:${t.weight};`}
+      >
+        {t.tag}
+      </a>
+    ))}
+    {cloud.length === 0 && <p class="muted">No tags yet.</p>}
+  </div>
+</section>
+
+<style>
+  .cloud-wrap { margin: 1.5rem 0 2rem; }
+  .muted { opacity:.8; }
+
+  .cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .35rem .6rem;
+    align-items: center;
+  }
+
+  /* Word cloud look: scale + tiny rotation, Oswald, white→yellow hover */
+  .cloud-tag {
+    display: inline-block;
+    transform: rotate(var(--rot)) scale(var(--scale));
+    transform-origin: center;
+    font-family: "Oswald", Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    font-weight: var(--w);
+    line-height: 1;
+    color: var(--flush-light);
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: transform .12s ease, color .12s ease, text-shadow .12s ease;
+  }
+  .cloud-tag:hover {
+    color: var(--flush-yellow);
+    transform: rotate(var(--rot)) scale(calc(var(--scale) * 1.06));
+    text-shadow: 0 2px 0 rgba(0,0,0,.35);
+  }
+</style>
