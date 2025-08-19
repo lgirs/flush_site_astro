@@ -1,0 +1,61 @@
+---
+const { title = "Flush", description = "Let’s do some entertainment", leadImage } = Astro.props;
+import "../styles/global.css";
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title} | Flush</title>
+    <meta name="description" content={description} />
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-inner">
+        <a href="/"><img src="/images/logo-flush-white.png" alt="Flush" class="logo" /></a>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/about">About</a>
+          <a href="/blog">Blog</a>
+          <a href="/arcade">Arcade</a>
+          <a href="/gigs">Gigs</a>
+          <a href="/tags">Tags</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero section -->
+    <section class="hero">
+      {leadImage && <img src={leadImage} alt="" class="hero-img" />}
+      <h1 class="hero-title">{title}</h1>
+      <p class="hero-sub">{description}</p>
+    </section>
+
+    <main class="page">
+      <slot />
+    </main>
+
+    <footer class="footer page">
+      <div>© Flush. All rights reserved.</div>
+    </footer>
+  </body>
+</html>
+
+<style>
+.hero {
+  text-align: center;
+  margin: 2rem 0;
+}
+.hero-img {
+  max-width: 300px;
+  margin: 0 auto 1.5rem;
+}
+.hero-title {
+  font-family: "Oswald", sans-serif;
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  font-weight: 700;
+  color: var(--flush-light);
+}
+.hero-sub {
+  font-size: 1.2rem;
+  color: var(--flush-yellow);
