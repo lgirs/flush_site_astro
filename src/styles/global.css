@@ -64,11 +64,13 @@ a:hover{ color: var(--flush-yellow); text-decoration: underline; }
   background: #000;
 }
 .header-inner{
-  max-width: 1040px; margin: 0 auto; padding: 10px 16px;
-  display:flex; align-items:center; justify-content:space-between;
+  margin: 0 auto; 
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;   /* ✅ keep everything centered */
+  gap: 2rem;                 /* space between logo and nav */
 }
-.nav a{ color: var(--flush-light); margin-left: 14px; }
-.nav a.active{ color: var(--flush-yellow); }
 
 /* Footer */
 .footer{
