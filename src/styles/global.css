@@ -29,14 +29,14 @@ h1{ font-weight:700; font-size: clamp(2rem, 6vw, 3rem); }
 h2{ font-weight:600; font-size: clamp(1.5rem, 4.5vw, 2rem); }
 
 /* Links & emphasis */
-/* Default link style (used in page content) */
+/* Default link style in page content */
 main a { 
   color: var(--flush-red); 
   text-decoration: none; 
 }
 main a:hover { 
   color: var(--flush-yellow); 
-  text-decoration: underline; 
+  text-decoration: none;   /* 🚫 no underline */
 }
 
 /* Header + Footer links = Flush white */
@@ -46,7 +46,7 @@ main a:hover {
 }
 .header a:hover, .footer a:hover {
   color: var(--flush-yellow);
-  text-decoration: underline;
+  text-decoration: none;   /* 🚫 no underline */
 }
 
 /* Page shell */
