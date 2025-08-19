@@ -1,19 +1,10 @@
 ---
 import HomeLayout from "../layouts/HomeLayout.astro";
-import LinkTiles from "../components/LinkTiles.astro";
-
-const LINKS = [
-  { type: "instagram", href: "https://www.instagram.com/flush_music/", label: "Instagram" },
-  { type: "facebook",  href: "https://www.facebook.com/flushmusic",    label: "Facebook" },
-  { type: "spotify",   href: "",                                        label: "Spotify" },       // add when ready
-  { type: "youtube",   href: "",                                        label: "YouTube" },       // add when ready
-  { type: "email",     href: "mailto:flushrocks@gmail.com",             label: "Email" },         // change if needed
-  { type: "album",     href: "",                                        label: "Album Landing" }, // distributor link later
-  { type: "apple",     href: "",                                        label: "Apple Music" },   // add when ready
-  { type: "bandcamp",  href: "",                                        label: "Bandcamp" }       // add when ready
-];
+import TagCloud from "../components/TagCloud.astro";
 ---
-<HomeLayout title="Welcome friend" description="WE ARE FLUSH. PLEASURE TO MEET YOU.">
+<HomeLayout title="Welcome friend" description="We are Flush. Pleasure to meet you.">
   <p class="short-copy">We believe that music is a community thing and we are better off together.</p>
-  <LinkTiles items={LINKS} />
+
+  <!-- Tag cloud: tweak maxTags/minSize/maxSize if you want -->
+  <TagCloud maxTags={60} seed="flush" minSize={0.9} maxSize={1.9} />
 </HomeLayout>
