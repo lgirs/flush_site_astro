@@ -1,8 +1,16 @@
 ---
 import HomeLayout from "../layouts/HomeLayout.astro";
 import SocialFeed from "../components/SocialFeed.astro";
+// Social links
+const IG_HANDLE = "flush_music";
+const IG_POSTS = [
+  "https://www.instagram.com/p/DC85hI0NIWZ/",
+  "https://www.instagram.com/p/DLYB5dAtZS0/",
+  "https://www.instagram.com/reel/DH1AUSPBea2/",
+];
+const FB_PAGE = "https://www.facebook.com/flushmusic";
 ---
 <HomeLayout title="Welcome friend" description="We are Flush. Good to meet you.">
   <p class="short-copy">We believe that music is a community thing and we are better off together.</p>
-<SocialFeed />
+  <SocialFeed igProfile={IG_HANDLE} igPosts={IG_POSTS} fbPage={FB_PAGE} />
 </HomeLayout>
