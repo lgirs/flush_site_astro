@@ -10,11 +10,12 @@
 
 *{ box-sizing:border-box }
 
-html,body{
-  margin:0; padding:0;
+html,body {
+  margin: 0; 
+  padding: 0;
   background: var(--flush-black);
   color: var(--flush-light);
-  font-family: "Archivo", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-family: "Oswald", Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   line-height: 1.6;
 }
 
@@ -132,3 +133,10 @@ img,video{ max-width: 100%; height: auto; display:block; border-radius: 6px; }
 
 /* Helpers */
 .centered { text-align:center; }
+
+/* Utility class for long-form body text */
+.long-text, .long-text p, .long-text li {
+  font-family: "Archivo", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+}
