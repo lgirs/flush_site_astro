@@ -1,35 +1,30 @@
 ---
+/* Page metadata for tags/word cloud */
 export const pageTitle = "Gigs";
 export const pageTags = ["Gigs"];
 
----
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import gigs from "../../data/gigs.json";
 
-type Gig = {
-  date: string;
-  event: string;
-  venue: string;
-  city: string;
-  country?: string;
-  link?: string;
-  notes?: string;
-};
+/** Parse YYYY-MM-DD safely as UTC midnight */
+const toDate = (s) => new Date(`${s}T00:00:00Z`);
 
-const toDate = (s: string) => new Date(`${s}T00:00:00Z`);
+/** Today (UTC date-only) */
+const now = new Date();
+const todayUTC = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
 
-const today = new Date();
-const todayUTC = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
+/** Split into upcoming / past */
+const upcoming = [];
+const past = [];
 
-const upcoming: Gig[] = [];
-const past: Gig[] = [];
+gigs.forEach((g) => (toDate(g.date) >= todayUTC ? upcoming : past).push(g));
 
-(gigs as Gig[]).forEach((g) => (toDate(g.date) >= todayUTC ? upcoming : past).push(g));
+/** Sort */
+upcoming.sort((a, b) => toDate(a.date) - toDate(b.date));
+past.sort((a, b) => toDate(b.date) - toDate(a.date));
 
-upcoming.sort((a, b) => toDate(a.date).getTime() - toDate(b.date).getTime());
-past.sort((a, b) => toDate(b.date).getTime() - toDate(a.date).getTime());
-
-const fmt = (s: string) => {
+/** Format YYYY-MM-DD */
+const fmt = (s) => {
   const d = toDate(s);
   const y = d.getUTCFullYear();
   const m = String(d.getUTCMonth() + 1).padStart(2, "0");
@@ -37,12 +32,10 @@ const fmt = (s: string) => {
   return `${y}-${m}-${da}`;
 };
 
-const place = (g: Gig) => `${g.city}${g.country ? `, ${g.country}` : ""}`;
+const place = (g) => `${g.city}${g.country ? `, ${g.country}` : ""}`;
 ---
-<BaseLayout   
-title="Gigs" 
-  description="Upcoming and past gigs by Flush"
-  tags={["Gigs"]}
+
+<BaseLayout title="Gigs" description="Upcoming and past gigs by Flush" tags={["Gigs"]}>
   <section class="gigs">
     <h1>Gigs</h1>
 
@@ -108,45 +101,38 @@ title="Gigs"
   h2 { margin-top: .5rem; }
   .block { display: grid; gap: .75rem; }
 
-    .list { 
+  /* separators version */
+  .list { 
     list-style: none; 
     padding: 0; 
     margin: 0; 
     display: grid; 
-    gap: 0; /* separators will create the spacing */
+    gap: 0; /* separators create visual spacing */
   }
 
+  /* compact row layout: date | details (flex) | location | link */
   .item {
     display: grid;
     align-items: baseline;
     gap: .35rem 1rem;
     grid-template-columns: 9ch 1fr auto auto;
     padding: .5rem 0;
-    border-bottom: 1px solid rgba(233,232,241,0.2); /* thin gray divider */
+    border-bottom: 1px solid rgba(233,232,241,0.2);
   }
-
   .item:last-child { border-bottom: none; }
 
   .date { opacity: .9; font-variant-numeric: tabular-nums; }
-  .details {
-    min-width: 0;               /* allows ellipsis */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+  .details { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .event { font-weight: 700; letter-spacing: .3px; text-transform: uppercase; }
-  .venue { }
   .notes { opacity: .85; }
-  .loc { opacity: .85; white-space: nowrap; }
-  .link { white-space: nowrap; }
-  .link.empty { width: 0.01px; overflow: hidden; } /* keeps column alignment even without a link */
+  .loc, .link { white-space: nowrap; }
+  .link.empty { width: 0.01px; overflow: hidden; }
   .muted { opacity: .8; }
 
-  /* Small screens: stack into two neat lines */
+  /* Small screens */
   @media (max-width: 640px){
     .item { grid-template-columns: 9ch 1fr; }
     .loc, .link { grid-column: 1 / -1; }
-    .loc { opacity: .85; }
-    .details { white-space: normal; } /* allow wrap on phones */
+    .details { white-space: normal; }
   }
 </style>
