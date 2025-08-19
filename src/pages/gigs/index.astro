@@ -2,9 +2,8 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import gigs from "../../data/gigs.json";
 
-// Helpers
 type Gig = {
-  date: string; // YYYY-MM-DD
+  date: string;
   event: string;
   venue: string;
   city: string;
@@ -13,40 +12,28 @@ type Gig = {
   notes?: string;
 };
 
-// Parse date safely
-const toDate = (s: string) => new Date(`${s}T00:00:00Z`); // treat as UTC midnight
+const toDate = (s: string) => new Date(`${s}T00:00:00Z`);
 
-// Today (build time)
 const today = new Date();
-// Normalize to date-only for comparison
-const y = today.getUTCFullYear();
-const m = today.getUTCMonth();
-const d = today.getUTCDate();
-const todayDateOnly = new Date(Date.UTC(y, m, d));
+const todayUTC = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
 
-// Partition
 const upcoming: Gig[] = [];
 const past: Gig[] = [];
 
-(gigs as Gig[]).forEach((g) => {
-  const gd = toDate(g.date);
-  if (gd >= todayDateOnly) upcoming.push(g);
-  else past.push(g);
-});
+(gigs as Gig[]).forEach((g) => (toDate(g.date) >= todayUTC ? upcoming : past).push(g));
 
-// Sort: upcoming ascending, past descending
 upcoming.sort((a, b) => toDate(a.date).getTime() - toDate(b.date).getTime());
 past.sort((a, b) => toDate(b.date).getTime() - toDate(a.date).getTime());
 
-// Format
 const fmt = (s: string) => {
   const d = toDate(s);
-  // Render as YYYY-MM-DD to keep it clean; change if you want a different format
   const y = d.getUTCFullYear();
   const m = String(d.getUTCMonth() + 1).padStart(2, "0");
   const da = String(d.getUTCDate()).padStart(2, "0");
   return `${y}-${m}-${da}`;
 };
+
+const place = (g: Gig) => `${g.city}${g.country ? `, ${g.country}` : ""}`;
 ---
 <BaseLayout title="Gigs" description="Upcoming and past gigs by Flush">
   <section class="gigs">
@@ -61,15 +48,18 @@ const fmt = (s: string) => {
           {upcoming.map((g) => (
             <li class="item">
               <span class="date">{fmt(g.date)}</span>
-              <span class="sep">—</span>
-              <span class="event">{g.event}</span>
-              <span class="at">@</span>
-              <span class="venue">{g.venue}</span>
-              <span class="loc">
-                {g.city}{g.country ? `, ${g.country}` : ""}
+              <span class="details">
+                <span class="event">{g.event}</span>
+                <span class="at"> @ </span>
+                <span class="venue">{g.venue}</span>
+                {g.notes && <span class="notes"> — <em>{g.notes}</em></span>}
               </span>
-              {g.link && <a class="link" href={g.link} target="_blank" rel="noopener">Details</a>}
-              {g.notes && <span class="notes">{g.notes}</span>}
+              <span class="loc">{place(g)}</span>
+              {g.link ? (
+                <a class="link" href={g.link} target="_blank" rel="noopener">Details</a>
+              ) : (
+                <span class="link empty" aria-hidden="true"></span>
+              )}
             </li>
           ))}
         </ul>
@@ -85,15 +75,18 @@ const fmt = (s: string) => {
           {past.map((g) => (
             <li class="item">
               <span class="date">{fmt(g.date)}</span>
-              <span class="sep">—</span>
-              <span class="event">{g.event}</span>
-              <span class="at">@</span>
-              <span class="venue">{g.venue}</span>
-              <span class="loc">
-                {g.city}{g.country ? `, ${g.country}` : ""}
+              <span class="details">
+                <span class="event">{g.event}</span>
+                <span class="at"> @ </span>
+                <span class="venue">{g.venue}</span>
+                {g.notes && <span class="notes"> — <em>{g.notes}</em></span>}
               </span>
-              {g.link && <a class="link" href={g.link} target="_blank" rel="noopener">Details</a>}
-              {g.notes && <span class="notes">{g.notes}</span>}
+              <span class="loc">{place(g)}</span>
+              {g.link ? (
+                <a class="link" href={g.link} target="_blank" rel="noopener">Details</a>
+              ) : (
+                <span class="link empty" aria-hidden="true"></span>
+              )}
             </li>
           ))}
         </ul>
@@ -106,41 +99,38 @@ const fmt = (s: string) => {
   .gigs { display: grid; gap: 1.5rem; }
   h1 { margin-top: .25rem; }
   h2 { margin-top: .5rem; }
-
   .block { display: grid; gap: .75rem; }
 
-  .list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    gap: .5rem;
-  }
+  .list { list-style: none; padding: 0; margin: 0; display: grid; gap: .5rem; }
 
+  /* New compact row layout */
   .item {
     display: grid;
     align-items: baseline;
-    gap: .35rem .5rem;
-    grid-template-columns: auto auto 1fr auto auto;
+    gap: .35rem 1rem;
+    grid-template-columns: 9ch 1fr auto auto; /* date | details (flex) | location | link */
   }
 
-  /* Compact, single-column on small screens */
-  @media (max-width: 640px){
-    .item { grid-template-columns: auto 1fr; }
-    .sep, .at { display: none; }
-    .venue::before { content: "@ "; opacity: .8; }
+  .date { opacity: .9; font-variant-numeric: tabular-nums; }
+  .details {
+    min-width: 0;               /* allows ellipsis */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-
-  .date { opacity: .9; min-width: 7ch; }
   .event { font-weight: 700; letter-spacing: .3px; text-transform: uppercase; }
   .venue { }
-  .loc { opacity: .85; margin-left: .5rem; }
-  .notes { opacity: .85; margin-left: .5rem; font-style: italic; }
-
-  .link {
-    margin-left: .75rem;
-    white-space: nowrap;
-  }
-
+  .notes { opacity: .85; }
+  .loc { opacity: .85; white-space: nowrap; }
+  .link { white-space: nowrap; }
+  .link.empty { width: 0.01px; overflow: hidden; } /* keeps column alignment even without a link */
   .muted { opacity: .8; }
+
+  /* Small screens: stack into two neat lines */
+  @media (max-width: 640px){
+    .item { grid-template-columns: 9ch 1fr; }
+    .loc, .link { grid-column: 1 / -1; }
+    .loc { opacity: .85; }
+    .details { white-space: normal; } /* allow wrap on phones */
+  }
 </style>
