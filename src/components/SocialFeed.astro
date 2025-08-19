@@ -2,17 +2,13 @@
 /**
  * SocialFeed.astro
  * Props:
- *  - igProfile?: string   (Instagram handle without @, e.g. "flush_music")
- *  - igPosts?: string[]   (array of Instagram post/reel URLs)
- *  - fbPage?: string      (full Facebook Page URL, e.g. "https://www.facebook.com/flushmusic")
+ *  - igProfile?: string
+ *  - igPosts?: string[]
+ *  - fbPage?: string
  */
-const {
-  igProfile = "",
-  igPosts = [],
-  fbPage = "",
-} = Astro.props;
+const { igProfile = "", igPosts = [], fbPage = "" } = Astro.props;
 
-// Build Facebook Page Plugin URL if a page is provided
+// Build FB Page Plugin URL (used only after user clicks "Load")
 const fbSrc = fbPage
   ? `https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(
       fbPage
@@ -38,40 +34,49 @@ const fbSrc = fbPage
     ) : (
       <div class="ig-grid">
         {igPosts.map((url) => (
-          <blockquote
-            class="instagram-media"
-            data-instgrm-permalink={url}
-            data-instgrm-version="14"
-            style="background:#000; border:0; margin:0 auto; max-width:540px; width:100%;"
-          ></blockquote>
+          <div class="ig-card">
+            <blockquote
+              class="instagram-media"
+              data-instgrm-permalink={url}
+              data-instgrm-version="14"
+              style="background:#000; border:0; margin:0 auto; max-width:540px; width:100%;"
+            ></blockquote>
+          </div>
         ))}
       </div>
     )}
   </div>
 
-  <!-- Facebook Page -->
+  <!-- Facebook (click to load to avoid “refused to connect” on some browsers) -->
   <div class="social-block">
     <div class="social-header">
       <span>Facebook</span>
       {fbPage && (
-        <a class="button" href={fbPage} target="_blank" rel="noopener">
-          Open Page
-        </a>
+        <a class="button" href={fbPage} target="_blank" rel="noopener">Open Page</a>
       )}
     </div>
 
     {fbPage ? (
       <div class="fb-wrap">
+        <div class="fb-consent" id="fb-consent">
+          <p class="muted">For privacy reasons, the Facebook feed loads only when you ask.</p>
+          <button class="button" id="fb-load">Load Facebook feed</button>
+        </div>
         <iframe
+          id="fb-iframe"
           title="Facebook Page Plugin"
-          src={fbSrc}
+          src=""
           width="500"
           height="600"
-          style="border:none;overflow:hidden;width:100%;max-width:700px;height:600px;"
+          style="border:none;overflow:hidden;width:100%;max-width:700px;height:600px;display:none;"
+          loading="lazy"
           scrolling="no"
           frameborder="0"
           allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
         ></iframe>
+        <noscript>
+          <p><a href={fbPage} target="_blank" rel="noopener">Open Facebook page</a></p>
+        </noscript>
       </div>
     ) : (
       <p class="muted">Add your Facebook Page URL to show the timeline.</p>
@@ -79,8 +84,22 @@ const fbSrc = fbPage
   </div>
 </section>
 
-<!-- Instagram embed script (required for rendering blockquotes) -->
+<!-- Instagram embed script -->
 <script async src="https://www.instagram.com/embed.js"></script>
+
+<!-- Small inline script to load FB only on click -->
+<script>
+  const btn = document.getElementById('fb-load');
+  const iframe = document.getElementById('fb-iframe');
+  const consent = document.getElementById('fb-consent');
+  if (btn && iframe && consent) {
+    btn.addEventListener('click', () => {
+      iframe.src = {fbSrc: `${fbSrc}`}.fbSrc; // ensure literal inlined at build
+      iframe.style.display = 'block';
+      consent.style.display = 'none';
+    });
+  }
+</script>
 
 <style>
   .social-block { margin: 1.25rem 0 2rem; }
@@ -89,10 +108,26 @@ const fbSrc = fbPage
     margin-bottom: .75rem;
   }
   .social-header span { font-weight:700; letter-spacing:.5px; }
-  .ig-grid { display:grid; gap: 1rem; }
-  @media (min-width: 720px){
+  .muted { opacity:.8; }
+
+  /* Instagram grid: 2 columns on tablets, 3 on desktop */
+  .ig-grid {
+    display:grid; gap: 1rem;
+  }
+  @media (min-width: 600px){
     .ig-grid { grid-template-columns: 1fr 1fr; }
   }
-  .fb-wrap { display:grid; place-items:center; }
-  .muted { opacity:.8; }
+  @media (min-width: 980px){
+    .ig-grid { grid-template-columns: 1fr 1fr 1fr; }
+  }
+
+  /* Make IG cards smaller without hacks: constrain the container, center it */
+  .ig-card {
+    max-width: 360px;   /* <— smaller than IG’s 540px default */
+    margin: 0 auto;
+  }
+
+  /* Facebook */
+  .fb-wrap { display:grid; place-items:center; gap: .75rem; }
+  .fb-consent { text-align:center; }
 </style>
