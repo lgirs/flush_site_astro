@@ -2,44 +2,76 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 
-// Build a page for each unique tag (lowercased)
+// Map a file path under src/pages to its route URL
+function pathToUrl(key: string) {
+  // keys look like "../pages/gigs/index.astro" (relative to this file)
+  let p = key.replace("../pages", "");
+  p = p.replace(/\.astro$/i, "");
+  if (p === "/index") return "/";
+  if (p.endsWith("/index")) p = p.slice(0, -("/index".length));
+  return p || "/";
+}
+
+// Build all tag pages (tags discovered from content + route pages)
 export async function getStaticPaths() {
   const entries = await getCollection("pages");
   const tagSet = new Set<string>();
+  for (const e of entries) (e.data.tags || []).forEach((t: string) => tagSet.add(String(t).toLowerCase().trim()));
 
-  for (const e of entries) {
-    (e.data.tags || []).forEach((t: string) => tagSet.add(t.toLowerCase()));
+  const routeMods = import.meta.glob("../../pages/**/*.astro", { eager: true }) as Record<string, any>;
+  for (const [path, mod] of Object.entries(routeMods)) {
+    if (path.includes("/pages/tags/") || path.includes("/pages/content/")) continue;
+    const arr = (mod?.pageTags || mod?.tags || []) as unknown[];
+    arr.forEach((t: unknown) => {
+      const key = String(t || "").toLowerCase().trim();
+      if (key) tagSet.add(key);
+    });
   }
 
-  const tags = Array.from(tagSet);
-  return tags.map((tag) => ({
-    params: { tag },
-    props: {
-      tag,
-      items: entries.filter((e) =>
-        (e.data.tags || []).map((t: string) => t.toLowerCase()).includes(tag)
-      ),
-    },
-  }));
+  return Array.from(tagSet).map((tag) => ({ params: { tag }, props: { tag } }));
 }
 
-const { tag, items } = Astro.props as {
-  tag: string;
-  items: Awaited<ReturnType<typeof getCollection>>;
-};
+const { tag } = Astro.props as { tag: string };
+
+// Gather matches from content collection
+const allContent = await getCollection("pages");
+const matchesContent = allContent
+  .filter((p) => (p.data.tags || []).map((t: string) => String(t).toLowerCase().trim()).includes(tag))
+  .map((p) => ({ title: p.data.title ?? p.slug, url: `/content/${p.slug}/` }));
+
+// Gather matches from route pages (require pageTags export)
+const routeMods = import.meta.glob("../../pages/**/*.astro", { eager: true }) as Record<string, any>;
+const matchesRoutes: { title: string; url: string }[] = [];
+for (const [path, mod] of Object.entries(routeMods)) {
+  if (path.includes("/pages/tags/") || path.includes("/pages/content/")) continue;
+  const arr = (mod?.pageTags || mod?.tags || []) as unknown[];
+  const has = arr.some((t: unknown) => String(t || "").toLowerCase().trim() === tag);
+  if (!has) continue;
+  const title = String(mod?.pageTitle || mod?.title || pathToUrl(path)).trim();
+  const url = pathToUrl(path);
+  matchesRoutes.push({ title, url });
+}
+
+const items = [...matchesContent, ...matchesRoutes];
 ---
-<BaseLayout title={`#${tag}`} description={`Posts tagged ${tag}`}>
-  <h1>#{tag}</h1>
-  {items.length === 0 ? (
-    <p>No items yet.</p>
+<BaseLayout title={`#${tag}`} description={`Pages tagged ${tag}`}>
+  {items.length === 1 ? (
+    <>
+      <meta http-equiv="refresh" content={`0; url=${items[0].url}`} />
+      <p>Redirecting to <a href={items[0].url}>{items[0].title}</a>…</p>
+    </>
   ) : (
-    <ul>
-      {items.map((p) => (
-        <li>
-          <a href={`/content/${p.slug}/`}>{p.data.title}</a>
-          {p.data.tags?.length ? <small> — {p.data.tags.join(", ")}</small> : null}
-        </li>
-      ))}
-    </ul>
+    <>
+      <h1>#{tag}</h1>
+      {items.length === 0 ? (
+        <p>No pages yet.</p>
+      ) : (
+        <ul>
+          {items.map((it) => (
+            <li><a href={it.url}>{it.title}</a></li>
+          ))}
+        </ul>
+      )}
+    </>
   )}
 </BaseLayout>
