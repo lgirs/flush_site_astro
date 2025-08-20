@@ -5,11 +5,10 @@ export const pageTags = [];
 import BaseLayout from "../../layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title="Style Guide" description="Visual reference for Flush site styles">
-  <Fragment slot="head">
-    <meta name="robots" content="noindex,nofollow" />
-  </Fragment>
+<!-- Robots note: ideally goes in <head>, but keeping it inline here to avoid slot issues -->
+<meta name="robots" content="noindex,nofollow" />
 
+<BaseLayout title="Style Guide" description="Visual reference for Flush site styles">
   <section class="sg">
     <h1>Style Guide</h1>
     <p class="muted">Internal reference for fonts, colors, components, and Markdown/MDX patterns.</p>
@@ -24,7 +23,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       <div class="swatch c-white"><span>#FFFFFF</span><small>Pure white</small></div>
     </div>
 
-    <!-- Fonts -->
+    <!-- Typography -->
     <h2>Typography — Oswald (global)</h2>
     <h1>H1 — Big Heading</h1>
     <h2>H2 — Section Heading</h2>
@@ -50,10 +49,10 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     <!-- Tag chips preview -->
     <h2>Tag chips</h2>
     <div class="cloud">
-      <a href="#" class="cloud-tag tag-big rot-left w700">gigs</a>
-      <a href="#" class="cloud-tag tag-med rot-right w600">lyrics</a>
-      <a href="#" class="cloud-tag tag-xl rot-left w700">video</a>
-      <a href="#" class="cloud-tag tag-small rot-right w600">music</a>
+      <a href="#" class="cloud-tag cloud-tag--xl-left">gigs</a>
+      <a href="#" class="cloud-tag cloud-tag--md-right">lyrics</a>
+      <a href="#" class="cloud-tag cloud-tag--lg-left">video</a>
+      <a href="#" class="cloud-tag cloud-tag--sm-right">music</a>
     </div>
 
     <!-- Markdown patterns -->
@@ -129,7 +128,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   /* Cards */
   .card { border:1px solid rgba(233,232,241,.15); border-radius:.5rem; padding:1rem; }
 
-  /* Tag cloud preview (class-based, no inline style strings) */
+  /* Tag cloud preview */
   .cloud { display:flex; flex-wrap:wrap; gap:.4rem .7rem; align-items:center; }
   .cloud-tag {
     display:inline-block;
@@ -142,14 +141,12 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     transition: transform .12s ease, color .12s ease, text-shadow .12s ease;
   }
   .cloud-tag:hover { color:var(--flush-yellow); text-shadow:0 2px 0 rgba(0,0,0,.35); }
-  .tag-xl { transform: scale(1.4); font-weight:700; }
-  .tag-big { transform: scale(1.2); font-weight:700; }
-  .tag-med { transform: scale(1.05); font-weight:600; }
-  .tag-small { transform: scale(0.95); font-weight:600; }
-  .rot-left { transform: rotate(-4deg); }
-  .rot-right { transform: rotate(3deg); }
-  .w700 { font-weight:700; }
-  .w600 { font-weight:600; }
+
+  /* pre-baked sizes/rotations (single transform each to avoid parser confusion) */
+  .cloud-tag--xl-left  { transform: rotate(-4deg) scale(1.4); font-weight:700; }
+  .cloud-tag--lg-left  { transform: rotate(-3deg) scale(1.2); font-weight:700; }
+  .cloud-tag--md-right { transform: rotate(3deg)  scale(1.05); font-weight:600; }
+  .cloud-tag--sm-right { transform: rotate(2deg)  scale(0.95); font-weight:600; }
 
   /* Button */
   .button { display:inline-block; padding:.5rem 1rem; border:1px solid var(--flush-yellow); border-radius:999px; color:var(--flush-yellow); }
