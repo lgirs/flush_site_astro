@@ -5,12 +5,36 @@ export const pageTags = ["Videos"];
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 const videos = [
-  { title: "Headspinner", id: "gC1v8W7jun8" },
-  { title: "We’re Not Yet Alright", id: "T4I9XjZPsE0" },
-  { title: "Dive", id: "yMnAPCWem2U" },
-  { title: "Entertainment", id: "yPlkSgcSOPM" },
-  { title: "Making of ‘Headspinner’ – conversation", id: "32okH7TnHUI" },
-  { title: "Kings and Queens", id: "R-2riBqqdyM" },
+  { 
+    title: "Headspinner", 
+    id: "gC1v8W7jun8", 
+    snippet: "You wake up one morning and nothing feels right, unless you are supposed to be in a Lynch-movie. We shot this video in one shot – backwards." 
+  },
+  { 
+    title: "We’re Not Yet Alright", 
+    id: "T4I9XjZPsE0", 
+    snippet: "Lyric video for our latest community rock anthem – ‘we’re all fucked so let’s be fucked together!’." 
+  },
+  { 
+    title: "Dive", 
+    id: "yMnAPCWem2U", 
+    snippet: "Boy saves girl or heroine saves herself in this digital action adventure." 
+  },
+  { 
+    title: "Entertainment", 
+    id: "yPlkSgcSOPM", 
+    snippet: "Flush at its most Kaurismäkiesque… in their favourite bar… solving crossword puzzles and drinking beer." 
+  },
+  { 
+    title: "Making of ‘Headspinner’ – conversation", 
+    id: "32okH7TnHUI", 
+    snippet: "Flush’s Lasse chats with video director Pedro Bergamo about the ‘Headspinner’ video." 
+  },
+  { 
+    title: "Kings and Queens", 
+    id: "R-2riBqqdyM", 
+    snippet: "Not for the youngest family members, at least according to Youtube, this is a story of emancipation and costumes." 
+  },
 ];
 
 const channelUrl = "https://www.youtube.com/channel/UCLt4cfyqEpW1oku7qP8d4AA";
@@ -33,7 +57,10 @@ const channelUrl = "https://www.youtube.com/channel/UCLt4cfyqEpW1oku7qP8d4AA";
               allowfullscreen
             ></iframe>
           </div>
-          <figcaption class="caption">{v.title}</figcaption>
+          <figcaption class="caption">
+            <strong>{v.title}</strong>
+            <p class="snippet">{v.snippet}</p>
+          </figcaption>
         </figure>
       ))}
     </div>
@@ -60,7 +87,6 @@ const channelUrl = "https://www.youtube.com/channel/UCLt4cfyqEpW1oku7qP8d4AA";
     gap: 1.25rem;
   }
 
-  /* 2 columns, wraps naturally if screen is narrow */
   .grid-2 {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -70,10 +96,13 @@ const channelUrl = "https://www.youtube.com/channel/UCLt4cfyqEpW1oku7qP8d4AA";
   .video-card { display: grid; gap: .4rem; }
   .caption {
     font-size: 0.95rem;
-    opacity: 0.9;
+    opacity: 0.95;
+  }
+  .snippet {
+    font-size: 0.85rem;
+    opacity: 0.85;
   }
 
-  /* 16:9 aspect */
   .frame {
     position: relative;
     width: 100%;
@@ -89,7 +118,6 @@ const channelUrl = "https://www.youtube.com/channel/UCLt4cfyqEpW1oku7qP8d4AA";
     height: 100%;
   }
 
-  /* Channel card */
   .channel-card {
     margin-top: 1rem;
     display: grid;
