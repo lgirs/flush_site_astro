@@ -1,0 +1,91 @@
+---
+export const pageTitle = "Music";
+export const pageTags = ["Music", "Streaming"];
+
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const album = {
+  title: "Noises (2024)",
+  url: "https://orcd.co/noises",
+  cover: "/images/flush_digital_album_noises_cover.jpg", // lives in public/images/
+};
+
+const spotify = {
+  id: "0M9RMWUBIGsJ9D123qGuW9",
+  url: "https://open.spotify.com/artist/0M9RMWUBIGsJ9D123qGuW9?si=vSJTUbG8Scat8S25n7NW4g",
+};
+---
+
+<BaseLayout title="Music" description="Albums and streaming links from Flush">
+  <section class="music">
+    <h1 class="page-title">Music</h1>
+
+    <!-- Latest album -->
+    <a class="album-card" href={album.url} target="_blank" rel="noopener">
+      <img class="cover" src={album.cover} alt="Flush — Noises album cover" />
+      <div class="meta">
+        <h2 class="album-title">{album.title}</h2>
+        <p class="album-cta">Listen / buy →</p>
+      </div>
+    </a>
+
+    <!-- Spotify embed (compact) -->
+    <div class="spotify">
+      <h2 class="section-title">Spotify</h2>
+      <iframe
+        style="border-radius:12px"
+        src={`https://open.spotify.com/embed/artist/${spotify.id}?utm_source=generator`}
+        width="100%"
+        height="152"
+        frameborder="0"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"
+      ></iframe>
+      <p class="spotify-link">
+        <a href={spotify.url} target="_blank" rel="noopener">Open on Spotify →</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-title { text-align:center; margin-bottom:1rem; }
+
+  .music {
+    display:grid;
+    gap:1.25rem;
+    max-width:760px;
+    margin:0 auto;
+  }
+
+  .album-card {
+    display:grid;
+    grid-template-columns: 1fr;
+    gap:.75rem;
+    text-decoration:none;
+    color:var(--flush-light);
+    border:1px solid rgba(233,232,241,.15);
+    border-radius:.5rem;
+    padding:.75rem;
+    transition: transform .12s ease, border-color .12s ease, color .12s ease;
+  }
+  .album-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--flush-yellow);
+    color: var(--flush-yellow);
+  }
+  .cover {
+    width:100%;
+    height:auto;
+    border-radius:.35rem;
+    display:block;
+  }
+  .meta { display:grid; gap:.2rem; }
+  .album-title { font-size:1.25rem; letter-spacing:.02em; }
+  .album-cta { opacity:.9; }
+
+  .spotify { display:grid; gap:.5rem; }
+  .section-title { font-size:1.1rem; letter-spacing:.02em; }
+  .spotify-link a { text-decoration:none; border-bottom:1px solid var(--flush-yellow); }
+  .spotify-link a:hover { color:var(--flush-yellow); }
+</style>
