@@ -1,0 +1,131 @@
+---
+export const pageTitle = "Videos";
+export const pageTags = ["Videos"];
+
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const videos = [
+  { title: "Headspinner", id: "gC1v8W7jun8" },
+  { title: "We’re Not Yet Alright", id: "T4I9XjZPsE0" },
+  { title: "Dive", id: "yMnAPCWem2U" },
+  { title: "Entertainment", id: "yPlkSgcSOPM" },
+  { title: "Making of ‘Headspinner’ – conversation", id: "32okH7TnHUI" },
+  { title: "Kings and Queens", id: "R-2riBqqdyM" },
+];
+
+const channelUrl = "https://www.youtube.com/channel/UCLt4cfyqEpW1oku7qP8d4AA";
+---
+
+<BaseLayout title="Video" description="Music videos and more from Flush">
+  <section class="video-wrap">
+    <h1 class="page-title">Videos</h1>
+
+    <div class="grid-2">
+      {videos.map((v) => (
+        <figure class="video-card">
+          <div class="frame">
+            <iframe
+              src={`https://www.youtube-nocookie.com/embed/${v.id}`}
+              title={v.title}
+              loading="lazy"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
+          </div>
+          <figcaption class="caption">{v.title}</figcaption>
+        </figure>
+      ))}
+    </div>
+
+    <a class="channel-card" href={channelUrl} target="_blank" rel="noopener">
+      <div class="channel-text">
+        <span class="eyebrow">More on YouTube</span>
+        <span class="name">Flush — Official Channel</span>
+        <span class="url">{channelUrl}</span>
+      </div>
+      <div class="cta">Open ▶</div>
+    </a>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-title {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .video-wrap {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  /* 2 columns, wraps naturally if screen is narrow */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .video-card { display: grid; gap: .4rem; }
+  .caption {
+    font-size: 0.95rem;
+    opacity: 0.9;
+  }
+
+  /* 16:9 aspect */
+  .frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    overflow: hidden;
+    border: 1px solid rgba(233,232,241,.15);
+  }
+  .frame > iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Channel card */
+  .channel-card {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: .75rem;
+    padding: 1rem;
+    border: 1px solid rgba(233,232,241,.15);
+    border-radius: .5rem;
+    text-decoration: none;
+    color: var(--flush-light);
+    transition: transform .12s ease, border-color .12s ease, color .12s ease;
+  }
+  .channel-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--flush-yellow);
+    color: var(--flush-yellow);
+  }
+  .channel-text { display: grid; gap: .1rem; }
+  .eyebrow {
+    font-size: .8rem;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    opacity: .9;
+  }
+  .name {
+    font-weight: 700;
+    letter-spacing: .02em;
+  }
+  .url {
+    font-size: .9rem;
+    opacity: .8;
+  }
+  .cta {
+    font-weight: 700;
+    letter-spacing: .03em;
+    padding-left: .5rem;
+  }
+</style>
