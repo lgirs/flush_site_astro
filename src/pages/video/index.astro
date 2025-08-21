@@ -87,11 +87,12 @@ const channelUrl = "https://www.youtube.com/channel/UCLt4cfyqEpW1oku7qP8d4AA";
     gap: 1.25rem;
   }
 
-  .grid-2 {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem;
-  }
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr; /* ← single column on all screens */
+  gap: 1rem;
+}
+
 
   .video-card { display: grid; gap: .4rem; }
   .caption {
