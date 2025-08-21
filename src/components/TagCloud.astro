@@ -54,8 +54,8 @@ const cloud = items.map(([tag, c]) => {
 });
 ---
 <section class="cloud-wrap" aria-label="Tags cloud">
-  <h2>Explore by tags</h2>
-  <div class="cloud">
+  <h3>Find site content by tags</h3>
+    <div class="cloud">
     {cloud.map((t) => (
       <a
         href={`/tags/${encodeURIComponent(t.tag)}/`}
