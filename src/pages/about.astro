@@ -3,18 +3,13 @@ export const pageTitle = "About";
 export const pageTags = ["About", "Band", "Biography"];
 
 import BaseLayout from "../layouts/BaseLayout.astro";
-
-const photos = [
-  { src: "/images/flush_band_live.jpg", alt: "Flush live" },
-  { src: "/images/flush_band_relaxing.jpg", alt: "Flush band" },
-];
 ---
 
 <BaseLayout title="About" description="Flush — band bio, photos and details">
   <section class="about">
     <header class="hero">
       <h1 class="hero-title">The Flush Bio</h1>
-      <p class="hero-sub">Us and our music</p>
+      <p class="hero-sub">Music brings us together.</p>
     </header>
 
     <!-- BIO -->
@@ -30,6 +25,11 @@ const photos = [
         or charts; we write for ourselves and we write for you; for all of us.
       </p>
 
+      <!-- Band live image -->
+      <figure class="bio-photo">
+        <img src="/images/flush_band_live.jpg" alt="Flush live on stage" loading="lazy" />
+      </figure>
+
       <p>
         Musically, our foundation is punk and 90s alternative rock. On top, we add flavors from
         various metal and rock subgenres. Sometimes we’re loud and fast; sometimes slow and quiet.
@@ -43,30 +43,21 @@ const photos = [
         We also write about love and sex, and essentially about how we humans are with each other.
       </p>
 
+      <!-- Band relaxing image -->
+      <figure class="bio-photo">
+        <img src="/images/flush_band_relaxing.jpg" alt="Flush band members relaxing" loading="lazy" />
+      </figure>
+
       <h2 class="h2">Band</h2>
       <ul class="band">
         <li><strong>Lasse</strong> — writes the songs and sings them, while playing offset shaped guitars</li>
         <li><strong>Janne</strong> — composes and shreds the most incredible leads on his guitar</li>
-        <li><strong>Eero</strong> — bass guitar dominates our low and low‑mid frequency range</li>
-        <li><strong>Börje</strong> — the hardest‑hitting drummer in the industry, but has the softest of smiles in the band</li>
+        <li><strong>Eero</strong> — bass guitar dominates our low and low-mid frequency range</li>
+        <li><strong>Börje</strong> — the hardest-hitting drummer in the industry, but has the softest of smiles in the band</li>
       </ul>
 
       <p><strong>We are Flush. Welcome to our community.</strong></p>
     </article>
-
-    <!-- PHOTOS -->
-    <section class="photos">
-      <h2 class="h2">Photos</h2>
-      <div class="photo-grid">
-        {photos.map((p) => (
-          <figure class="photo">
-            <img src={p.src} alt={p.alt} loading="lazy" />
-            {p.alt && <figcaption>{p.alt}</figcaption>}
-          </figure>
-        ))}
-      </div>
-      <p class="note">Add/replace images in <code>/public/images/</code>.</p>
-    </section>
   </section>
 </BaseLayout>
 
@@ -76,16 +67,19 @@ const photos = [
   .hero-title { font-weight: 700; letter-spacing: .02em; }
   .hero-sub { color: var(--flush-yellow); }
 
-  .bio { display: grid; gap: .75rem; }
+  .bio { display: grid; gap: 1rem; }
   .h2 { font-size: clamp(1.1rem, 1.2vw + 1rem, 1.5rem); margin: .25rem 0; letter-spacing: .02em; }
   .band { list-style: none; padding: 0; margin: .25rem 0 0; display: grid; gap: .35rem; }
 
-  .photos { display: grid; gap: .5rem; }
-  .photo-grid { display: grid; grid-template-columns: 1fr; gap: .75rem; }
-  .photo img {
-    width: 100%; height: auto; display: block;
-    border-radius: .35rem; border: 1px solid rgba(233,232,241,.15);
+  .bio-photo {
+    margin: 0 auto;
+    max-width: 640px;
   }
-  .photo figcaption { font-size: .9rem; opacity: .85; margin-top: .25rem; }
-  .note { opacity: .8; font-size: .9rem; }
+  .bio-photo img {
+    width: 100%;
+    height: auto;
+    border-radius: .35rem;
+    border: 1px solid rgba(233,232,241,.15);
+    display: block;
+  }
 </style>
