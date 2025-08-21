@@ -1,8 +1,91 @@
 ---
+export const pageTitle = "About";
+export const pageTags = ["About", "Band", "Biography"];
+
 import BaseLayout from "../layouts/BaseLayout.astro";
-const tags = ['band', 'story'];
+
+const photos = [
+  { src: "/images/flush_band_live.jpg", alt: "Flush live" },
+  { src: "/images/flush_band_relaxing.jpg", alt: "Flush band" },
+];
 ---
-<BaseLayout title="About" description="About Flush" tags={tags}>
-  <h1>About</h1>
-  <p>Flush is a Helsinki-based rock band building a community for vibrant punk rock fans, blending punk, grunge and metal with thought‑provoking lyrics.</p>
+
+<BaseLayout title="About" description="Flush — band bio, photos and details">
+  <section class="about">
+    <header class="hero">
+      <h1 class="hero-title">About Flush</h1>
+      <p class="hero-sub">Helsinki-based community rock band</p>
+    </header>
+
+    <!-- BIO -->
+    <article class="long-text bio">
+      <p>
+        We are Flush, a community rock band from Helsinki, Finland. Our purpose is simple:
+        We make music, for ourselves and for you, to make us feel like we belong. Even if it’s
+        just a short and sweaty moment in the moshpit at our shows, or sharing a pint of cheap
+        beer with an old or new friend watching us play from a little further away, or listening
+        to our song on your headphones in your favourite safe place… in these moments music
+        connects us. Whether you are the misfit or the one who didn’t fit in, or you were the most
+        popular kid in school, you are welcome in our community. We don’t write music for playlists
+        or charts; we write for ourselves and we write for you; for all of us.
+      </p>
+
+      <p>
+        Musically, our foundation is punk and 90s alternative rock. On top, we add flavors from
+        various metal and rock subgenres. Sometimes we’re loud and fast; sometimes slow and quiet.
+        Sometime our music punches you in the face with its certainty; sometimes it’s fragile and
+        introspective.
+      </p>
+
+      <p>
+        Lyrically, we go where the pain is. Anxiety, depression, substance abuse, suicide, and
+        loneliness frequently visit our songs, as do a wide range of political and societal questions.
+        We also write about love and sex, and essentially about how we humans are with each other.
+      </p>
+
+      <h2 class="h2">Band</h2>
+      <ul class="band">
+        <li><strong>Lasse</strong> — writes the songs and sings them, while playing offset shaped guitars</li>
+        <li><strong>Janne</strong> — composes and shreds the most incredible leads on his guitar</li>
+        <li><strong>Eero</strong> — bass guitar dominates our low and low‑mid frequency range</li>
+        <li><strong>Börje</strong> — the hardest‑hitting drummer in the industry, but has the softest of smiles in the band</li>
+      </ul>
+
+      <p><strong>We are Flush. Welcome to our community.</strong></p>
+    </article>
+
+    <!-- PHOTOS -->
+    <section class="photos">
+      <h2 class="h2">Photos</h2>
+      <div class="photo-grid">
+        {photos.map((p) => (
+          <figure class="photo">
+            <img src={p.src} alt={p.alt} loading="lazy" />
+            {p.alt && <figcaption>{p.alt}</figcaption>}
+          </figure>
+        ))}
+      </div>
+      <p class="note">Add/replace images in <code>/public/images/</code>.</p>
+    </section>
+  </section>
 </BaseLayout>
+
+<style>
+  .about { max-width: 880px; margin: 0 auto; display: grid; gap: 1.25rem; }
+  .hero { text-align: center; display: grid; gap: .25rem; }
+  .hero-title { font-weight: 700; letter-spacing: .02em; }
+  .hero-sub { color: var(--flush-yellow); }
+
+  .bio { display: grid; gap: .75rem; }
+  .h2 { font-size: clamp(1.1rem, 1.2vw + 1rem, 1.5rem); margin: .25rem 0; letter-spacing: .02em; }
+  .band { list-style: none; padding: 0; margin: .25rem 0 0; display: grid; gap: .35rem; }
+
+  .photos { display: grid; gap: .5rem; }
+  .photo-grid { display: grid; grid-template-columns: 1fr; gap: .75rem; }
+  .photo img {
+    width: 100%; height: auto; display: block;
+    border-radius: .35rem; border: 1px solid rgba(233,232,241,.15);
+  }
+  .photo figcaption { font-size: .9rem; opacity: .85; margin-top: .25rem; }
+  .note { opacity: .8; font-size: .9rem; }
+</style>
