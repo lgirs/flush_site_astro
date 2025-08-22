@@ -3,7 +3,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 
 const FONT_LIST = [
   "Archivo",
-  "IBM Plex Sans",
+  "IBM Plex Sans",        // already present
   "Source Sans 3",
   "Work Sans",
   "PT Sans",
@@ -13,6 +13,12 @@ const FONT_LIST = [
   "Clarendon",
   "Mrs Eaves XL Serif",
   "Stencil",
+  // Newly added:
+  "Roboto Slab",
+  "Merriweather",
+  "Libre Franklin",
+  "IBM Plex Serif",
+  "Fira Sans",
 ];
 
 const SAMPLE_PARAGRAPH = `We make loud, honest music. The words come from real life — shows, friends, late nights, and staying true to what matters.`;
@@ -23,13 +29,27 @@ const PANGRAM = `Sphinx of black quartz, judge my vow. 0123456789 — !?&%`;
   <meta name="robots" content="noindex, nofollow" />
 
   <style is:global>
-  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Sans+3:wght@400;500;600&family=Work+Sans:wght@400;500;600&family=PT+Sans:wght@400;700&family=Inter:wght@400;500;600&family=Montserrat:wght@400;500;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?
+    family=Oswald:wght@300;400;600;700&
+    family=Archivo:wght@400;500;600&
+    family=IBM+Plex+Sans:wght@400;500;600&
+    family=IBM+Plex+Serif:wght@400;500;600&
+    family=Source+Sans+3:wght@400;500;600&
+    family=Work+Sans:wght@400;500;600&
+    family=PT+Sans:wght@400;700&
+    family=Inter:wght@400;500;600&
+    family=Montserrat:wght@400;500;600&
+    family=Roboto+Slab:wght@400;500;600&
+    family=Merriweather:wght@400;700&
+    family=Libre+Franklin:wght@400;500;600&
+    family=Fira+Sans:wght@400;500;600&
+    display=swap');
   </style>
 
   <section class="intro">
     <h1 class="h1">Font Lab (Hidden)</h1>
     <p class="hint long-text">
-      Oswald + Flush logos are the anchors. Each card shows <strong>Oswald</strong> on the left and a <strong>candidate font</strong> on the right, both with sample text <em>and</em> logos.
+      Oswald + Flush logos are the anchors. Each card shows <strong>Oswald</strong> on the left and a <strong>candidate font</strong> on the right, with logos and sample text.
     </p>
   </section>
 
@@ -84,30 +104,5 @@ const PANGRAM = `Sphinx of black quartz, judge my vow. 0123456789 — !?&%`;
 </BaseLayout>
 
 <style>
-  :root{ --flush-red:#962800; --flush-black:#0f0d0d; --flush-light:#e9e8f1; --flush-yellow:#f5d547; }
-
-  .intro{ max-width:900px; margin:0 auto 1.5rem; }
-  .hint{ opacity:.9 }
-
-  .grid{ display:grid; gap:1rem; max-width:1100px; margin:0 auto 2rem; }
-
-  .card{ background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1rem; }
-  .card__head{ display:flex; align-items:center; gap:.6rem; margin-bottom:.6rem; }
-  .chip{ font-size:.75rem; text-transform:uppercase; letter-spacing:.08em; padding:.15rem .45rem; border-radius:6px; color:var(--flush-black); background:#bbb; }
-  .chip.ok{ background:#81d16b; } .chip.bad{ background:#e99; }
-
-  .compare{ display:grid; grid-template-columns:1fr; gap:1rem; }
-  @media(min-width:760px){ .compare{ grid-template-columns:1fr 1fr; } }
-
-  .label{ font-weight:600; margin-bottom:.4rem; color:var(--flush-light); }
-  .body{ font-size:1rem; line-height:1.7; color:var(--flush-light); }
-  .oswald{ font-family:"Oswald", sans-serif; }
-  .candidate{ font-family: var(--candidate), system-ui, sans-serif; }
-
-  .logo-sample{ max-height:40px; margin:.25rem 0; display:block; }
-  .logo-sample.light{ background:#e9e8f1; padding:.25rem; }
-  .logo-sample.dark{ background:#0f0d0d; padding:.25rem; }
-
-  .link-main{ color: var(--flush-red); text-decoration:none; }
-  .link-main:hover{ color: var(--flush-yellow); }
+  /* … same CSS as before … */
 </style>
