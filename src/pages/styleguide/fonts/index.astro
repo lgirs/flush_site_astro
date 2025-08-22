@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 
-// Candidate body fonts to compare (with Oswald always shown)
+// Candidate body fonts to compare (left side is always Oswald)
 const FONT_LIST = [
   "Archivo",        // current
   "IBM Plex Sans",
@@ -10,10 +10,10 @@ const FONT_LIST = [
   "PT Sans",
   "Inter",
   "Montserrat",
-  "Frutiger",
-  "Clarendon",
-  "Mrs Eaves XL Serif",
-  "Stencil",
+  "Frutiger",           // not on Google Fonts → will show Fallback ✖
+  "Clarendon",          // not on Google Fonts → Fallback ✖
+  "Mrs Eaves XL Serif", // not on Google Fonts → Fallback ✖
+  "Stencil",            // not on Google Fonts → Fallback ✖
 ];
 
 const SAMPLE_PARAGRAPH = `We make loud, honest music. The words come from real life — shows, friends, late nights, and staying true to what matters. This is the reading block you’ll see on pages with longer text.`;
@@ -23,42 +23,36 @@ const PANGRAM = `Sphinx of black quartz, judge my vow. 0123456789 — !?&%`;
 <BaseLayout title="Font Lab (Hidden)" description="Compare Oswald with candidate body fonts">
   <meta name="robots" content="noindex, nofollow" />
 
-  <!-- Google Fonts: load Oswald + most test families -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?
-      family=Oswald:wght@300;400;600;700&
-      family=Archivo:wght@400;500;600&
-      family=IBM+Plex+Sans:wght@400;500;600&
-      family=Source+Sans+3:wght@400;500;600&
-      family=Work+Sans:wght@400;500;600&
-      family=PT+Sans:wght@400;700&
-      family=Inter:wght@400;500;600&
-      family=Montserrat:wght@400;500;600&
-      family=Mrs+Eaves+XL+Serif:wght@400&
-      family=Stencil+Std:wght@400&
-      display=swap"
-    rel="stylesheet"
-  />
+  <!-- Import fonts via CSS so Astro lifts this to <head> -->
+  <style is:global>
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Sans+3:wght@400;500;600&family=Work+Sans:wght@400;500;600&family=PT+Sans:wght@400;700&family=Inter:wght@400;500;600&family=Montserrat:wght@400;500;600&display=swap');
+  </style>
 
-  <!-- Logo anchor -->
-  <section class="logo-anchor">
-    <img src="/images/logo-flush-black.png" alt="Flush logo" class="logo" />
+  <!-- Logo anchors: white on dark, black on light -->
+  <section class="logo-row">
+    <div class="block dark">
+      <img src="/images/logo-flush-white.png" alt="Flush logo (white)" class="logo" />
+    </div>
+    <div class="block light">
+      <img src="/images/logo-flush-black.png" alt="Flush logo (black)" class="logo" />
+    </div>
   </section>
 
   <section class="intro">
     <h1 class="h1">Font Lab (Hidden)</h1>
     <p class="hint long-text">
-      Oswald and the Flush logo are the anchors. Below, you can compare `.long-text`
-      paragraphs in different fonts. Each card shows Oswald on the left and the candidate on the right.
+      Oswald and the Flush logo are the anchors. Below, compare paragraph style
+      for <code>.long-text</code>. Each card shows <strong>Oswald</strong> on the left
+      and the <strong>candidate</strong> on the right. Cards auto‑label whether the
+      candidate font actually loaded (<em>Loaded ✔</em>) or fell back (<em>Fallback ✖</em>).
     </p>
   </section>
 
   <section class="grid">
     {FONT_LIST.map((family) => (
-      <article class="card">
+      <article class="card" data-font={family}>
         <header class="card__head">
+          <div class="chip">Checking…</div>
           <h2 class="h2">{family}</h2>
         </header>
 
@@ -68,6 +62,7 @@ const PANGRAM = `Sphinx of black quartz, judge my vow. 0123456789 — !?&%`;
             <h3 class="label">Oswald</h3>
             <p class="body oswald">{SAMPLE_PARAGRAPH}</p>
             <p class="body oswald">{PANGRAM}</p>
+            <p class="body oswald">Links look like <a href="#" class="link-main">this</a>.</p>
           </div>
 
           <!-- Candidate -->
@@ -75,26 +70,56 @@ const PANGRAM = `Sphinx of black quartz, judge my vow. 0123456789 — !?&%`;
             <h3 class="label">{family}</h3>
             <p class="body candidate" style={`--candidate: "${family}"`}>{SAMPLE_PARAGRAPH}</p>
             <p class="body candidate" style={`--candidate: "${family}"`}>{PANGRAM}</p>
+            <p class="body candidate" style={`--candidate: "${family}"`}>
+              Links look like <a href="#" class="link-main">this</a>.
+            </p>
           </div>
         </div>
       </article>
     ))}
   </section>
+
+  <script>
+    // Mark each card as Loaded ✔ if the exact family is available, else Fallback ✖.
+    // (Frutiger / Clarendon / Mrs Eaves XL / Stencil will show Fallback unless you add them via Adobe Fonts or local @font-face.)
+    document.addEventListener('DOMContentLoaded', () => {
+      const cards = document.querySelectorAll('.card[data-font]');
+      cards.forEach(card => {
+        const family = card.getAttribute('data-font');
+        const ok = document.fonts && document.fonts.check(`400 16px "${family}"`);
+        const chip = card.querySelector('.chip');
+        if (ok) {
+          chip.textContent = 'Loaded ✔';
+          chip.classList.add('ok');
+        } else {
+          chip.textContent = 'Fallback ✖';
+          chip.classList.add('bad');
+        }
+      });
+    });
+  </script>
 </BaseLayout>
 
 <style>
-  .logo-anchor { text-align:center; margin:1rem auto; }
-  .logo { max-height:60px; width:auto; }
+  :root{
+    --flush-red:#962800; --flush-black:#0f0d0d; --flush-light:#e9e8f1; --flush-yellow:#f5d547;
+  }
+
+  .logo-row{
+    display:grid; grid-template-columns:1fr; gap:.75rem; margin:1rem auto; max-width:700px;
+  }
+  @media(min-width:720px){ .logo-row{ grid-template-columns:1fr 1fr; } }
+  .block{
+    display:flex; align-items:center; justify-content:center; border-radius:10px; padding:1rem;
+  }
+  .block.dark{ background:#0f0d0d; }
+  .block.light{ background:#e9e8f1; }
+  .logo{ max-height:60px; width:auto; }
 
   .intro{ max-width:900px; margin:0 auto 1.5rem; }
-  .hint{ opacity:.85 }
+  .hint{ opacity:.9 }
 
-  .grid{
-    display:grid;
-    gap:1rem;
-    max-width:1100px;
-    margin:0 auto 2rem;
-  }
+  .grid{ display:grid; gap:1rem; max-width:1100px; margin:0 auto 2rem; }
 
   .card{
     background:rgba(255,255,255,0.02);
@@ -102,19 +127,22 @@ const PANGRAM = `Sphinx of black quartz, judge my vow. 0123456789 — !?&%`;
     border-radius:12px;
     padding:1rem;
   }
-
-  .compare{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:1rem;
+  .card__head{ display:flex; align-items:center; gap:.6rem; margin-bottom:.6rem; }
+  .chip{
+    font-size:.75rem; text-transform:uppercase; letter-spacing:.08em; padding:.15rem .45rem; border-radius:6px;
+    color:var(--flush-black); background:#bbb;
   }
-  @media(min-width:760px){
-    .compare{ grid-template-columns:1fr 1fr; }
-  }
+  .chip.ok{ background: #81d16b; }   /* green-ish */
+  .chip.bad{ background: #e99; }      /* red-ish */
 
-  .label{ font-weight:600; margin-bottom:.4rem; }
+  .compare{ display:grid; grid-template-columns:1fr; gap:1rem; }
+  @media(min-width:760px){ .compare{ grid-template-columns:1fr 1fr; } }
 
+  .label{ font-weight:600; margin-bottom:.4rem; color:var(--flush-light); }
   .body{ font-size:1rem; line-height:1.7; color:var(--flush-light); }
-  .oswald{ font-family:"Oswald", sans-serif; }
-  .candidate{ font-family: var(--candidate), system-ui, sans-serif; }
+  .oswald{ font-family:"Oswald", Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif; }
+  .candidate{ font-family: var(--candidate), system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+
+  .link-main{ color: var(--flush-red); text-decoration:none; }
+  .link-main:hover{ color: var(--flush-yellow); }
 </style>
