@@ -123,6 +123,20 @@ main a:hover {
   text-decoration: none;       /* site uses no underline */
 }
 
+/* Footer links: inherit base look, use the site's yellow highlight on hover */
+.site-footer a {
+  color: inherit;            /* kills browser blue */
+  text-decoration: none;     /* matches site */
+  transition: background .15s ease-in-out;
+}
+
+.site-footer a:hover,
+.site-footer a:focus-visible {
+  /* Use your existing highlight variable; the fallback is a soft yellow */
+  background: var(--flush-yellow, #f3c623);
+  text-decoration: none;     /* keep no-underline if that's your global rule */
+}
+
 /* Buttons / highlights */
 .button{
   display:inline-block;
