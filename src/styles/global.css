@@ -117,24 +117,16 @@ main a:hover {
   justify-content: center;
 }
 
-/* Plain link that relies on site-wide hover/highlight rules */
-.site-footer .link-plain {
-  color: inherit;              /* kills default blue */
-  text-decoration: none;       /* site uses no underline */
-}
-
 /* Footer links: inherit base look, use the site's yellow highlight on hover */
 .site-footer a {
   color: inherit;            /* kills browser blue */
   text-decoration: none;     /* matches site */
-  transition: background .15s ease-in-out;
+  transition: color .15s ease-in-out;
 }
-
 .site-footer a:hover,
 .site-footer a:focus-visible {
-  /* Use your existing highlight variable; the fallback is a soft yellow */
-  background: var(--flush-yellow, #f3c623);
-  text-decoration: none;     /* keep no-underline if that's your global rule */
+  color: var(--flush-yellow);
+  text-decoration: none;
 }
 
 /* Buttons / highlights */
