@@ -23,4 +23,129 @@ const FONT_LIST = [
   "Fira Sans",
 ];
 
-const SAMPLE_PARAGRAPH = `We make loud, honest musi_
+const SAMPLE_PARAGRAPH = `We make loud, honest music. The words come from real life — shows, friends, late nights, and staying true to what matters.`;
+const PANGRAM = `Sphinx of black quartz, judge my vow. 0123456789 — !?&%`;
+---
+
+<BaseLayout title="Font Lab (Hidden)" description="Compare Oswald with candidate body fonts">
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Import Google-hosted fonts in HEAD via Astro -->
+  <style is:global>
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@400;500;600&family=Source+Sans+3:wght@400;500;600&family=Work+Sans:wght@400;500;600&family=PT+Sans:wght@400;700&family=Inter:wght@400;500;600&family=Montserrat:wght@400;500;600&family=Roboto+Slab:wght@400;500;600&family=Merriweather:wght@400;700&family=Libre+Franklin:wght@400;500;600&family=Fira+Sans:wght@400;500;600&display=swap');
+  </style>
+
+  <section class="intro">
+    <h1 class="h1">Font Lab (Hidden)</h1>
+    <p class="hint long-text">
+      Oswald + Flush logos are the anchors. Each card shows <strong>Oswald</strong> on the left and a
+      <strong>candidate</strong> on the right, with logos and sample text. The badge shows if the
+      candidate font actually loaded (<em>Loaded ✔</em>) or fell back (<em>Fallback ✖</em>).
+    </p>
+  </section>
+
+  <section class="grid">
+    {FONT_LIST.map((family) => (
+      <article class="card" data-font={family}>
+        <header class="card__head">
+          <div class="chip">Checking…</div>
+          <h2 class="h2">{family}</h2>
+        </header>
+
+        <div class="compare">
+          <!-- Oswald reference -->
+          <div class="col">
+            <h3 class="label">Oswald + Logos</h3>
+            <div class="logos">
+              <img src="/images/logo-flush-black.png" alt="Flush logo black" class="logo-sample light" />
+              <img src="/images/logo-flush-white.png" alt="Flush logo white" class="logo-sample dark" />
+            </div>
+            <p class="body oswald">{SAMPLE_PARAGRAPH}</p>
+            <p class="body oswald">{PANGRAM}</p>
+            <p class="body oswald">Links look like <a href="#" class="link-main">this</a>.</p>
+          </div>
+
+          <!-- Candidate -->
+          <div class="col">
+            <h3 class="label">{family} + Logos</h3>
+            <div class="logos">
+              <img src="/images/logo-flush-black.png" alt="Flush logo black" class="logo-sample light" />
+              <img src="/images/logo-flush-white.png" alt="Flush logo white" class="logo-sample dark" />
+            </div>
+            <p class="body candidate" style={`--candidate: "${family}"`}>{SAMPLE_PARAGRAPH}</p>
+            <p class="body candidate" style={`--candidate: "${family}"`}>{PANGRAM}</p>
+            <p class="body candidate" style={`--candidate: "${family}"`}>
+              Links look like <a href="#" class="link-main">this</a>.
+            </p>
+          </div>
+        </div>
+      </article>
+    ))}
+  </section>
+
+  <script>
+    // Mark each card Loaded ✔ if the exact family is available, else Fallback ✖
+    document.addEventListener('DOMContentLoaded', () => {
+      const cards = document.querySelectorAll('.card[data-font]');
+      cards.forEach(card => {
+        const family = card.getAttribute('data-font');
+        const ok = document.fonts && document.fonts.check(`400 16px "${family}"`);
+        const chip = card.querySelector('.chip');
+        if (ok) { chip.textContent = 'Loaded ✔'; chip.classList.add('ok'); }
+        else    { chip.textContent = 'Fallback ✖'; chip.classList.add('bad'); }
+      });
+    });
+  </script>
+</BaseLayout>
+
+<style>
+  :root{
+    --flush-red:#962800; --flush-black:#0f0d0d; --flush-light:#e9e8f1; --flush-yellow:#f5d547;
+  }
+
+  .intro{ max-width:900px; margin:0 auto 1.5rem; }
+  .hint{ opacity:.9 }
+
+  .grid{
+    display:grid; gap:1rem; max-width:1100px; margin:0 auto 2rem;
+  }
+
+  .card{
+    background:rgba(255,255,255,0.02);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:12px;
+    padding:1rem;
+  }
+
+  .card__head{
+    display:flex; align-items:center; gap:.6rem; margin-bottom:.6rem;
+  }
+
+  .chip{
+    font-size:.75rem; text-transform:uppercase; letter-spacing:.08em;
+    padding:.15rem .45rem; border-radius:6px; color:var(--flush-black); background:#bbb;
+  }
+  .chip.ok{ background:#81d16b; }    /* green-ish */
+  .chip.bad{ background:#e99; }       /* red-ish */
+
+  .compare{ display:grid; grid-template-columns:1fr; gap:1rem; }
+  @media(min-width:760px){ .compare{ grid-template-columns:1fr 1fr; } }
+
+  .label{ font-weight:600; margin-bottom:.4rem; color:var(--flush-light); }
+
+  .logos{
+    display:flex; gap:.5rem; align-items:center; flex-wrap:wrap; margin-bottom:.35rem;
+  }
+  .logo-sample{
+    max-height:40px; width:auto; display:block; border-radius:6px; padding:.25rem;
+  }
+  .logo-sample.light{ background:#e9e8f1; }
+  .logo-sample.dark{ background:#0f0d0d; }
+
+  .body{ font-size:1rem; line-height:1.7; color:var(--flush-light); }
+  .oswald{ font-family:"Oswald", Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif; }
+  .candidate{ font-family: var(--candidate), system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+
+  .link-main{ color: var(--flush-red); text-decoration:none; }
+  .link-main:hover{ color: var(--flush-yellow); }
+</style>
