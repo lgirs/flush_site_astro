@@ -1,160 +1,88 @@
 ---
-export const pageTitle = "Videos";
-export const pageTags = ["Videos"];
-
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 const videos = [
-  { 
-    title: "Headspinner", 
-    id: "gC1v8W7jun8", 
-    snippet: "You wake up one morning and nothing feels right, unless you are supposed to be in a Lynch-movie. We shot this video in one shot – backwards." 
+  {
+    title: "Headspinner",
+    id: "gC1v8W7jun8",
+    note:
+      "You wake up one morning and nothing feels right, unless you are supposed to be in a Lynch-movie. We shot this video in one shot – backwards."
   },
-  { 
-    title: "We’re Not Yet Alright", 
-    id: "T4I9XjZPsE0", 
-    snippet: "Lyric video for our latest community rock anthem – ‘we’re all fucked so let’s be fucked together!’." 
+  {
+    title: "We’re Not Yet Alright",
+    id: "T4I9XjZPsE0",
+    note:
+      "Lyric video for our latest community rock anthem – ‘we’re all fucked so let’s be fucked together!’."
   },
-  { 
-    title: "Dive", 
-    id: "yMnAPCWem2U", 
-    snippet: "Boy saves girl or heroine saves herself in this digital action adventure." 
+  {
+    title: "Dive",
+    id: "yMnAPCWem2U",
+    note:
+      "Boy saves girl or heroine saves herself in this digital action adventure."
   },
-  { 
-    title: "Entertainment", 
-    id: "yPlkSgcSOPM", 
-    snippet: "Flush at its most Kaurismäkiesque… in their favourite bar… solving crossword puzzles and drinking beer." 
+  {
+    title: "Entertainment",
+    id: "yPlkSgcSOPM",
+    note:
+      "Flush at its most Kaurismäkiesque… in their favourite bar… solving crossword puzzles and drinking beer."
   },
-  { 
-    title: "Making of ‘Headspinner’ – conversation", 
-    id: "32okH7TnHUI", 
-    snippet: "Flush’s Lasse chats with video director Pedro Bergamo about the ‘Headspinner’ video." 
+  {
+    title: "Making of ‘Headspinner’ – conversation",
+    id: "32okH7TnHUI",
+    note:
+      "Flush’s Lasse chats with video director Pedro Bergamo about the ‘Headspinner’ video."
   },
-  { 
-    title: "Kings and Queens", 
-    id: "R-2riBqqdyM", 
-    snippet: "Not for the youngest family members, at least according to Youtube, this is a story of emancipation and costumes." 
+  {
+    title: "Kings and Queens",
+    id: "R-2riBqqdyM",
+    note:
+      "Not for the youngest family members, at least according to Youtube, this is a story of emancipation and costumes."
   },
 ];
 
-const channelUrl = "https://www.youtube.com/channel/UCLt4cfyqEpW1oku7qP8d4AA";
+const YT_PROFILE = "https://www.youtube.com/channel/UCLt4cfyqEpW1oku7qP8d4AA";
 ---
 
-<BaseLayout title="Video" description="Music videos and more from Flush">
-  <section class="video-wrap">
-    <h1 class="page-title">Videos</h1>
+<BaseLayout title="Videos" description="Official music videos and more" tags={["Videos"]}>
+  <div class="page">
+    <h1>Videos</h1>
 
-    <div class="grid-2">
-      {videos.map((v) => (
-        <figure class="video-card">
-          <div class="frame">
-            <iframe
-              src={`https://www.youtube-nocookie.com/embed/${v.id}`}
-              title={v.title}
-              loading="lazy"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen
-            ></iframe>
-          </div>
-          <figcaption class="caption">
-            <strong>{v.title}</strong>
-            <p class="snippet">{v.snippet}</p>
-          </figcaption>
-        </figure>
-      ))}
+    <div class="videos">
+      {
+        videos.map((v) => (
+          <article class="video">
+            <h2>{v.title}</h2>
+            <div class="frame">
+              <iframe
+                src={`https://www.youtube.com/embed/${v.id}`}
+                title={v.title}
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen>
+              </iframe>
+            </div>
+            <p class="long-text">{v.note}</p>
+          </article>
+        ))
+      }
     </div>
 
-    <a class="channel-card" href={channelUrl} target="_blank" rel="noopener">
-      <div class="channel-text">
-        <span class="eyebrow">More on YouTube</span>
-        <span class="name">Flush — Official Channel</span>
-        <span class="url">{channelUrl}</span>
-      </div>
-      <div class="cta">Open ▶</div>
-    </a>
-  </section>
+    <div class="profile">
+      <a href={YT_PROFILE} target="_blank" rel="noopener">More on our YouTube profile →</a>
+    </div>
+  </div>
+
+  <style>
+    /* one-column stack; keeps with our “single centered block” approach */
+    .videos {
+      display: grid;
+      gap: 2rem;
+    }
+    .video h2 { margin-bottom: .5rem; }
+    .frame { position: relative; width: 100%; aspect-ratio: 16/9; }
+    .frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+    .profile { margin-top: 2rem; }
+  </style>
 </BaseLayout>
-
-<style>
-  .page-title {
-    text-align: center;
-    margin-bottom: 1rem;
-  }
-
-  .video-wrap {
-    display: grid;
-    gap: 1.25rem;
-  }
-
-.grid-2 {
-  display: grid;
-  grid-template-columns: 1fr; /* ← single column on all screens */
-  gap: 1rem;
-}
-
-
-  .video-card { display: grid; gap: .4rem; }
-  .caption {
-    font-size: 0.95rem;
-    opacity: 0.95;
-  }
-  .snippet {
-    font-size: 0.85rem;
-    opacity: 0.85;
-  }
-
-  .frame {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    background: #000;
-    overflow: hidden;
-    border: 1px solid rgba(233,232,241,.15);
-  }
-  .frame > iframe {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  .channel-card {
-    margin-top: 1rem;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    gap: .75rem;
-    padding: 1rem;
-    border: 1px solid rgba(233,232,241,.15);
-    border-radius: .5rem;
-    text-decoration: none;
-    color: var(--flush-light);
-    transition: transform .12s ease, border-color .12s ease, color .12s ease;
-  }
-  .channel-card:hover {
-    transform: translateY(-2px);
-    border-color: var(--flush-yellow);
-    color: var(--flush-yellow);
-  }
-  .channel-text { display: grid; gap: .1rem; }
-  .eyebrow {
-    font-size: .8rem;
-    letter-spacing: .04em;
-    text-transform: uppercase;
-    opacity: .9;
-  }
-  .name {
-    font-weight: 700;
-    letter-spacing: .02em;
-  }
-  .url {
-    font-size: .9rem;
-    opacity: .8;
-  }
-  .cta {
-    font-weight: 700;
-    letter-spacing: .03em;
-    padding-left: .5rem;
-  }
-</style>
