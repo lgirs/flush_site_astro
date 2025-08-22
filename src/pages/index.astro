@@ -2,9 +2,59 @@
 import HomeLayout from "../layouts/HomeLayout.astro";
 import TagCloud from "../components/TagCloud.astro";
 ---
-<HomeLayout title="WELCOME FRIEND" description="WE ARE FLUSH. PLEASURE TO MEET YOU.">
-  <p class="short-copy">We believe that music is a community thing and we are happy to have you here.</p>
 
-  <!-- Tag cloud: tweak maxTags/minSize/maxSize if you want -->
-  <TagCloud maxTags={60} seed="flush" minSize={0.9} maxSize={1.9} />
+<HomeLayout title="WELCOME FRIEND!" description="">
+  <!-- Intro copy -->
+  <section class="intro long-text">
+    <p>
+      We are Flush and you are very welcome to our website. We just re-built this site so please
+      excuse any hickups that you might experience. On this site you will find our music, our gigs,
+      our story and, in the near future, more fun content too. Maybe even games!
+    </p>
+
+    <p>
+      We believe that music is a community thing and it’s a thing that happens together. We are happy
+      to have you here with us.
+    </p>
+
+    <p class="signature"><em>Börje, Eero, Janne and Lasse a.k.a. Flush</em></p>
+  </section>
+
+  <!-- Tags / word cloud -->
+  <section class="tags">
+    <h2 class="h2">Find site content by tags</h2>
+    <TagCloud />
+  </section>
 </HomeLayout>
+
+<style>
+  /* Make the hero title as bold as it gets */
+  :global(.hero-title) {
+    font-weight: 900;
+    letter-spacing: 0.02em;
+  }
+
+  .intro {
+    max-width: 880px;
+    margin: 1.25rem auto 0;
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .signature {
+    text-align: right;
+  }
+
+  .tags {
+    max-width: 880px;
+    margin: 2rem auto 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .h2 {
+    font-size: clamp(1.1rem, 1.2vw + 1rem, 1.5rem);
+    margin: 0;
+    letter-spacing: 0.02em;
+  }
+</style>
