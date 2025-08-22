@@ -1,0 +1,120 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+// Candidate body fonts to compare (with Oswald always shown)
+const FONT_LIST = [
+  "Archivo",        // current
+  "IBM Plex Sans",
+  "Source Sans 3",
+  "Work Sans",
+  "PT Sans",
+  "Inter",
+  "Montserrat",
+  "Frutiger",
+  "Clarendon",
+  "Mrs Eaves XL Serif",
+  "Stencil",
+];
+
+const SAMPLE_PARAGRAPH = `We make loud, honest music. The words come from real life — shows, friends, late nights, and staying true to what matters. This is the reading block you’ll see on pages with longer text.`;
+const PANGRAM = `Sphinx of black quartz, judge my vow. 0123456789 — !?&%`;
+---
+
+<BaseLayout title="Font Lab (Hidden)" description="Compare Oswald with candidate body fonts">
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Google Fonts: load Oswald + most test families -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?
+      family=Oswald:wght@300;400;600;700&
+      family=Archivo:wght@400;500;600&
+      family=IBM+Plex+Sans:wght@400;500;600&
+      family=Source+Sans+3:wght@400;500;600&
+      family=Work+Sans:wght@400;500;600&
+      family=PT+Sans:wght@400;700&
+      family=Inter:wght@400;500;600&
+      family=Montserrat:wght@400;500;600&
+      family=Mrs+Eaves+XL+Serif:wght@400&
+      family=Stencil+Std:wght@400&
+      display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Logo anchor -->
+  <section class="logo-anchor">
+    <img src="/images/logo-flush-black.png" alt="Flush logo" class="logo" />
+  </section>
+
+  <section class="intro">
+    <h1 class="h1">Font Lab (Hidden)</h1>
+    <p class="hint long-text">
+      Oswald and the Flush logo are the anchors. Below, you can compare `.long-text`
+      paragraphs in different fonts. Each card shows Oswald on the left and the candidate on the right.
+    </p>
+  </section>
+
+  <section class="grid">
+    {FONT_LIST.map((family) => (
+      <article class="card">
+        <header class="card__head">
+          <h2 class="h2">{family}</h2>
+        </header>
+
+        <div class="compare">
+          <!-- Oswald reference -->
+          <div class="col">
+            <h3 class="label">Oswald</h3>
+            <p class="body oswald">{SAMPLE_PARAGRAPH}</p>
+            <p class="body oswald">{PANGRAM}</p>
+          </div>
+
+          <!-- Candidate -->
+          <div class="col">
+            <h3 class="label">{family}</h3>
+            <p class="body candidate" style={`--candidate: "${family}"`}>{SAMPLE_PARAGRAPH}</p>
+            <p class="body candidate" style={`--candidate: "${family}"`}>{PANGRAM}</p>
+          </div>
+        </div>
+      </article>
+    ))}
+  </section>
+</BaseLayout>
+
+<style>
+  .logo-anchor { text-align:center; margin:1rem auto; }
+  .logo { max-height:60px; width:auto; }
+
+  .intro{ max-width:900px; margin:0 auto 1.5rem; }
+  .hint{ opacity:.85 }
+
+  .grid{
+    display:grid;
+    gap:1rem;
+    max-width:1100px;
+    margin:0 auto 2rem;
+  }
+
+  .card{
+    background:rgba(255,255,255,0.02);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:12px;
+    padding:1rem;
+  }
+
+  .compare{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:1rem;
+  }
+  @media(min-width:760px){
+    .compare{ grid-template-columns:1fr 1fr; }
+  }
+
+  .label{ font-weight:600; margin-bottom:.4rem; }
+
+  .body{ font-size:1rem; line-height:1.7; color:var(--flush-light); }
+  .oswald{ font-family:"Oswald", sans-serif; }
+  .candidate{ font-family: var(--candidate), system-ui, sans-serif; }
+</style>
