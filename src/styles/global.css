@@ -106,6 +106,22 @@ main a:hover {
   text-align:center;
 }
 
+.site-footer {
+  margin-top: 2rem;
+  padding: 1rem 0;
+  text-align: center;
+  border-top: 1px solid rgba(233,232,241,.15);
+  font-size: 0.9rem;
+}
+
+.site-footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0;
+  display: grid;
+  gap: 0.25rem;
+}
+
 /* Buttons / highlights */
 .button{
   display:inline-block;
