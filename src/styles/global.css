@@ -123,13 +123,6 @@ main a:hover {
   text-decoration: none;       /* site uses no underline */
 }
 
-/* If you want a subtle underline on hover without changing color,
-   keep this; otherwise delete and rely entirely on your existing highlight */
-.site-footer .link-plain:hover,
-.site-footer .link-plain:focus-visible {
-  text-decoration: underline;
-}
-
 /* Buttons / highlights */
 .button{
   display:inline-block;
