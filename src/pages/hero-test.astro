@@ -1,17 +1,23 @@
 ---
-// src/pages/hero-test.astro
 import BaseLayout from "../layouts/BaseLayout.astro";
 import HeroLogo from "../components/HeroLogo.astro";
 ---
-<BaseLayout title="Hero Test" description="Testing stacked logo + vector">
+
+<BaseLayout title="Hero Test" description="Testing stacked logo + brush text">
   <HeroLogo
     logo="/images/logo-flush-white.png"
-    splash="/images/us.svg"
-    splashColor="var(--flush-light)"  /* Flush white; change to var(--flush-red) if you want red */
+    splash="/images/wereallbrushtext.png"
     title="Flush"
+    maxWidth="1100px"
+    padX="1rem"
+    logoOffsetX="0px"   <!-- tweak this e.g. "-6px" if logo feels off-center -->
   />
 
   <section class="page long-text">
-    <p>This is a hidden test page for the stacked hero layout. Logo on top (smaller), vector below in Flush white.</p>
+    <p>
+      This hidden test page renders the Flush logo on top and the brush text
+      image below it. Use this page to preview alignment and sizing before
+      applying to the real homepage.
+    </p>
   </section>
 </BaseLayout>
