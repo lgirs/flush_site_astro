@@ -1,0 +1,55 @@
+---
+/**
+ * HeroLogo.astro
+ * Centers the Flush logo and places a decorative vector behind it.
+ * Put your vector at: /public/images/us.svg
+ */
+const {
+  logo = "/images/logo-flush-white.png",
+  splash = "/images/us.svg",
+  title = "Flush",
+} = Astro.props;
+---
+<section class="hero" aria-label={title}>
+  <div class="hero__inner">
+    <img src={splash} alt="" class="hero__splash" aria-hidden="true" loading="eager" />
+    <img src={logo} alt="Flush" class="hero__logo" loading="eager" />
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    display: grid;
+    place-items: center;
+    padding: clamp(3rem, 8vw, 8rem) 1rem;
+    background: var(--flush-black);
+    overflow: hidden;
+  }
+  .hero__inner {
+    position: relative;
+    display: grid;
+    place-items: center;
+    isolation: isolate;
+  }
+  .hero__splash {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    transform: translate(-50%, -50%) rotate(-4deg);
+    width: min(90vw, 920px);
+    max-width: 92vw;
+    opacity: 0.22;
+    filter: drop-shadow(0 10px 22px rgba(0,0,0,.45));
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+  }
+  .hero__logo {
+    position: relative;
+    z-index: 1;
+    width: min(60vw, 520px);
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 6px 14px rgba(0,0,0,.45));
+  }
+</style>
