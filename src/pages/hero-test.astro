@@ -1,15 +1,17 @@
 ---
+// src/pages/hero-test.astro
 import BaseLayout from "../layouts/BaseLayout.astro";
 import HeroLogo from "../components/HeroLogo.astro";
 ---
-<BaseLayout title="Hero Test" description="Testing logo hero">
+<BaseLayout title="Hero Test" description="Testing stacked logo + vector">
   <HeroLogo
     logo="/images/logo-flush-white.png"
     splash="/images/us.svg"
+    splashColor="var(--flush-light)"  /* Flush white; change to var(--flush-red) if you want red */
     title="Flush"
   />
 
   <section class="page long-text">
-    <p>This is a hidden test page for the hero layout. Compare how the logo and vector splash look together before applying to the home page.</p>
+    <p>This is a hidden test page for the stacked hero layout. Logo on top (smaller), vector below in Flush white.</p>
   </section>
 </BaseLayout>
