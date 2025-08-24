@@ -1,0 +1,15 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HeroLogo from "../components/HeroLogo.astro";
+---
+<BaseLayout title="Hero Test" description="Testing logo hero">
+  <HeroLogo
+    logo="/images/logo-flush-white.png"
+    splash="/images/us.svg"
+    title="Flush"
+  />
+
+  <section class="page long-text">
+    <p>This is a hidden test page for the hero layout. Compare how the logo and vector splash look together before applying to the home page.</p>
+  </section>
+</BaseLayout>
