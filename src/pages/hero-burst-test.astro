@@ -1,0 +1,41 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HeroBurst from "../components/HeroBurst.astro";
+
+/* Exact files you listed (paths relative to /public) */
+const MARKS = [
+  "/images/marks/shit.svg",
+  "/images/marks/together.svg",
+  "/images/marks/fireworks.svg",
+  "/images/marks/burn.svg",
+  "/images/marks/head.svg",
+  "/images/marks/control.svg",
+  "/images/marks/dark.svg",
+  "/images/marks/race.svg",
+  "/images/marks/insane.svg",
+  "/images/marks/worry.svg",
+  "/images/marks/wisdom.svg",
+  "/images/marks/owl.svg",
+  "/images/marks/clock.svg",
+  "/images/marks/feet.svg",
+  "/images/marks/all.svg",
+  "/images/marks/found.svg",
+  "/images/marks/us.svg",
+  "/images/marks/join me.svg", // space handled by encodeURI in the component
+];
+---
+<BaseLayout title="Hero Burst Test" description="Test: center logo with surrounding vector marks">
+  <HeroBurst
+    centerLogo="/images/logo-flush-white-orange_vex.png"
+    marks={MARKS}
+    maxWidth="1100px"
+    padX="1rem"
+    radius="min(40vw, 460px)"
+    size="clamp(40px, 6.5vw, 86px)"
+  />
+
+  <section class="page long-text">
+    <p>Hidden test page for the hero burst. These are the exact SVGs from <code>/public/images/marks/</code>.
+      Tweak <code>radius</code> and <code>size</code> if you want the ring tighter or larger.</p>
+  </section>
+</BaseLayout>
