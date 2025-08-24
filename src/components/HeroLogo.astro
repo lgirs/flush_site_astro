@@ -2,7 +2,7 @@
 /**
  * HeroLogo.astro
  * Centers the Flush logo and places a decorative vector behind it.
- * Put your vector at: /public/images/us.svg
+ * Put the vector file at: /public/images/us.svg
  */
 const {
   logo = "/images/logo-flush-white.png",
@@ -12,7 +12,10 @@ const {
 ---
 <section class="hero" aria-label={title}>
   <div class="hero__inner">
-    <img src={splash} alt="" class="hero__splash" aria-hidden="true" loading="eager" />
+    <!-- Decorative splash via CSS mask (colored by background) -->
+    <span class="hero__splashMask" aria-hidden="true"></span>
+
+    <!-- Brand logo -->
     <img src={logo} alt="Flush" class="hero__logo" loading="eager" />
   </div>
 </section>
@@ -30,21 +33,38 @@ const {
     position: relative;
     display: grid;
     place-items: center;
-    isolation: isolate;
+    isolation: isolate; /* keeps z-index layers local */
   }
-  .hero__splash {
-  filter: invert(42%) sepia(78%) saturate(648%) hue-rotate(5deg) brightness(98%) contrast(94%);
-position: absolute;
+
+  /* === Splash using CSS mask (always visible, fully colorable) === */
+  .hero__splashMask{
+    position: absolute;
     inset: 50% auto auto 50%;
     transform: translate(-50%, -50%) rotate(-4deg);
     width: min(90vw, 920px);
-    max-width: 92vw;
-    opacity: 0.22;
-    filter: drop-shadow(0 10px 22px rgba(0,0,0,.45));
+    height: min(90vw, 920px); /* square area for the mask */
     z-index: 0;
     pointer-events: none;
     user-select: none;
+
+    /* Color the splash here */
+    background: var(--flush-yellow);
+
+    /* Apply the SVG as a mask so the background color shows through the shape */
+    -webkit-mask-image: url("/images/us.svg");
+    mask-image: url("/images/us.svg");
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+
+    /* Subtle shadow for separation on dark bg */
+    filter: drop-shadow(0 10px 22px rgba(0,0,0,.45));
+    opacity: 0.28; /* tweak visibility */
   }
+
   .hero__logo {
     position: relative;
     z-index: 1;
@@ -52,5 +72,9 @@ position: absolute;
     height: auto;
     display: block;
     filter: drop-shadow(0 6px 14px rgba(0,0,0,.45));
+  }
+
+  @media (min-width: 900px) {
+    .hero__splashMask { opacity: 0.24; }
   }
 </style>
