@@ -1,18 +1,15 @@
 ---
 /**
- * HeroLogo.astro (stacked)
- * Renders the Flush logo (smaller) on top, and the vector splash BELOW it.
- * The splash is colored via a CSS mask so it’s always visible and brand‑consistent.
- *
- * Files expected:
+ * HeroLogo.astro (stacked) — build-safe
+ * Logo (smaller) on top, vector splash BELOW it, colorable via prop.
+ * Files:
  *   /public/images/logo-flush-white.png
  *   /public/images/us.svg
  */
 const {
   logo = "/images/logo-flush-white.png",
-  splash = "/images/us.svg",
-  // "Flush white" = site light tone (not pure #fff). Use --flush-light by default.
-  splashColor = "var(--flush-light)",
+  splash = "/images/us.svg",           // kept for clarity; path is used in mask below
+  splashColor = "var(--flush-light)",  // pass "var(--flush-red)" or "#fff" if you want
   title = "Flush",
 } = Astro.props;
 ---
@@ -21,8 +18,12 @@ const {
     <!-- Top: original logo (smaller) -->
     <img src={logo} alt="Flush" class="hero__logo" loading="eager" />
 
-    <!-- Below: vector splash in 'flush white' via mask -->
-    <span class="hero__splashBelow" aria-hidden="true"></span>
+    <!-- Below: vector splash in configured color (via CSS var) -->
+    <span
+      class="hero__splashBelow"
+      style={`--splash-color: ${splashColor}; --splash-url: url('${splash}');`}
+      aria-hidden="true"
+    ></span>
   </div>
 </section>
 
@@ -57,12 +58,12 @@ const {
     height: min(52vw, 520px);
     display: block;
 
-    /* color (Flush white by default; can pass splashColor prop) */
-    background: ${splashColor};
+    /* color comes from the inline CSS variable */
+    background: var(--splash-color);
 
-    /* mask the SVG */
-    -webkit-mask-image: url("/images/us.svg");
-    mask-image: url("/images/us.svg");
+    /* mask the SVG (URL comes via inline CSS var as well) */
+    -webkit-mask-image: var(--splash-url);
+    mask-image: var(--splash-url);
     -webkit-mask-repeat: no-repeat;
     mask-repeat: no-repeat;
     -webkit-mask-position: center;
@@ -70,9 +71,8 @@ const {
     -webkit-mask-size: contain;
     mask-size: contain;
 
-    /* subtle separation from bg */
     filter: drop-shadow(0 8px 18px rgba(0,0,0,.35));
-    opacity: 0.95; /* strong but not blinding */
+    opacity: 0.95;
   }
 
   @media (min-width: 900px) {
