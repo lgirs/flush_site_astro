@@ -42,7 +42,9 @@ const videos = [
   },
 ];
 
-const YT_PROFILE = "https://www.youtube.com/channel/UCLt4cfyqEpW1oku7qP8d4AA";
+const YT_CHANNEL_URL = "https://www.youtube.com/@flushmusic"; // update if needed
+// Optional: add a playlist ID to show an embedded playlist instead of the card
+const YT_PLAYLIST_ID = ""; 
 ---
 
 <BaseLayout title="Videos" description="Official music videos and more" tags={["Videos"]}>
@@ -50,33 +52,55 @@ const YT_PROFILE = "https://www.youtube.com/channel/UCLt4cfyqEpW1oku7qP8d4AA";
     <h1>Videos</h1>
 
     <div class="videos">
-      {
-        videos.map((v) => (
-          <article class="videos">
-            <h2>{v.title}</h2>
-            <div class="frame">
-              <iframe
-                src={`https://www.youtube.com/embed/${v.id}`}
-                title={v.title}
-                loading="lazy"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen>
-              </iframe>
-            </div>
-            <p class="long-text">{v.note}</p>
-          </article>
-        ))
-      }
+      {videos.map((v) => (
+        <article class="videos">
+          <h2>{v.title}</h2>
+          <div class="frame">
+            <iframe
+              src={`https://www.youtube.com/embed/${v.id}`}
+              title={v.title}
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen>
+            </iframe>
+          </div>
+          <p class="long-text">{v.note}</p>
+        </article>
+      ))}
     </div>
 
-    <div class="profile">
-      <a href={YT_PROFILE} target="_blank" rel="noopener">More on our YouTube profile →</a>
-    </div>
+    <!-- YouTube channel section -->
+    <section class="yt-section">
+      {YT_PLAYLIST_ID ? (
+        <div class="yt-embed">
+          <iframe
+            width="100%"
+            height="380"
+            src={`https://www.youtube.com/embed/videoseries?list=${YT_PLAYLIST_ID}`}
+            title="YouTube playlist"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+        </div>
+      ) : (
+        <a class="yt-card" href={YT_CHANNEL_URL} target="_blank" rel="noopener">
+          <div class="yt-card__left">
+            <span class="yt-badge">YouTube</span>
+            <h3 class="yt-title">More on our YouTube profile →</h3>
+            <p class="yt-sub long-text">Live videos, premieres, and more. Click to see the full channel.</p>
+          </div>
+          <div class="yt-card__right">
+            <img src="/images/logo-flush-black.png" alt="Flush" class="yt-logo light" />
+            <img src="/images/logo-flush-white.png" alt="Flush" class="yt-logo dark" />
+          </div>
+        </a>
+      )}
+    </section>
   </div>
 
   <style>
-    /* one-column stack; keeps with our “single centered block” approach */
     .videos {
       display: grid;
       gap: 2rem;
@@ -85,6 +109,61 @@ const YT_PROFILE = "https://www.youtube.com/channel/UCLt4cfyqEpW1oku7qP8d4AA";
     .frame { position: relative; width: 100%; aspect-ratio: 16/9; }
     .frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
-    .profile { margin-top: 2rem; }
+    /* YouTube section */
+    .yt-section { max-width: 980px; margin: 2rem auto 0; }
+    .yt-embed {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0,0,0,.25);
+    }
+
+    .yt-card {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      padding: 1rem;
+      border-radius: 12px;
+      text-decoration: none;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+    }
+    .yt-card:hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.05);
+      box-shadow: 0 8px 24px rgba(0,0,0,.25);
+    }
+
+    @media (min-width: 760px) {
+      .yt-card { grid-template-columns: 2fr 1fr; padding: 1.25rem 1.5rem; }
+    }
+
+    .yt-card__left { display:flex; flex-direction:column; gap:.4rem; }
+    .yt-badge {
+      display:inline-block;
+      font-size:.75rem;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color: var(--flush-black);
+      background: var(--flush-yellow);
+      padding:.2rem .5rem;
+      border-radius: 999px;
+    }
+    .yt-title {
+      margin:.25rem 0 0;
+      font-size: clamp(1.1rem, 1.2vw + 1rem, 1.6rem);
+      color: var(--flush-light);
+      letter-spacing:.01em;
+    }
+    .yt-sub { margin:.25rem 0 0; color: var(--flush-light); opacity:.9; }
+
+    .yt-card__right {
+      display:flex; align-items:center; justify-content:flex-end; gap:.5rem; flex-wrap:wrap;
+    }
+    .yt-logo {
+      max-height:42px; width:auto; border-radius:6px; padding:.25rem;
+    }
+    .yt-logo.light { background:#e9e8f1; }
+    .yt-logo.dark  { background:#0f0d0d; }
   </style>
 </BaseLayout>
