@@ -1,63 +1,37 @@
 ---
 /**
  * HeroLogo.astro (stacked with PNG splash)
- * - Shows main logo (smaller) on top
- * - Shows a raster splash/brush image below
- * Files:
- *   /public/images/logo-flush-white.png
- *   /public/images/wereallbrushtext.png
  */
 const {
   logo = "/images/logo-flush-white.png",
-  splash = "/images/wereallbrushtext.png",  // raster PNG splash
+  splash = "/images/wereallbrushtext.png",
   title = "Flush",
-  maxWidth = "1100px",   // match header container
-  padX = "1rem",         // header padding
-  logoOffsetX = "0px",   // optical nudge
+  maxWidth = "1100px",
+  padX = "1rem",
+  logoOffsetX = "0px",
 } = Astro.props;
 ---
 <section class="hero" aria-label={title} style={`--mx:${maxWidth}; --px:${padX}; --offset-x:${logoOffsetX};`}>
   <div class="hero__inner">
-    <!-- Top: smaller brand logo -->
     <img src={logo} alt="Flush" class="hero__logo" loading="eager" />
-
-    <!-- Below: brush text image -->
     <img src={splash} alt="" class="hero__splashBelow" aria-hidden="true" loading="eager" />
   </div>
 </section>
 
 <style>
-  .hero {
-    background: var(--flush-black);
-    padding-block: clamp(2.5rem, 6vw, 6rem);
-  }
+  .hero { background: var(--flush-black); padding-block: clamp(2.5rem, 6vw, 6rem); }
   .hero__inner {
-    max-width: var(--mx);
-    margin-inline: auto;
-    padding-inline: var(--px);
-    display: grid;
-    justify-items: center;
-    gap: clamp(0.75rem, 1.5vw, 1.25rem);
-    width: 100%;
+    max-width: var(--mx); margin-inline: auto; padding-inline: var(--px);
+    display: grid; justify-items: center; gap: clamp(0.75rem, 1.5vw, 1.25rem); width: 100%;
   }
-
   .hero__logo {
-    width: min(40vw, 340px);
-    height: auto;
-    display: block;
-    translate: var(--offset-x) 0;
-    filter: drop-shadow(0 6px 14px rgba(0,0,0,.45));
+    width: min(40vw, 340px); height: auto; display: block;
+    translate: var(--offset-x) 0; filter: drop-shadow(0 6px 14px rgba(0,0,0,.45));
   }
-
   .hero__splashBelow {
-    width: min(92vw, 920px);
-    height: auto;
-    display: block;
-    object-fit: contain;
-    filter: drop-shadow(0 8px 18px rgba(0,0,0,.35));
-    opacity: 0.95;
+    width: min(92vw, 920px); height: auto; display: block; object-fit: contain;
+    filter: drop-shadow(0 8px 18px rgba(0,0,0,.35)); opacity: 0.95;
   }
-
   @media (min-width: 900px) {
     .hero__logo { width: min(28vw, 320px); }
     .hero__splashBelow { opacity: 0.92; }
