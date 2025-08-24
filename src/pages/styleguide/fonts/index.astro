@@ -1,26 +1,25 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 
+// Candidate body fonts to compare (left column is always Oswald)
 const FONT_LIST = [
-  // Baseline + earlier candidates
+  // Google Fonts candidates
   "Montserrat",
   "IBM Plex Sans",
   "Source Sans 3",
   "Work Sans",
   "PT Sans",
   "Inter",
-  "Montserrat",
-  // Not on Google Fonts → will show Fallback ✖ unless you add via Adobe Fonts or local @font-face
+  "Libre Franklin",
+  "Roboto Slab",
+  "Merriweather",
+  "IBM Plex Serif",
+  "Fira Sans",
+  // Not on Google Fonts → will show Fallback ✖ unless added via Adobe Fonts or local @font-face
   "Frutiger",
   "Clarendon",
   "Mrs Eaves XL Serif",
   "Stencil",
-  // Newly requested
-  "Roboto Slab",
-  "Merriweather",
-  "Libre Franklin",
-  "IBM Plex Serif",
-  "Fira Sans",
 ];
 
 const SAMPLE_PARAGRAPH = `We make loud, honest music. The words come from real life — shows, friends, late nights, and staying true to what matters.`;
@@ -30,9 +29,9 @@ const PANGRAM = `Sphinx of black quartz, judge my vow. 0123456789 — !?&%`;
 <BaseLayout title="Font Lab (Hidden)" description="Compare Oswald with candidate body fonts">
   <meta name="robots" content="noindex, nofollow" />
 
-  <!-- Import Google-hosted fonts in HEAD via Astro -->
+  <!-- Import Google-hosted fonts in HEAD via Astro (make sure Montserrat includes 400) -->
   <style is:global>
-  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600;700&family=Montserrat:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@400;500;600&family=Source+Sans+3:wght@400;500;600&family=Work+Sans:wght@400;500;600&family=PT+Sans:wght@400;700&family=Inter:wght@400;500;600&family=Montserrat:wght@400;500;600&family=Roboto+Slab:wght@400;500;600&family=Merriweather:wght@400;700&family=Libre+Franklin:wght@400;500;600&family=Fira+Sans:wght@400;500;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600;700&family=Montserrat:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@400;500;600&family=Source+Sans+3:wght@400;500;600&family=Work+Sans:wght@400;500;600&family=PT+Sans:wght@400;700&family=Inter:wght@400;500;600&family=Libre+Franklin:wght@400;500;600&family=Roboto+Slab:wght@400;500;600&family=Merriweather:wght@400;700&family=Fira+Sans:wght@400;500;600&display=swap');
   </style>
 
   <section class="intro">
@@ -84,12 +83,16 @@ const PANGRAM = `Sphinx of black quartz, judge my vow. 0123456789 — !?&%`;
   </section>
 
   <script>
-    // Mark each card Loaded ✔ if the exact family is available, else Fallback ✖
+    // Robust badge: succeeds if ANY common weight is loaded for that family
     document.addEventListener('DOMContentLoaded', () => {
       const cards = document.querySelectorAll('.card[data-font]');
       cards.forEach(card => {
         const family = card.getAttribute('data-font');
-        const ok = document.fonts && document.fonts.check(`400 16px "${family}"`);
+        const weights = ['400 16px', '500 16px', '600 16px', '700 16px'];
+        let ok = false;
+        if (document.fonts && document.fonts.check) {
+          ok = weights.some(w => document.fonts.check(`${w} "${family}"`));
+        }
         const chip = card.querySelector('.chip');
         if (ok) { chip.textContent = 'Loaded ✔'; chip.classList.add('ok'); }
         else    { chip.textContent = 'Fallback ✖'; chip.classList.add('bad'); }
