@@ -1,19 +1,9 @@
 ---
 /**
  * HeroBurst.astro
- * Center logo (smaller) surrounded by a ring of vector images (SVGs) in Flush white.
- * Put your SVGs under: /public/images/marks/
- *
- * Props:
- *  - centerLogo: path to the center logo image (PNG/SVG)
- *  - marks: array of image paths (SVGs) to place around the logo
- *  - maxWidth: container width to match header (default 1100px)
- *  - padX: horizontal padding to match header (default 1rem)
- *  - radius: ring radius (CSS size) e.g. "min(38vw, 420px)"
- *  - size: size of each mark (CSS size) e.g. "clamp(36px, 6vw, 80px)"
- *  - jitter: degrees to randomly jitter each mark a bit (default 10)
- *
- * NOTE: We color marks via CSS mask so they render in Flush white consistently.
+ * Center logo surrounded by a ring of vector images (SVGs) in Flush white.
+ * Pass full public paths in `marks` (e.g. "/images/marks/shit.svg").
+ * Uses CSS masks so every mark renders in --flush-light regardless of the SVG fill.
  */
 interface Props {
   centerLogo?: string;
@@ -27,65 +17,37 @@ interface Props {
 
 const {
   centerLogo = "/images/logo-flush-white-orange_vex.png",
-  // Replace these with your uploaded vectors in /public/images/marks/
-  marks = [
-    "/images/marks.shit.svg",
-    "/images/marks.together.svg",
-    "/images/marks.fireworks.svg",
-    "/images/marks.burn.svg",
-    "/images/marks.head.svg",
-    "/images/marks.control.svg",
-    "/images/marks.dark.svg",
-    "/images/marks.race.svg",
-"/images/marks.insane.svg",
-"/images/marks.worry.svg",
-"/images/marks.wisdom.svg",
-"/images/marks.owl.svg",
-"/images/marks.clock.svg",
-"/images/marks.feet.svg",
-"/images/marks.all.svg",
-"/images/marks.found.svg",
-"/images/marks.us.svg",
-"/images/marks.join me.svg",
-  ],
+  marks = [],
   maxWidth = "1100px",
   padX = "1rem",
-  radius = "min(38vw, 420px)",
-  size = "clamp(36px, 6vw, 80px)",
+  radius = "min(40vw, 460px)",
+  size = "clamp(40px, 6.5vw, 86px)",
   jitter = 10,
-} as Props;
+} = Astro.props as Props;
 
-// Pre-compute angles for each mark and a tiny jitter so layout feels alive
 const total = marks.length || 1;
 const ring = marks.map((src, i) => {
   const angle = (i / total) * 360;
-  // small deterministic jitter per index
-  const j = ((i * 37) % (jitter * 2)) - jitter; // -jitter..+jitter
-  return { src, angle: angle + j };
+  const j = ((i * 37) % (jitter * 2)) - jitter; // small deterministic jitter
+  // Encode spaces like "join me.svg" so the mask URL is valid
+  const safe = encodeURI(src);
+  return { src: safe, angle: angle + j };
 });
 ---
 <section class="burst" style={`--mx:${maxWidth}; --px:${padX}; --radius:${radius}; --mark-size:${size};`}>
   <div class="burst__inner">
-    <!-- center logo -->
     <img src={centerLogo} alt="Flush" class="burst__logo" loading="eager" />
 
-    <!-- ring of vector marks -->
     <div class="burst__ring" aria-hidden="true">
       {ring.map((m) => (
-        <span
-          class="mark"
-          style={`--angle:${m.angle}deg; --img:url('${m.src}');`}
-        />
+        <span class="mark" style={`--angle:${m.angle}deg; --img:url('${m.src}');`} />
       ))}
     </div>
   </div>
 </section>
 
 <style>
-  .burst {
-    background: var(--flush-black);
-    padding-block: clamp(2.5rem, 8vw, 7rem);
-  }
+  .burst { background: var(--flush-black); padding-block: clamp(2.5rem, 8vw, 7rem); }
   .burst__inner{
     max-width: var(--mx);
     margin-inline: auto;
@@ -96,7 +58,7 @@ const ring = marks.map((src, i) => {
     isolation: isolate;
   }
 
-  /* center logo slightly smaller than before */
+  /* center logo (a bit smaller than the old hero) */
   .burst__logo{
     width: min(36vw, 360px);
     height: auto;
@@ -105,7 +67,6 @@ const ring = marks.map((src, i) => {
     z-index: 1;
   }
 
-  /* ring layer */
   .burst__ring{
     position: absolute;
     inset: 0;
@@ -115,23 +76,21 @@ const ring = marks.map((src, i) => {
     pointer-events: none;
   }
 
-  /* each mark uses the SVG as a mask so we can color it Flush white */
+  /* each mark is tinted Flush white via mask */
   .mark{
     position: absolute;
     width: var(--mark-size);
     height: var(--mark-size);
-    background: var(--flush-light); /* Flush white tint */
+    background: var(--flush-light);
     filter: drop-shadow(0 8px 18px rgba(0,0,0,.35));
     opacity: .95;
 
-    /* mask the external SVG */
     -webkit-mask-image: var(--img);
     mask-image: var(--img);
     -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
     -webkit-mask-position: center;   mask-position: center;
     -webkit-mask-size: contain;      mask-size: contain;
 
-    /* position on ring using rotate/translate trick */
     transform:
       rotate(var(--angle))
       translate(var(--radius))
