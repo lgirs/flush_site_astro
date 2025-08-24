@@ -4,7 +4,7 @@
  *  - Content collection (src/content/pages/**)
  *  - Route pages (src/pages/**) that export `pageTags`
  *
- * Put this at the bottom of Home (already done).
+ * Drop this near the bottom of Home.
  */
 import { getCollection } from "astro:content";
 
@@ -16,13 +16,13 @@ const counts = new Map<string, number>();
 for (const e of entries) {
   (e.data.tags || []).forEach((t: string) => {
     const key = String(t).toLowerCase().trim();
+    if (!key) return;
     counts.set(key, (counts.get(key) || 0) + 1);
   });
 }
 
 // 2) Collect tags from route pages that export `pageTags`
 const routeMods = import.meta.glob("../pages/**/*.astro", { eager: true }) as Record<string, any>;
-
 for (const [path, mod] of Object.entries(routeMods)) {
   // ignore templates and tag-archive pages themselves
   if (path.includes("/pages/tags/") || path.includes("/pages/content/")) continue;
@@ -44,23 +44,33 @@ function rngFor(k: string){let x=(hash(seed+"|"+k)||1)>>>0;return ()=>{x^=x<<13;
 const maxCount = items.length ? Math.max(...items.map(([,c])=>c)) : 1;
 const minCount = items.length ? Math.min(...items.map(([,c])=>c)) : 1;
 
+// Map each tag to responsive font-size (rem + vw) and font-weight.
+// Removes transform scale() to keep text pixel‑crisp on large/HiDPI screens.
 const cloud = items.map(([tag, c]) => {
-  const pct = (c - minCount) / Math.max(1, (maxCount - minCount));
-  const scale = minSize + pct * (maxSize - minSize);
+  const pct = (c - minCount) / Math.max(1, (maxCount - minCount)); // 0..1
+
+  // Size range; tune if needed (kept close to your original min/max intent)
+  const remMin = 0.9, remMax = 1.9;
+  const vwMin  = 0.20, vwMax  = 1.20;
+
+  const rem = +(remMin + (remMax - remMin) * pct).toFixed(3);
+  const vw  = +(vwMin  + (vwMax  - vwMin)  * pct).toFixed(3);
+
   const rnd = rngFor(tag);
-  const rot = Math.round((rnd()*20 - 10) * 10) / 10;
-  const weight = rnd() > 0.65 ? 700 : 600;
-  return { tag, scale, rot, weight };
+  const rot = Math.round((rnd()*20 - 10) * 10) / 10;              // -10..+10 deg
+  const weight = rnd() > 0.66 ? 700 : 600;                         // bold range
+
+  return { tag, rem, vw, rot, weight };
 });
 ---
 <section class="cloud-wrap" aria-label="Tags cloud">
   <h3>Find site content by tags</h3>
-    <div class="cloud">
+  <div class="cloud">
     {cloud.map((t) => (
       <a
         href={`/tags/${encodeURIComponent(t.tag)}/`}
         class="cloud-tag"
-        style={`--scale:${t.scale}; --rot:${t.rot}deg; --w:${t.weight};`}
+        style={`--rot:${t.rot}deg; --w:${t.weight}; font-size: clamp(${t.rem}rem, ${t.vw}vw, ${t.rem + 0.6}rem);`}
       >
         {t.tag}
       </a>
@@ -73,9 +83,10 @@ const cloud = items.map(([tag, c]) => {
   .cloud-wrap { margin: 1.5rem 0 2rem; }
   .muted { opacity:.8; }
   .cloud { display:flex; flex-wrap:wrap; gap:.35rem .6rem; align-items:center; }
+
   .cloud-tag {
     display:inline-block;
-    transform: rotate(var(--rot)) scale(var(--scale));
+    transform: rotate(var(--rot));            /* no scale → crisp text */
     transform-origin:center;
     font-family:"Oswald", Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
     font-weight:var(--w);
@@ -84,7 +95,12 @@ const cloud = items.map(([tag, c]) => {
     letter-spacing:.5px;
     text-transform:uppercase;
     text-decoration:none;
-    transition: transform .12s ease, color .12s ease, text-shadow .12s ease;
+    transition: color .12s ease, text-shadow .12s ease;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
-  .cloud-tag:hover { color:var(--flush-yellow); transform: rotate(var(--rot)) scale(calc(var(--scale) * 1.06)); text-shadow:0 2px 0 rgba(0,0,0,.35); }
+  .cloud-tag:hover {
+    color:var(--flush-yellow);
+    text-shadow:0 2px 0 rgba(0,0,0,.35);
+  }
 </style>
