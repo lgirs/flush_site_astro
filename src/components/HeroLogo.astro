@@ -1,22 +1,28 @@
 ---
 /**
- * HeroLogo.astro
- * Centers the Flush logo and places a decorative vector behind it.
- * Put the vector file at: /public/images/us.svg
+ * HeroLogo.astro (stacked)
+ * Renders the Flush logo (smaller) on top, and the vector splash BELOW it.
+ * The splash is colored via a CSS mask so it’s always visible and brand‑consistent.
+ *
+ * Files expected:
+ *   /public/images/logo-flush-white.png
+ *   /public/images/us.svg
  */
 const {
   logo = "/images/logo-flush-white.png",
   splash = "/images/us.svg",
+  // "Flush white" = site light tone (not pure #fff). Use --flush-light by default.
+  splashColor = "var(--flush-light)",
   title = "Flush",
 } = Astro.props;
 ---
 <section class="hero" aria-label={title}>
   <div class="hero__inner">
-    <!-- Decorative splash via CSS mask (colored by background) -->
-    <span class="hero__splashMask" aria-hidden="true"></span>
-
-    <!-- Brand logo -->
+    <!-- Top: original logo (smaller) -->
     <img src={logo} alt="Flush" class="hero__logo" loading="eager" />
+
+    <!-- Below: vector splash in 'flush white' via mask -->
+    <span class="hero__splashBelow" aria-hidden="true"></span>
   </div>
 </section>
 
@@ -25,32 +31,36 @@ const {
     position: relative;
     display: grid;
     place-items: center;
-    padding: clamp(3rem, 8vw, 8rem) 1rem;
+    padding: clamp(2.5rem, 6vw, 6rem) 1rem;
     background: var(--flush-black);
     overflow: hidden;
   }
   .hero__inner {
-    position: relative;
     display: grid;
-    place-items: center;
-    isolation: isolate; /* keeps z-index layers local */
+    justify-items: center;
+    gap: clamp(0.75rem, 1.5vw, 1.25rem);
+    max-width: 1100px;
+    width: 100%;
   }
 
-  /* === Splash using CSS mask (always visible, fully colorable) === */
-  .hero__splashMask{
-    position: absolute;
-    inset: 50% auto auto 50%;
-    transform: translate(-50%, -50%) rotate(-4deg);
-    width: min(90vw, 920px);
-    height: min(90vw, 920px); /* square area for the mask */
-    z-index: 0;
-    pointer-events: none;
-    user-select: none;
+  /* Smaller brand logo on top */
+  .hero__logo {
+    width: min(40vw, 340px);
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 6px 14px rgba(0,0,0,.45));
+  }
 
-    /* Color the splash here */
-background: var(--flush-red);
+  /* Splash below the logo using CSS mask so we can color it */
+  .hero__splashBelow {
+    width: min(92vw, 920px);
+    height: min(52vw, 520px);
+    display: block;
 
-    /* Apply the SVG as a mask so the background color shows through the shape */
+    /* color (Flush white by default; can pass splashColor prop) */
+    background: ${splashColor};
+
+    /* mask the SVG */
     -webkit-mask-image: url("/images/us.svg");
     mask-image: url("/images/us.svg");
     -webkit-mask-repeat: no-repeat;
@@ -60,21 +70,13 @@ background: var(--flush-red);
     -webkit-mask-size: contain;
     mask-size: contain;
 
-    /* Subtle shadow for separation on dark bg */
-    filter: drop-shadow(0 10px 22px rgba(0,0,0,.45));
-    opacity: 0.28; /* tweak visibility */
-  }
-
-  .hero__logo {
-    position: relative;
-    z-index: 1;
-    width: min(60vw, 520px);
-    height: auto;
-    display: block;
-    filter: drop-shadow(0 6px 14px rgba(0,0,0,.45));
+    /* subtle separation from bg */
+    filter: drop-shadow(0 8px 18px rgba(0,0,0,.35));
+    opacity: 0.95; /* strong but not blinding */
   }
 
   @media (min-width: 900px) {
-    .hero__splashMask { opacity: 0.24; }
+    .hero__logo { width: min(28vw, 320px); }
+    .hero__splashBelow { opacity: 0.92; }
   }
 </style>
