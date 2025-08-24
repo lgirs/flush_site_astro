@@ -1,76 +1,59 @@
 ---
 /**
- * HeroLogo.astro (stacked) — build-safe
- * Logo (smaller) on top, vector splash BELOW it, colorable via prop.
+ * HeroLogo.astro (stacked with PNG splash)
+ * - Shows main logo (smaller) on top
+ * - Shows a raster splash/brush image below
  * Files:
  *   /public/images/logo-flush-white.png
- *   /public/images/us.svg
+ *   /public/images/wereallbrushtext.png
  */
 const {
   logo = "/images/logo-flush-white.png",
-  splash = "/images/us.svg",           // kept for clarity; path is used in mask below
-  splashColor = "var(--flush-light)",  // pass "var(--flush-red)" or "#fff" if you want
+  splash = "/images/wereallbrushtext.png",  // raster PNG splash
   title = "Flush",
+  maxWidth = "1100px",   // match header container
+  padX = "1rem",         // header padding
+  logoOffsetX = "0px",   // optical nudge
 } = Astro.props;
 ---
-<section class="hero" aria-label={title}>
+<section class="hero" aria-label={title} style={`--mx:${maxWidth}; --px:${padX}; --offset-x:${logoOffsetX};`}>
   <div class="hero__inner">
-    <!-- Top: original logo (smaller) -->
+    <!-- Top: smaller brand logo -->
     <img src={logo} alt="Flush" class="hero__logo" loading="eager" />
 
-    <!-- Below: vector splash in configured color (via CSS var) -->
-    <span
-      class="hero__splashBelow"
-      style={`--splash-color: ${splashColor}; --splash-url: url('${splash}');`}
-      aria-hidden="true"
-    ></span>
+    <!-- Below: brush text image -->
+    <img src={splash} alt="" class="hero__splashBelow" aria-hidden="true" loading="eager" />
   </div>
 </section>
 
 <style>
   .hero {
-    position: relative;
-    display: grid;
-    place-items: center;
-    padding: clamp(2.5rem, 6vw, 6rem) 1rem;
     background: var(--flush-black);
-    overflow: hidden;
+    padding-block: clamp(2.5rem, 6vw, 6rem);
   }
   .hero__inner {
+    max-width: var(--mx);
+    margin-inline: auto;
+    padding-inline: var(--px);
     display: grid;
     justify-items: center;
     gap: clamp(0.75rem, 1.5vw, 1.25rem);
-    max-width: 1100px;
     width: 100%;
   }
 
-  /* Smaller brand logo on top */
   .hero__logo {
     width: min(40vw, 340px);
     height: auto;
     display: block;
+    translate: var(--offset-x) 0;
     filter: drop-shadow(0 6px 14px rgba(0,0,0,.45));
   }
 
-  /* Splash below the logo using CSS mask so we can color it */
   .hero__splashBelow {
     width: min(92vw, 920px);
-    height: min(52vw, 520px);
+    height: auto;
     display: block;
-
-    /* color comes from the inline CSS variable */
-    background: var(--splash-color);
-
-    /* mask the SVG (URL comes via inline CSS var as well) */
-    -webkit-mask-image: var(--splash-url);
-    mask-image: var(--splash-url);
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-    mask-position: center;
-    -webkit-mask-size: contain;
-    mask-size: contain;
-
+    object-fit: contain;
     filter: drop-shadow(0 8px 18px rgba(0,0,0,.35));
     opacity: 0.95;
   }
