@@ -2,10 +2,9 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import TagCloud from "../components/TagCloud.astro";
 
-export const pageTitle = "Home (Random Mark Variant)";
+export const pageTitle = "Home (Random Side-by-Side)";
 export const pageTags = ["Home", "Experiment"];
 
-// Exact SVGs you approved (in /public/images/marks/)
 const MARKS = [
   "/images/marks/shit.svg",
   "/images/marks/burn.svg",
@@ -19,23 +18,27 @@ const MARKS = [
   "/images/marks/join me.svg",
 ];
 ---
-<BaseLayout title="Home (Random Mark Variant)" description="Hidden: home hero with one random SVG mark">
+<BaseLayout title="Home (Random Side-by-Side)" description="Hidden: logo left, random vector right">
   <meta name="robots" content="noindex,nofollow" />
 
   <!-- HERO -->
   <section class="hero" aria-label="Flush">
-    <div class="hero__inner" style="--mx:1100px; --px:1rem; --offset-x:-6px;">
-      <!-- smaller center logo with optical nudge -->
-      <img
-        src="/images/logo-flush-white-orange_vex.png"
-        alt="Flush"
-        class="hero__logo"
-        loading="eager"
-      />
+    <div class="hero__inner" style="--mx:1100px; --px:1rem;">
+      <div class="hero__grid">
+        <!-- Left: smaller center logo (with tiny optical nudge) -->
+        <img
+          src="/images/logo-flush-white-orange_vex.png"
+          alt="Flush"
+          class="hero__logo"
+          loading="eager"
+        />
 
-      <!-- Random mark below (mask version, with <img> fallback) -->
-      <span class="hero__mark" aria-hidden="true"></span>
-      <img class="hero__markImg" alt="" aria-hidden="true" />
+        <!-- Right: Random mark (masked white) with <img> fallback -->
+        <div class="hero__art">
+          <span class="hero__mark" aria-hidden="true"></span>
+          <img class="hero__markImg" alt="" aria-hidden="true" />
+        </div>
+      </div>
     </div>
   </section>
 
@@ -70,14 +73,12 @@ const MARKS = [
       const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
       const chosen = pick(marks);
 
-      // Mask version (tinted white)
       const maskEl = document.querySelector(".hero__mark");
       if (maskEl) {
         maskEl.style.setProperty("--img", `url('${encodeURI(chosen)}')`);
         maskEl.classList.add("is-ready");
       }
 
-      // PNG fallback: if browser doesn’t support CSS mask, just show the image
       const fallbackEl = document.querySelector(".hero__markImg");
       if (fallbackEl) {
         fallbackEl.src = chosen;
@@ -86,39 +87,55 @@ const MARKS = [
   </script>
 
   <style>
-    /* HERO container mirrors header: centered, same max width + padding */
     .hero {
       background: var(--flush-black);
-      padding-block: clamp(2.5rem, 7vw, 6rem);
+      padding-block: clamp(2.2rem, 6vw, 5.5rem);
     }
     .hero__inner {
       max-width: var(--mx);
       margin-inline: auto;
       padding-inline: var(--px);
-      display: grid;
-      justify-items: center;
-      gap: clamp(0.75rem, 1.5vw, 1.25rem);
-      width: 100%;
     }
+
+    /* Side-by-side grid: stacks on small screens, 2 columns on >=760px */
+    .hero__grid {
+      display: grid;
+      align-items: center;
+      gap: clamp(1rem, 3vw, 2rem);
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 760px) {
+      .hero__grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
     .hero__logo {
-      width: min(30vw, 300px);
+      width: min(48vw, 360px);
       height: auto;
       display: block;
-      translate: var(--offset-x, 0) 0; /* optical centering */
+      translate: -6px 0; /* optical centering */
       filter: drop-shadow(0 6px 14px rgba(0,0,0,.45));
+      margin-inline: auto; /* center in its column on mobile */
     }
 
-    /* Masked mark rendered in Flush white */
-    .hero__mark {
-      display: none;                       /* shown once JS sets it ready */
-      width: min(92vw, 920px);
-      height: auto;
-      aspect-ratio: 16 / 7;                /* adjust if you prefer taller/shorter */
-      background: var(--flush-light);      /* Flush white tint */
-      filter: drop-shadow(0 8px 18px rgba(0,0,0,.35));
-      opacity: 0.95;
+    .hero__art {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 100%;
+    }
 
-      /* CSS mask uses the URL from the --img var set by JS */
+    /* Masked mark (white) with explicit size */
+    .hero__mark {
+      display: none; /* shown once JS sets ready */
+      width: min(84vw, 540px);
+      height: auto;
+      aspect-ratio: 16 / 10; /* a bit taller than before */
+      background: var(--flush-light);
+      filter: drop-shadow(0 8px 18px rgba(0,0,0,.35));
+      opacity: 0.96;
+
       -webkit-mask-image: var(--img);
       mask-image: var(--img);
       -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
@@ -127,17 +144,22 @@ const MARKS = [
     }
     .hero__mark.is-ready { display: block; }
 
-    /* Fallback image (only visible if mask is unsupported) */
+    /* Fallback image */
     .hero__markImg {
       display: block;
-      width: min(92vw, 920px);
+      width: min(84vw, 540px);
       height: auto;
       filter: drop-shadow(0 8px 18px rgba(0,0,0,.35));
-      opacity: 0.95;
+      opacity: 0.96;
     }
-    /* If masks are supported, prefer the masked version and hide the fallback image */
     @supports (mask-image: url("")) or (-webkit-mask-image: url("")) {
       .hero__markImg { display: none; }
+    }
+
+    /* On wider screens give the art a bit more room than the logo */
+    @media (min-width: 760px) {
+      .hero__logo { width: min(28vw, 320px); margin: 0; }
+      .hero__mark, .hero__markImg { width: min(40vw, 560px); }
     }
 
     /* INTRO */
