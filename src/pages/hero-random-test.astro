@@ -1,0 +1,119 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import TagCloud from "../components/TagCloud.astro";
+
+// Exact SVGs you approved (paths are under /public)
+const MARKS = [
+  "/images/marks/shit.svg",
+  "/images/marks/burn.svg",
+  "/images/marks/head.svg",
+  "/images/marks/control.svg",
+  "/images/marks/insane.svg",
+  "/images/marks/wisdom.svg",
+  "/images/marks/owl.svg",
+  "/images/marks/clock.svg",
+  "/images/marks/us.svg",
+  "/images/marks/join me.svg", // space is fine; we encode it in the script
+];
+
+export const pageTitle = "Home (Random Mark Variant)";
+export const pageTags = ["Home", "Experiment"];
+---
+<BaseLayout title="Home (Random Mark Variant)" description="Hidden: home hero with one random SVG mark" >
+  <meta name="robots" content="noindex,nofollow" />
+
+  <!-- HERO -->
+  <section class="hero" aria-label="Flush">
+    <div class="hero__inner">
+      <!-- smaller center logo -->
+      <img
+        src="/images/logo-flush-white-orange_vex.png"
+        alt="Flush"
+        class="hero__logo"
+        loading="eager"
+      />
+
+      <!-- large random mark below (tinted Flush white via CSS mask) -->
+      <span class="hero__mark" aria-hidden="true"></span>
+    </div>
+  </section>
+
+  <!-- INTRO COPY -->
+  <section class="intro long-text">
+    <p>
+      We make loud, honest music. The words come from real life — shows, friends, late nights,
+      and staying true to what matters.
+    </p>
+    <p>
+      Dig in below: explore by tags, watch videos, or jump to the latest stories.
+    </p>
+  </section>
+
+  <!-- TAG CLOUD -->
+  <TagCloud />
+
+  <script is:inline>
+    // Pick one mark at each page load (client-side), then tint it Flush white via CSS mask.
+    (function () {
+      const marks = {list: JSON.parse(decodeURIComponent("%7B%22list%22%3A%5B%22%2Fimages%2Fmarks%2Fshit.svg%22%2C%22%2Fimages%2Fmarks%2Fburn.svg%22%2C%22%2Fimages%2Fmarks%2Fhead.svg%22%2C%22%2Fimages%2Fmarks%2Fcontrol.svg%22%2C%22%2Fimages%2Fmarks%2Finsane.svg%22%2C%22%2Fimages%2Fmarks%2Fwisdom.svg%22%2C%22%2Fimages%2Fmarks%2Fowl.svg%22%2C%22%2Fimages%2Fmarks%2Fclock.svg%22%2C%22%2Fimages%2Fmarks%2Fus.svg%22%2C%22%2Fimages%2Fmarks%2Fjoin%20me.svg%22%5D%7D"))}.list;
+      const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+      const el = document.querySelector(".hero__mark");
+      if (!el) return;
+      const chosen = pick(marks);
+      // Use CSS variables so PostCSS stays happy
+      el.style.setProperty("--img", `url('${encodeURI(chosen)}')`);
+      el.classList.add("is-ready");
+    })();
+  </script>
+
+  <style>
+    /* HERO */
+    .hero {
+      background: var(--flush-black);
+      padding-block: clamp(2.5rem, 7vw, 6rem);
+    }
+    .hero__inner {
+      max-width: 1100px;
+      margin-inline: auto;
+      padding-inline: 1rem;
+      display: grid;
+      justify-items: center;
+      gap: clamp(0.75rem, 1.5vw, 1.25rem);
+      width: 100%;
+    }
+    .hero__logo {
+      width: min(30vw, 300px);
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,.45));
+    }
+    .hero__mark {
+      /* start hidden until JS sets the mask */
+      display: none;
+      width: min(92vw, 920px);
+      height: auto;
+      aspect-ratio: 16 / 7; /* rough; adjust if you like */
+      background: var(--flush-light); /* Flush white tint */
+      filter: drop-shadow(0 8px 18px rgba(0,0,0,.35));
+      opacity: 0.95;
+
+      /* masked SVG (set via --img from script) */
+      -webkit-mask-image: var(--img);
+      mask-image: var(--img);
+      -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+      -webkit-mask-position: center;   mask-position: center;
+      -webkit-mask-size: contain;      mask-size: contain;
+    }
+    .hero__mark.is-ready { display: block; }
+
+    /* INTRO */
+    .intro {
+      max-width: 760px;
+      margin: 1.5rem auto 1rem;
+      padding-inline: 1rem;
+      color: var(--flush-light);
+    }
+    .intro a { color: var(--flush-red); text-decoration: none; }
+    .intro a:hover { color: var(--flush-yellow); }
+  </style>
+</BaseLayout>
