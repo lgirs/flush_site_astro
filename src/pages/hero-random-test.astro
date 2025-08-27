@@ -25,7 +25,7 @@ const MARKS = [
   <section class="hero" aria-label="Flush">
     <div class="hero__inner" style="--mx:1100px; --px:1rem;">
       <div class="hero__grid">
-        <!-- Left: smaller center logo (with tiny optical nudge) -->
+        <!-- Left: logo -->
         <img
           src="/images/logo-flush-white-orange_vex.png"
           alt="Flush"
@@ -33,7 +33,7 @@ const MARKS = [
           loading="eager"
         />
 
-        <!-- Right: Random mark (masked white) with <img> fallback -->
+        <!-- Right: random vector (masked white) with <img> fallback -->
         <div class="hero__art">
           <span class="hero__mark" aria-hidden="true"></span>
           <img class="hero__markImg" alt="" aria-hidden="true" />
@@ -44,19 +44,15 @@ const MARKS = [
 
   <!-- INTRO COPY -->
   <section class="intro long-text">
-    <p>
-      We make loud, honest music. The words come from real life — shows, friends, late nights,
-      and staying true to what matters.
-    </p>
-    <p>
-      Dig in below: explore by tags, watch videos, or jump to the latest stories.
-    </p>
+    <p>We make loud, honest music. The words come from real life — shows, friends, late nights, and staying true to what matters.</p>
+    <p>Dig in below: explore by tags, watch videos, or jump to the latest stories.</p>
   </section>
 
   <!-- TAG CLOUD -->
   <TagCloud />
 
   <script is:inline>
+    // pick one SVG each load
     (function () {
       const marks = [
         "/images/marks/shit.svg",
@@ -78,61 +74,59 @@ const MARKS = [
         maskEl.style.setProperty("--img", `url('${encodeURI(chosen)}')`);
         maskEl.classList.add("is-ready");
       }
-
       const fallbackEl = document.querySelector(".hero__markImg");
-      if (fallbackEl) {
-        fallbackEl.src = chosen;
-      }
+      if (fallbackEl) fallbackEl.src = chosen;
     })();
   </script>
 
   <style>
-    .hero {
-      background: var(--flush-black);
-      padding-block: clamp(2.2rem, 6vw, 5.5rem);
-    }
+    /* Section + shared container (matches header width/padding) */
+    .hero { background: var(--flush-black); padding-block: clamp(2.2rem, 6vw, 5.5rem); }
     .hero__inner {
       max-width: var(--mx);
       margin-inline: auto;
       padding-inline: var(--px);
     }
 
-    /* Side-by-side grid: stacks on small screens, 2 columns on >=760px */
+    /* Grid:
+       - mobile: 1 column, centered
+       - desktop: 2 columns sized to their content and centered as a group
+    */
     .hero__grid {
       display: grid;
       align-items: center;
-      gap: clamp(1rem, 3vw, 2rem);
+      justify-items: center;
+      gap: clamp(1rem, 4vw, 2.5rem);
       grid-template-columns: 1fr;
     }
-    @media (min-width: 760px) {
+    @media (min-width: 900px) {
       .hero__grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: max-content max-content;
+        justify-content: center; /* center the pair as a group */
       }
     }
 
+    /* Left column: logo (cap at ~320px on desktop) */
     .hero__logo {
       width: min(48vw, 360px);
       height: auto;
       display: block;
-      translate: -6px 0; /* optical centering */
       filter: drop-shadow(0 6px 14px rgba(0,0,0,.45));
-      margin-inline: auto; /* center in its column on mobile */
+    }
+    @media (min-width: 900px) {
+      .hero__logo { width: min(28vw, 320px); }
     }
 
-    .hero__art {
-      position: relative;
-      display: grid;
-      place-items: center;
-      width: 100%;
-    }
+    /* Right column: vector wrapper */
+    .hero__art { display: grid; place-items: center; }
 
-    /* Masked mark (white) with explicit size */
+    /* Masked vector (Flush white) */
     .hero__mark {
-      display: none; /* shown once JS sets ready */
-      width: min(84vw, 540px);
+      display: none; /* shown when JS sets URL */
+      width: min(84vw, 560px);
       height: auto;
-      aspect-ratio: 16 / 10; /* a bit taller than before */
-      background: var(--flush-light);
+      aspect-ratio: 16 / 10;            /* tweak if your marks are taller/shorter */
+      background: var(--flush-light);   /* tint to brand "white" */
       filter: drop-shadow(0 8px 18px rgba(0,0,0,.35));
       opacity: 0.96;
 
@@ -144,10 +138,10 @@ const MARKS = [
     }
     .hero__mark.is-ready { display: block; }
 
-    /* Fallback image */
+    /* Fallback image (hidden when mask is supported) */
     .hero__markImg {
       display: block;
-      width: min(84vw, 540px);
+      width: min(84vw, 560px);
       height: auto;
       filter: drop-shadow(0 8px 18px rgba(0,0,0,.35));
       opacity: 0.96;
@@ -155,14 +149,11 @@ const MARKS = [
     @supports (mask-image: url("")) or (-webkit-mask-image: url("")) {
       .hero__markImg { display: none; }
     }
-
-    /* On wider screens give the art a bit more room than the logo */
-    @media (min-width: 760px) {
-      .hero__logo { width: min(28vw, 320px); margin: 0; }
+    @media (min-width: 900px) {
       .hero__mark, .hero__markImg { width: min(40vw, 560px); }
     }
 
-    /* INTRO */
+    /* Intro text */
     .intro {
       max-width: 760px;
       margin: 1.5rem auto 1rem;
