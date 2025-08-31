@@ -1,31 +1,25 @@
 ---
 import HomeLayout from "../layouts/HomeLayout.astro";
 import TagCloud from "../components/TagCloud.astro";
-import { readdir } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
-import { dirname, join } from "node:path";
 
+// Page metadata / tags
 export const pageTitle = "Flush";
 export const pageTags = ["Home"];
 
-/** Build-time: list SVGs in /public/images/marks (no hardcoded names) */
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const marksDir = join(__dirname, "..", "..", "public", "images", "marks");
-
-let markFiles: string[] = [];
-try {
-  const entries = await readdir(marksDir, { withFileTypes: true });
-  markFiles = entries
-    .filter((e) => e.isFile() && e.name.toLowerCase().endsWith(".svg"))
-    .map((e) => `/images/marks/${e.name}`);
-} catch {
-  markFiles = [];
-}
+/**
+ * Build-time: collect ALL SVGs in /public/images/marks via import.meta.glob
+ * - No filesystem APIs (works reliably on Netlify)
+ * - Result is a list of URLs we can pass to the client
+ */
+const modules = import.meta.glob("/public/images/marks/*.svg", {
+  eager: true,
+  as: "url",
+});
+const markFiles: string[] = Object.values(modules);
 ---
 
 <HomeLayout title="Flush" description="Official Flush site">
-  <!-- HERO: single random vector (white; masked) -->
+  <!-- HERO: one random white-tinted vector -->
   <section class="hero">
     <div class="hero__inner">
       <span class="hero__mark" aria-hidden="true"></span>
@@ -62,59 +56,62 @@ try {
     />
   </section>
 
-  <!-- TAG CLOUD -->
+  <!-- TAG CLOUD (unchanged) -->
   <TagCloud />
 
-  <!-- ship file list to client for per-load random pick -->
+  <!-- Ship the list to the browser for per-load random choice -->
   <script type="application/json" id="marks-json">
     {JSON.stringify(markFiles)}
   </script>
 
-  <!-- Client-side: pick one SVG per page load -->
+  <!-- Client: pick one SVG each page load -->
   <script is:inline>
-    (function () {
+    (() => {
       try {
         const dataEl = document.getElementById("marks-json");
         const list = dataEl ? JSON.parse(dataEl.textContent || "[]") : [];
-        const fallback = "/images/marks/us.svg"; // safe fallback if folder empty
+        if (!Array.isArray(list) || list.length === 0) return;
 
-        const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
-        const chosen = (Array.isArray(list) && list.length) ? pick(list) : fallback;
+        // pick one
+        const chosen = list[Math.floor(Math.random() * list.length)];
 
+        // masked (white tint)
         const maskEl = document.querySelector(".hero__mark");
-        const imgEl  = document.querySelector(".hero__markImg");
-
-        // Show masked (tinted white) version
         if (maskEl) {
-          const url = `url('${encodeURI(chosen)}')`;
-          // set both properties directly (more robust than CSS vars across browsers)
+          const url = `url('${chosen}')`;
           maskEl.style.webkitMaskImage = url;
           maskEl.style.maskImage = url;
           maskEl.classList.add("is-ready");
         }
-        // Fallback <img> if masks unsupported
+
+        // fallback <img> if masks unsupported
+        const imgEl = document.querySelector(".hero__markImg");
         if (imgEl) imgEl.src = chosen;
       } catch {}
     })();
   </script>
 
   <style>
-    /* Only local hero styles – we don't touch any site-wide containers or footer/header */
-    .hero { background: var(--flush-black); padding-block: clamp(2.2rem, 7vw, 6rem); }
+    /* LOCAL ONLY — does not touch site containers, header, footer, or TagCloud */
+
+    .hero {
+      background: var(--flush-black);
+      padding-block: clamp(2.2rem, 7vw, 6rem);
+    }
     .hero__inner {
-      max-width: 1100px;              /* match repo container */
+      max-width: 1100px;    /* match existing site container */
       margin-inline: auto;
-      padding-inline: 1rem;
+      padding-inline: 1rem; /* match existing site padding */
       display: grid;
       place-items: center;
     }
 
     /* Random vector as white mask (with image fallback) */
-    .hero__mark{
-      display: none;                   /* shown when JS sets mask */
+    .hero__mark {
+      display: none; /* revealed when mask is set */
       width: clamp(260px, 70vw, 680px);
       height: auto;
-      aspect-ratio: 16 / 10;           /* generic ratio; mask-size:contain preserves original */
+      aspect-ratio: 16 / 10; /* generic; mask-size contain keeps the real shape */
       background: var(--flush-light);
       filter: drop-shadow(0 8px 18px rgba(0,0,0,.35));
       opacity: .96;
@@ -125,27 +122,34 @@ try {
     }
     .hero__mark.is-ready { display: block; }
 
-    .hero__markImg{
+    .hero__markImg {
       display: block;
       width: clamp(260px, 70vw, 680px);
       height: auto;
       filter: drop-shadow(0 8px 18px rgba(0,0,0,.35));
       opacity: .96;
     }
-    @supports (mask-image: url("")) or (-webkit-mask-image: url("")){
+    @supports (mask-image: url("")) or (-webkit-mask-image: url("")) {
       .hero__markImg { display: none; }
     }
 
-    /* Intro copy (uses .long-text → Montserrat from your repo) */
-    .intro{
+    .intro {
       max-width: 760px;
       margin: 1.5rem auto 1rem;
       padding-inline: 1rem;
       color: var(--flush-light);
     }
 
-    /* Smaller vexed logo centered */
-    .logo-wrap{ display: grid; place-items: center; margin: 2rem 0; }
-    .home-logo{ width: clamp(160px, 32vw, 280px); height: auto; display: block; filter: drop-shadow(0 6px 14px rgba(0,0,0,.45)); }
+    .logo-wrap {
+      display: grid;
+      place-items: center;
+      margin: 2rem 0;
+    }
+    .home-logo {
+      width: clamp(160px, 32vw, 280px);
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,.45));
+    }
   </style>
 </HomeLayout>
