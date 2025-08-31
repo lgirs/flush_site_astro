@@ -1,59 +1,161 @@
 ---
 import HomeLayout from "../layouts/HomeLayout.astro";
 import TagCloud from "../components/TagCloud.astro";
+import { readdir } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
+
+export const pageTitle = "Flush";
+export const pageTags = ["Home"];
+
+/** Build-time: read /public/images/marks for *.svg (no hardcoded names) */
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const marksDir = join(__dirname, "../..", "public", "images", "marks");
+
+let markFiles: string[] = [];
+try {
+  const entries = await readdir(marksDir, { withFileTypes: true });
+  markFiles = entries
+    .filter((e) => e.isFile() && e.name.toLowerCase().endsWith(".svg"))
+    .map((e) => `/images/marks/${e.name}`);
+} catch {
+  markFiles = [];
+}
 ---
 
-<HomeLayout title="WELCOME FRIEND!" description="">
-  <!-- Intro copy -->
+<HomeLayout title="Flush" description="Official Flush site">
+  <!-- HERO: one random vector (white, masked) -->
+  <section class="hero">
+    <div class="hero__inner">
+      <span class="hero__mark" aria-hidden="true"></span>
+      <img class="hero__markImg" alt="" aria-hidden="true" />
+    </div>
+  </section>
+
+  <!-- INTRO COPY -->
   <section class="intro long-text">
+    <p>Hello Friend! Welcome to the Flush internets!</p>
     <p>
-      We are Flush and you are very welcome to our website. We just re-built this site so please
-      excuse any hickups that you might experience. On this site you will find our music, our gigs,
-      our story and, in the near future, more fun content too. Maybe even games!
+      Flush is a rock band from Helsinki, Finland, we like to describe ourselves as community rock.
+      Once described as “an ideal band to book for funerals”, we are  bit of punk rock, quite a lot
+      of alternative rock, and many other flavours of rock and metal. But most of all, we are a safe
+      space or sometimes an escape for when the world feels like a bit too much. A community for those
+      who don’t always fit in. A community for anyone.
     </p>
-
     <p>
-      We believe that music is a community thing and it’s a thing that happens together. We are happy
-      to have you here with us.
+      On this website of ours you’ll find the usual stuff you would expect from a band. Links to music,
+      gigs, etc. But there will be more! There will be games, gig trackers, scrapbooks, blogs, links to
+      stories you might have missed… who knows what else. So come back as we grow the site and make this
+      a part of the community.
     </p>
-
-    <p class="signature"><em>Börje, Eero, Janne and Lasse a.k.a. Flush</em></p>
+    <p>We’re glad you found us. Welcome to our community.</p>
   </section>
 
-  <!-- Tags / word cloud -->
-  <section class="tags">
-     <TagCloud />
+  <!-- LOGO (smaller than before) -->
+  <section class="logo-wrap">
+    <img
+      src="/images/logo-flush-white-orange_vex.png"
+      alt="Flush"
+      class="home-logo"
+      loading="eager"
+    />
   </section>
+
+  <!-- TAG CLOUD -->
+  <TagCloud />
+
+  <!-- Ship the folder file list to the client -->
+  <script type="application/json" id="marks-json">
+    {JSON.stringify(markFiles)}
+  </script>
+
+  <!-- Client-side: pick one SVG per page load -->
+  <script is:inline>
+    (function () {
+      try {
+        const dataEl = document.getElementById("marks-json");
+        const list = dataEl ? JSON.parse(dataEl.textContent || "[]") : [];
+        if (!Array.isArray(list) || !list.length) return;
+
+        const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+        const chosen = pick(list);
+
+        // Masked (tinted white)
+        const maskEl = document.querySelector(".hero__mark");
+        if (maskEl) {
+          maskEl.style.setProperty("--img", `url('${encodeURI(chosen)}')`);
+          maskEl.classList.add("is-ready");
+        }
+
+        // Fallback <img> (if mask unsupported)
+        const fallbackEl = document.querySelector(".hero__markImg");
+        if (fallbackEl) fallbackEl.src = chosen;
+      } catch {}
+    })();
+  </script>
+
+  <style>
+    /* Section backgrounds and shared container */
+    .hero {
+      background: var(--flush-black);
+      padding-block: clamp(2.2rem, 7vw, 6rem);
+    }
+    .hero__inner {
+      max-width: 1100px;
+      margin-inline: auto;
+      padding-inline: 1rem;
+      display: grid;
+      place-items: center;
+    }
+
+    /* Random mark as a white mask (with image fallback) */
+    .hero__mark {
+      display: none;                /* becomes block when is-ready */
+      inline-size: clamp(260px, 70vw, 680px);
+      block-size: clamp(120px, 28vw, 320px);
+      background: var(--flush-light);
+      filter: drop-shadow(0 8px 18px rgba(0,0,0,.35));
+      opacity: 0.96;
+      /* mask uses URL from JS */
+      -webkit-mask-image: var(--img);
+      mask-image: var(--img);
+      -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+      -webkit-mask-position: center;   mask-position: center;
+      -webkit-mask-size: contain;      mask-size: contain;
+    }
+    .hero__mark.is-ready { display: block; }
+
+    .hero__markImg {
+      display: block;
+      inline-size: clamp(260px, 70vw, 680px);
+      block-size: auto;
+      filter: drop-shadow(0 8px 18px rgba(0,0,0,.35));
+      opacity: 0.96;
+    }
+    @supports (mask-image: url("")) or (-webkit-mask-image: url("")) {
+      .hero__markImg { display: none; }
+    }
+
+    /* Intro copy */
+    .intro {
+      max-width: 760px;
+      margin: 1.5rem auto 1rem;
+      padding-inline: 1rem;
+      color: var(--flush-light);
+    }
+
+    /* Centered smaller logo */
+    .logo-wrap {
+      display: grid;
+      place-items: center;
+      margin: 2rem 0;
+    }
+    .home-logo {
+      width: clamp(160px, 32vw, 280px);
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,.45));
+    }
+  </style>
 </HomeLayout>
-
-<style>
-  /* Make the hero title as bold as it gets */
-  :global(.hero-title) {
-    font-weight: 900;
-    letter-spacing: 0.02em;
-  }
-
-  .intro {
-    max-width: 880px;
-    margin: 1.25rem auto 0;
-    display: grid;
-    gap: 0.9rem;
-  }
-
-  .signature {
-    text-align: right;
-  }
-
-  .tags {
-    max-width: 880px;
-    margin: 2rem auto 0;
-    display: grid;
-    gap: 0.5rem;
-  }
-
-  .h2 {
-    font-size: clamp(1.1rem, 1.2vw + 1rem, 1.5rem);
-    margin: 0;
-    letter-spacing: 0.02em;
-  }
-</style>
