@@ -1,73 +1,99 @@
 ---
-const { title = "Flush", description = "Let’s do some entertainment", leadImage } = Astro.props;
-import "../styles/global.css";
+const { title = "Flush", description = "Official Flush site" } = Astro.props;
 ---
+
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>{title} | Flush</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Oswald + Montserrat are already used project-wide -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600;700&family=Montserrat:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/styles/global.css" />
   </head>
+
   <body>
-    <header class="header">
-      <div class="header-inner">
-        <a href="/"><img src="/images/logo-flush-white.png" alt="Flush" class="logo" /></a>
-        <nav>
+    <!-- Header (text links; white->yellow hover) -->
+    <header class="site-header">
+      <div class="container">
+        <a href="/" class="brand">
+          <img
+            src="/images/logo-flush-white.png"
+            alt="Flush"
+            width="84"
+            height="28"
+            class="brand__img"
+          />
+        </a>
+        <nav class="nav">
           <a href="/">Home</a>
-          <a href="/gigs">Gigs</a>
-          <a href="/music">Music</a>
-          <a href="/content/lyrics/">Lyrics</a>
-          <a href="/videos">Videos</a>
-          <a href="/about">About</a>
+          <a href="/gigs/">Gigs</a>
+          <a href="/music/">Music</a>
+          <a href="/lyrics/">Lyrics</a>
+          <a href="/videos/">Videos</a>
+          <a href="/about/">About</a>
         </nav>
       </div>
     </header>
 
-    <!-- HERO -->
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="hero__overlay"></div>
-      <div class="hero__inner">
-        <h1 id="hero-title" class="hero__title">{title}</h1>
-        <p class="hero__sub">{description}</p>
-      </div>
-    </section>
-
-    <main class="page">
+    <!-- Page content -->
+    <main id="main">
       <slot />
     </main>
 
-<footer class="site-footer">
-  <ul>
-    <li><a class="link-plain" href="mailto:flushrock@gmail.com">Email</a></li>
-    <li><a class="link-plain" href="https://www.instagram.com/flush_music/" target="_blank" rel="noopener">Instagram</a></li>
-    <li><a class="link-plain" href="https://www.facebook.com/flushmusic" target="_blank" rel="noopener">Facebook</a></li>
-    <li><a class="link-plain" href="https://open.spotify.com/artist/0M9RMWUBIGsJ9D123qGuW9" target="_blank" rel="noopener">Spotify</a></li>
-  </ul>
-</footer>
+    <!-- Footer (plain text socials; white->yellow hover) -->
+    <footer class="site-footer">
+      <div class="container footer__grid">
+        <small class="copy">© {new Date().getFullYear()} FLUSH</small>
+        <div class="socials">
+          <a href="mailto:hello@flush.rocks">Email</a>
+          <a href="https://www.instagram.com/flushrocks/" rel="noopener">Instagram</a>
+          <a href="https://www.facebook.com/flushrock" rel="noopener">Facebook</a>
+          <a href="https://open.spotify.com/artist/5nC7xgEo5W2Qe2ZcId6coF" rel="noopener">Spotify</a>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
 
 <style>
-/* Hero styles unchanged */
-.hero{
-  position: relative;
-  min-height: 55vh;
-  width: 100%;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  background-image: url("/images/logo-flush-white-orange_vex.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
+  :root{
+    --flush-red:#962800; --flush-black:#0f0d0d; --flush-light:#e9e8f1; --flush-yellow:#f5d547;
+  }
+  body{ margin:0; background:var(--flush-black); color:var(--flush-light); font-family:"Oswald", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+  .container{ max-width:1100px; margin-inline:auto; padding-inline:1rem; }
 
-.hero__overlay{
-  position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.65) 100%);
-}
-.hero__inner{ position: relative; padding: 2rem 1rem; max-width: 900px; }
-.hero__title { font-family: "Oswald", sans-serif; font-size: clamp(2.5rem, 8vw, 4.25rem); font-weight: 700; color: var(--flush-light); text-transform: uppercase; letter-spacing: .5px; margin: 0 0 .5rem 0; }
-.hero__sub   { font-family: "Oswald", sans-serif; font-weight: 400; font-size: clamp(1.05rem, 2.5vw, 1.35rem); color: var(--flush-yellow); margin: 0; }
+  .site-header{
+    background:#000; position:sticky; top:0; z-index:50;
+    border-bottom:1px solid rgba(255,255,255,.06);
+  }
+  .site-header .container{
+    display:flex; align-items:center; justify-content:space-between; gap:.75rem;
+    min-height:48px;
+  }
+  .brand{ display:inline-flex; align-items:center; text-decoration:none; }
+  .brand__img{ display:block; height:28px; width:auto; }
+
+  .nav{ display:flex; gap:1rem; flex-wrap:wrap; }
+  .nav a{
+    color:#fff; text-decoration:none; letter-spacing:.02em;
+  }
+  .nav a:hover{ color:var(--flush-yellow); }
+
+  main{ min-height:40vh; }
+
+  .site-footer{
+    margin-top:2rem; padding:1.25rem 0; border-top:1px solid rgba(255,255,255,.08);
+  }
+  .footer__grid{ display:flex; align-items:center; justify-content:space-between; gap:.75rem; }
+  .copy{ opacity:.85; }
+  .socials{ display:flex; gap:.85rem; flex-wrap:wrap; }
+  .socials a{ color:#fff; text-decoration:none; }
+  .socials a:hover{ color:var(--flush-yellow); }
 </style>
