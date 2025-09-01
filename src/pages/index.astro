@@ -5,14 +5,14 @@ import TagCloud from "../components/TagCloud.astro";
 ---
 
 <HomeLayout title="Flush" description="Let’s do some entertainment">
-  <!-- HERO with background mark layer -->
+  <!-- HERO with background random vector -->
   <section class="home-hero">
-    <!-- Vector layer (behind content) -->
+    <!-- Vector layer (behind everything, non-interactive) -->
     <div class="mark-layer" aria-hidden="true">
       <RandomMark />
     </div>
 
-    <!-- Foreground content (copy kept verbatim) -->
+    <!-- Foreground content (copy kept EXACTLY as in repo) -->
     <div class="hero-content">
       <div class="home-copy long-text">
         <p>Hello Friend! Welcome to the Flush internets!</p>
@@ -34,22 +34,19 @@ import TagCloud from "../components/TagCloud.astro";
     </div>
   </section>
 
-  <!-- Tag cloud stays on the page -->
+  <!-- Tag cloud stays -->
   <section class="home-tags">
     <TagCloud />
   </section>
 
   <style>
-    /* Container establishes a stacking context */
     .home-hero {
       position: relative;
-      min-height: 40vh;
       display: grid;
       place-items: center;
       padding-block: 2rem 1rem;
+      min-height: 40vh;
     }
-
-    /* Mark sits behind content and is non-interactive */
     .mark-layer {
       position: absolute;
       inset: 0;
@@ -57,25 +54,10 @@ import TagCloud from "../components/TagCloud.astro";
       place-items: center;
       pointer-events: none;
       z-index: 0;
-      opacity: 0.9; /* subtle; adjust if needed */
+      opacity: 0.9; /* adjust if needed */
     }
-
-    /* Copy sits above the mark */
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-    }
-
-    .home-copy {
-      max-width: 56rem;
-      margin-inline: auto;
-      padding-inline: 1rem;
-    }
-
-    .home-tags {
-      margin-top: 1.25rem;
-      padding-inline: 1rem;
-    }
+    .hero-content { position: relative; z-index: 1; width: 100%; }
+    .home-copy { max-width: 56rem; margin-inline: auto; padding-inline: 1rem; }
+    .home-tags { margin-top: 1.25rem; padding-inline: 1rem; }
   </style>
 </HomeLayout>
