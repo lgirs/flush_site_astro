@@ -1,7 +1,7 @@
 ---
 /**
  * RandomMark.astro — picks one random SVG each load.
- * REQUIREMENT: vectors live in src/assets/marks/*.svg
+ * REQUIREMENT: vectors in src/assets/marks/*.svg
  */
 const modules = import.meta.glob("../assets/marks/*.svg", {
   import: "default",
@@ -9,16 +9,21 @@ const modules = import.meta.glob("../assets/marks/*.svg", {
   eager: true,
 });
 const markUrls = Object.values(modules) as string[];
+const count = markUrls.length;
 ---
 
 <div class="rm" aria-hidden="true">
   <div class="rm__mask"></div>
   <img class="rm__img" alt="" />
+  {count === 0 && (
+    <div class="rm__debug">NO VECTORS FOUND (src/assets/marks)</div>
+  )}
 </div>
 
 <script type="module" data-urls={JSON.stringify(markUrls)}>
   const urls = JSON.parse(document.currentScript.dataset.urls || "[]");
-  if (urls.length > 0) {
+  console.log("[RandomMark] vectors:", urls.length, urls.slice(0, 3));
+  if (Array.isArray(urls) && urls.length) {
     const url = urls[Math.floor(Math.random() * urls.length)];
     const root = document.currentScript.previousElementSibling;
     const mask = root?.querySelector(".rm__mask");
@@ -31,15 +36,29 @@ const markUrls = Object.values(modules) as string[];
       mask.style.maskSize = mask.style.webkitMaskSize = "contain";
       mask.style.background = "white";
     }
-    if (img) { img.src = url; }
-  } else {
-    console.warn("[RandomMark] No vectors found in src/assets/marks/");
+    if (img) {
+      img.src = url;
+      img.loading = "lazy";
+      img.decoding = "async";
+    }
   }
 </script>
 
 <style>
-.rm { position: relative; display: grid; place-items: center; }
-.rm__mask, .rm__img { width: min(60vmin, 720px); height: min(60vmin, 720px); }
-.rm__img { position: absolute; inset: 0; margin: auto; object-fit: contain; opacity: 0; }
-@supports not (mask-image: url("")) { .rm__mask { display:none; } .rm__img { opacity:1; } }
+  .rm { position: relative; display: grid; place-items: center; }
+  .rm__mask, .rm__img { width: min(60vmin, 720px); height: min(60vmin, 720px); }
+  .rm__img { position: absolute; inset: 0; margin: auto; object-fit: contain; opacity: 0; }
+  @supports not (mask-image: url("")) { .rm__mask { display: none; } .rm__img { opacity: 1; } }
+
+  /* visible diagnostic if no vectors were found */
+  .rm__debug {
+    position: absolute;
+    bottom: 0.5rem;
+    left: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    background: #f5d547;
+    color: #0f0d0d;
+    font: 600 12px/1.2 system-ui, sans-serif;
+    border-radius: 4px;
+  }
 </style>
