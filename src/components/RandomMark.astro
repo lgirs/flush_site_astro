@@ -1,14 +1,9 @@
 ---
 /**
  * RandomMark.astro
- * One subtle centered SVG mark chosen on EACH page load.
- *
- * Priority:
- *   1) src/assets/marks/hero/*.svg   (curated)
- *   2) src/assets/marks/*.svg        (fallback)
- *   3) built-in data-URI placeholder (last-resort)
- *
- * Fully static: no external requests; works on Netlify static.
+ * One subtle, centered mark on EACH page load.
+ * Primary source:   src/assets/marks/hero/*.svg
+ * Fallback source:  src/assets/marks/*.svg
  */
 const heroMods = import.meta.glob("../assets/marks/hero/*.svg", {
   import: "default",
@@ -24,31 +19,25 @@ const heroUrls = Object.values(heroMods) as string[];
 const allUrls = Object.values(allMods) as string[];
 const candidateUrls = heroUrls.length ? heroUrls : allUrls;
 
-// Safe built-in placeholder (simple white squiggle)
-const PLACEHOLDER = `data:image/svg+xml;utf8,` + encodeURIComponent(
-  `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
-     <path d="M70 520 L300 100 L530 520" fill="none" stroke="#ffffff" stroke-width="32" stroke-linecap="round"/>
+// Built-in tiny placeholder so the hero never looks empty
+const PLACEHOLDER = `data:image/svg+xml;utf8,${encodeURIComponent(
+  `<svg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'>
+     <path d='M70 520 L300 100 L530 520' fill='none' stroke='#ffffff' stroke-width='32' stroke-linecap='round'/>
    </svg>`
-);
+)}`;
+
+// Load the tiny client module as an external asset (CSP-friendly)
+import randomMarkJs from "../scripts/random-mark.ts?url";
 ---
 
-<div class="rm" aria-hidden="true">
+<div class="rm" aria-hidden="true"
+     data-rm-urls={JSON.stringify(candidateUrls)}
+     data-rm-fallback={PLACEHOLDER}>
   <div class="rm__bg"></div>
 </div>
 
-<script type="module" data-urls={JSON.stringify(candidateUrls)} data-fallback={PLACEHOLDER}>
-  const urls = JSON.parse(document.currentScript.dataset.urls || "[]");
-  const fallback = document.currentScript.dataset.fallback;
-  const root = document.currentScript.previousElementSibling;
-  const bg = root?.querySelector(".rm__bg");
-  if (!bg) export {};
-
-  // Pick on every page load (client-side)
-  const pick = (list) => list[Math.floor(Math.random() * list.length)];
-  const chosen = Array.isArray(urls) && urls.length ? pick(urls) : fallback;
-
-  bg.style.backgroundImage = `url(${chosen})`;
-</script>
+<!-- external, no inline code -->
+<script type="module" src={randomMarkJs}></script>
 
 <style>
   .rm {
@@ -65,8 +54,8 @@ const PLACEHOLDER = `data:image/svg+xml;utf8,` + encodeURIComponent(
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    /* Subtle white look; always below text */
+    /* subtle, white-ink feel */
     filter: grayscale(1) brightness(8);
-    opacity: 0.28;
+    opacity: 0.24;
   }
 </style>
