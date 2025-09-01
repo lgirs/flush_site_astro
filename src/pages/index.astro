@@ -1,96 +1,51 @@
 ---
 import HomeLayout from "../layouts/HomeLayout.astro";
-
-// Import all mark SVGs from /public/images/marks
-// IMPORTANT: Use relative path, not "/public/..."
-const modules = import.meta.glob("../../public/images/marks/*.svg", {
-  eager: true,
-  as: "url",
-});
-const markUrls = Object.values(modules);
+import RandomMark from "../components/RandomMark.astro";
 ---
 
 <HomeLayout title="Flush" description="Let’s do some entertainment">
-  <div class="hero">
-    <div class="hero__mark" aria-hidden="true"></div>
-    <img class="hero__markImg" alt="" />
-  </div>
+  <!-- Random white vector (changes each load). No other layout changes. -->
+  <section class="home-hero">
+    <RandomMark />
+  </section>
 
-  <p class="intro">
-    Welcome to Flush. This is our space for music, words, and whatever else
-    comes along. Stick around and explore.
-  </p>
+  <!-- HOME COPY — preserved exactly as requested -->
+  <section class="home-copy long-text">
+    <p>Hello Friend! Welcome to the Flush internets!</p>
+    <p>
+      Flush is a rock band from Helsinki, Finland, we like to describe ourselves as community rock.
+      Once described as “an ideal band to book for funerals”, we are  bit of punk rock, quite a lot
+      of alternative rock, and many other flavours of rock and metal. But most of all, we are a safe
+      space or sometimes an escape for when the world feels like a bit too much. A community for those
+      who don’t always fit in. A community for anyone.
+    </p>
+    <p>
+      On this website of ours you’ll find the usual stuff you would expect from a band. Links to music,
+      gigs, etc. But there will be more! There will be games, gig trackers, scrapbooks, blogs, links to
+      stories you might have missed… who knows what else. So come back as we grow the site and make this
+      a part of the community.
+    </p>
+    <p>We’re glad you found us. Welcome to our community.</p>
+  </section>
 
-  <!-- Tag cloud component already wired here if present -->
-  <!-- Example: <TagCloud /> -->
-
-  <script type="module" data-marks={JSON.stringify(markUrls)}>
-    const MARK_URLS = JSON.parse(document.currentScript.dataset.marks || "[]");
-    if (Array.isArray(MARK_URLS) && MARK_URLS.length > 0) {
-      const pick = () =>
-        MARK_URLS[Math.floor(Math.random() * MARK_URLS.length)];
-      const url = pick();
-
-      const markEl = document.querySelector(".hero__mark");
-      const imgEl = document.querySelector(".hero__markImg");
-
-      if (markEl) {
-        markEl.style.maskImage = `url(${url})`;
-        markEl.style.webkitMaskImage = `url(${url})`;
-        markEl.style.maskRepeat = "no-repeat";
-        markEl.style.maskPosition = "center";
-        markEl.style.maskSize = "contain";
-        markEl.style.webkitMaskRepeat = "no-repeat";
-        markEl.style.webkitMaskPosition = "center";
-        markEl.style.webkitMaskSize = "contain";
-        markEl.style.background = "white"; // makes the mask visible
-      }
-      if (imgEl) {
-        imgEl.src = url;
-        imgEl.loading = "lazy";
-        imgEl.decoding = "async";
-      }
-    } else {
-      console.warn("[home hero] No mark URLs found");
-    }
-  </script>
+  <!-- If your repo has additional sections (e.g., <TagCloud />), keep them below. -->
+  <!-- Example:
+  <TagCloud />
+  -->
 
   <style>
-    .hero {
-      position: relative;
-      display: grid;
-      place-items: center;
-      margin-block: 2rem;
+    .home-hero {
+      display: flex;
+      justify-content: center;
+      padding-block: 1.5rem 0.5rem;
     }
-    .hero__mark {
-      width: min(60vmin, 720px);
-      height: min(60vmin, 720px);
-    }
-    .hero__markImg {
-      position: absolute;
-      inset: 0;
-      margin: auto;
-      width: min(60vmin, 720px);
-      height: min(60vmin, 720px);
-      object-fit: contain;
-      opacity: 0; /* hidden unless mask unsupported */
-    }
-    @supports not (mask-image: url("")) {
-      .hero__mark {
-        display: none;
-      }
-      .hero__markImg {
-        opacity: 1;
-      }
-    }
-
-    .intro {
-      font-family: var(--font-body, Montserrat, sans-serif);
-      font-size: 1.25rem;
-      margin-block: 2rem;
-      text-align: center;
-      max-width: 42rem;
+    .home-copy {
+      max-width: 56rem;
       margin-inline: auto;
+      padding-inline: 1rem;
+      padding-bottom: 2rem;
+      text-align: left;
     }
+    /* rely on your global fonts/colors; no overrides here */
   </style>
 </HomeLayout>
