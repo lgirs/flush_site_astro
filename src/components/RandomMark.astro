@@ -1,11 +1,10 @@
 ---
 /**
  * RandomMark.astro
- * Shows ONE random SVG each load.
- * Vectors should live in: src/assets/marks/*.svg
+ * Renders ONE random SVG from src/assets/marks/*.svg as a background-image.
+ * This avoids any possible mask/filter quirks and should be unmissable.
  *
- * We render a visible <img> (filtered to white) to remove any chance of mask issues.
- * If no vectors are found, a yellow debug badge appears so it's obvious.
+ * If zero vectors are found, a yellow debug strip appears with guidance.
  */
 const modules = import.meta.glob("../assets/marks/*.svg", {
   import: "default",
@@ -14,26 +13,25 @@ const modules = import.meta.glob("../assets/marks/*.svg", {
 });
 const markUrls = Object.values(modules) as string[];
 const count = markUrls.length;
+const pick = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
+const choice = count > 0 ? pick(markUrls) : null;
 ---
 
-<div class="rm" aria-hidden="true">
-  <img class="rm__img" alt="" />
-  {count === 0 && <div class="rm__debug">NO VECTORS FOUND (src/assets/marks)</div>}
+<div class="rm" aria-hidden="true" style={choice ? `--rm-url: url('${choice}')` : ""}>
+  <div class="rm__bg"></div>
+
+  {count === 0 && (
+    <div class="rm__debug">
+      NO VECTORS FOUND in <code>src/assets/marks/</code>
+    </div>
+  )}
+
+  {count > 0 && (
+    <div class="rm__debug">
+      vectors: {count} • first: <a href={markUrls[0]} target="_blank" rel="noopener">{markUrls[0]}</a>
+    </div>
+  )}
 </div>
-
-<script type="module" data-urls={JSON.stringify(markUrls)}>
-  const urls = JSON.parse(document.currentScript.dataset.urls || "[]");
-  console.log("[RandomMark] vectors:", urls.length, urls.slice(0, 3));
-  const root = document.currentScript.previousElementSibling;
-  const img  = root?.querySelector(".rm__img");
-
-  if (Array.isArray(urls) && urls.length && img) {
-    const url = urls[Math.floor(Math.random() * urls.length)];
-    img.src = url;
-    img.loading = "lazy";
-    img.decoding = "async";
-  }
-</script>
 
 <style>
   .rm {
@@ -43,24 +41,33 @@ const count = markUrls.length;
     width: 100%;
     height: 100%;
   }
-  .rm__img {
-    width: min(65vmin, 820px);
-    height: min(65vmin, 820px);
-    object-fit: contain;
-    /* Turn any dark SVG white; sits on dark hero bg */
-    filter: brightness(0) invert(1);
-    opacity: 0.9;
+
+  /* The visible vector — guaranteed to show if the URL resolves */
+  .rm__bg {
+    width: min(70vmin, 880px);
+    height: min(70vmin, 880px);
+    background-image: var(--rm-url);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain; /* preserve aspect */
+    opacity: 0.95;
   }
 
-  /* visible diagnostic if no vectors were found */
+  /* Tiny unobtrusive debug strip so we can see what’s going on in prod */
   .rm__debug {
     position: absolute;
-    bottom: 0.5rem;
-    left: 0.5rem;
-    padding: 0.25rem 0.5rem;
+    bottom: 8px;
+    left: 8px;
+    padding: 2px 6px;
     background: #f5d547;
     color: #0f0d0d;
     font: 600 12px/1.2 system-ui, sans-serif;
     border-radius: 4px;
+    max-width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
+  .rm__debug a { color: #0f0d0d; text-decoration: underline; }
+  .rm__debug code { font: 600 12px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; }
 </style>
