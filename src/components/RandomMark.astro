@@ -18,44 +18,38 @@ const allMods = import.meta.glob("../assets/marks/*.svg", {
   query: "?url",
   eager: true,
 });
+
 const heroUrls = Object.values(heroMods) as string[];
 const allUrls = Object.values(allMods) as string[];
-const candidateUrls = heroUrls.length ? heroUrls : allUrls;
+const candidateUrls = (heroUrls.length ? heroUrls : allUrls) as string[];
 
 const PLACEHOLDER = `data:image/svg+xml;utf8,${encodeURIComponent(
-  `<svg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'>
-     <path d='M70 520 L300 100 L530 520' fill='none' stroke='#ffffff' stroke-width='32' stroke-linecap='round'/>
-   </svg>`
+  "<svg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'><path d='M70 520 L300 100 L530 520' fill='none' stroke='#ffffff' stroke-width='32' stroke-linecap='round'/></svg>"
 )}`;
+
+const urlsAttr = JSON.stringify(candidateUrls);
 ---
 
-<div
-  class="rm"
-  aria-hidden="true"
-  data-urls={JSON.stringify(candidateUrls)}
-  data-fallback={PLACEHOLDER}
->
+<div class="rm" aria-hidden="true" data-urls={urlsAttr} data-fallback={PLACEHOLDER}>
   <div class="rm__bg"></div>
 </div>
 
-<!-- Tiny inline script; runs on each page load and sets one random URL -->
 <script is:inline>
-  (() => {
-    const roots = document.querySelectorAll('.rm[data-urls]');
-    roots.forEach((root) => {
+  (function () {
+    var roots = document.querySelectorAll('.rm[data-urls]');
+    roots.forEach(function (root) {
       try {
-        const json = root.getAttribute('data-urls') || '[]';
-        const fallback = root.getAttribute('data-fallback') || '';
-        const urls = JSON.parse(json);
-        const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
-        const choice = Array.isArray(urls) && urls.length ? pick(urls) : fallback;
-        const bg = root.querySelector('.rm__bg');
-        if (bg && choice) bg.style.backgroundImage = `url(${choice})`;
+        var json = root.getAttribute('data-urls') || '[]';
+        var fallback = root.getAttribute('data-fallback') || '';
+        var urls = JSON.parse(json);
+        var pick = function (arr) { return arr[Math.floor(Math.random() * arr.length)]; };
+        var choice = (Array.isArray(urls) && urls.length) ? pick(urls) : fallback;
+        var bg = root.querySelector('.rm__bg');
+        if (bg && choice) { bg.style.backgroundImage = 'url(' + choice + ')'; }
       } catch (e) {
-        // last-resort fallback
-        const bg = root.querySelector('.rm__bg');
-        const fb = root.getAttribute('data-fallback');
-        if (bg && fb) bg.style.backgroundImage = `url(${fb})`;
+        var bg2 = root.querySelector('.rm__bg');
+        var fb = root.getAttribute('data-fallback');
+        if (bg2 && fb) { bg2.style.backgroundImage = 'url(' + fb + ')'; }
       }
     });
   })();
@@ -76,7 +70,6 @@ const PLACEHOLDER = `data:image/svg+xml;utf8,${encodeURIComponent(
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    /* subtle white-ink look, never fights title */
     filter: grayscale(1) brightness(8);
     opacity: 0.24;
   }
