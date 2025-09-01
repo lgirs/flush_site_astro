@@ -1,38 +1,53 @@
 ---
 /**
  * RandomMark.astro
- * Shows ONE clean hero mark on each page load.
- * Put only approved hero SVGs in: src/assets/marks/hero/*.svg
+ * One subtle centered SVG mark chosen on EACH page load.
  *
- * Build-time step: we collect the URLs.
- * Runtime step: we randomly pick one in the browser on each load.
+ * Priority:
+ *   1) src/assets/marks/hero/*.svg   (curated)
+ *   2) src/assets/marks/*.svg        (fallback)
+ *   3) built-in data-URI placeholder (last-resort)
+ *
+ * Fully static: no external requests; works on Netlify static.
  */
-const heroModules = import.meta.glob("../assets/marks/hero/*.svg", {
+const heroMods = import.meta.glob("../assets/marks/hero/*.svg", {
   import: "default",
   query: "?url",
   eager: true,
 });
-const heroUrls = Object.values(heroModules) as string[];
+const allMods = import.meta.glob("../assets/marks/*.svg", {
+  import: "default",
+  query: "?url",
+  eager: true,
+});
+const heroUrls = Object.values(heroMods) as string[];
+const allUrls = Object.values(allMods) as string[];
+const candidateUrls = heroUrls.length ? heroUrls : allUrls;
+
+// Safe built-in placeholder (simple white squiggle)
+const PLACEHOLDER = `data:image/svg+xml;utf8,` + encodeURIComponent(
+  `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+     <path d="M70 520 L300 100 L530 520" fill="none" stroke="#ffffff" stroke-width="32" stroke-linecap="round"/>
+   </svg>`
+);
 ---
 
-<!-- Root sized by parent (the hero). This block is the visible mark -->
 <div class="rm" aria-hidden="true">
   <div class="rm__bg"></div>
-  {heroUrls.length === 0 && (
-    <div class="rm__debug">Put SVGs in <code>src/assets/marks/hero/</code></div>
-  )}
 </div>
 
-<script type="module" data-urls={JSON.stringify(heroUrls)}>
+<script type="module" data-urls={JSON.stringify(candidateUrls)} data-fallback={PLACEHOLDER}>
   const urls = JSON.parse(document.currentScript.dataset.urls || "[]");
+  const fallback = document.currentScript.dataset.fallback;
   const root = document.currentScript.previousElementSibling;
   const bg = root?.querySelector(".rm__bg");
-  if (Array.isArray(urls) && urls.length && bg) {
-    const pick = () => urls[Math.floor(Math.random() * urls.length)];
-    const url = pick();
-    // Change per page load (client-side)
-    bg.style.backgroundImage = `url(${url})`;
-  }
+  if (!bg) export {};
+
+  // Pick on every page load (client-side)
+  const pick = (list) => list[Math.floor(Math.random() * list.length)];
+  const chosen = Array.isArray(urls) && urls.length ? pick(urls) : fallback;
+
+  bg.style.backgroundImage = `url(${chosen})`;
 </script>
 
 <style>
@@ -45,21 +60,13 @@ const heroUrls = Object.values(heroModules) as string[];
     pointer-events: none;
   }
   .rm__bg {
-    /* Fixed, centered, no tilt */
     width: min(60vmin, 760px);
     height: min(60vmin, 760px);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    /* subtle white look so it never fights the title */
+    /* Subtle white look; always below text */
     filter: grayscale(1) brightness(8);
-    opacity: 0.25;
+    opacity: 0.28;
   }
-  .rm__debug {
-    position: absolute; bottom: 8px; left: 8px;
-    padding: 2px 6px; border-radius: 4px;
-    background:#f5d547; color:#0f0d0d;
-    font: 600 12px/1.2 system-ui, sans-serif;
-  }
-  .rm__debug code { font: 600 12px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; }
 </style>
