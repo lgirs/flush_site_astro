@@ -2,7 +2,6 @@
 const { title = "Flush", description = "Let’s do some entertainment" } = Astro.props;
 import "../styles/global.css";
 
-// detect if a vector is supplied
 const hasVector = Astro.slots.has("hero-vector");
 const heroClass = hasVector ? "hero hero--vector" : "hero";
 ---
@@ -31,15 +30,15 @@ const heroClass = hasVector ? "hero hero--vector" : "hero";
 
     <!-- HERO -->
     <section class={heroClass}>
-      <!-- Random vector from page -->
+      <!-- 1) Vector ABOVE gradient so it can't disappear -->
       <div class="hero__vector" aria-hidden="true">
         <slot name="hero-vector" />
       </div>
 
-      <!-- Gradient overlay -->
+      <!-- 2) Gradient -->
       <div class="hero__overlay" aria-hidden="true"></div>
 
-      <!-- Hero text -->
+      <!-- 3) Text -->
       <div class="hero__inner">
         <h1 class="hero__title">FLUSH</h1>
         <p class="hero__sub">Let’s do some entertainment</p>
@@ -62,6 +61,7 @@ const heroClass = hasVector ? "hero hero--vector" : "hero";
 </html>
 
 <style>
+/* Default hero with old background (only when no vector provided) */
 .hero {
   position: relative;
   min-height: 55vh;
@@ -75,29 +75,31 @@ const heroClass = hasVector ? "hero hero--vector" : "hero";
   background-repeat: no-repeat;
 }
 
-/* disable default background if vector is present */
+/* Disable background when vector is present */
 .hero--vector {
   background-image: none;
   background-color: #0f0d0d;
 }
 
-.hero__vector {
+/* ORDER: background (via .hero) -> overlay? (z:2) vs vector (z:3) -> text (z:4) */
+.hero__overlay{
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.45) 40%, rgba(0,0,0,0.55) 100%);
+}
+
+/* Vector above overlay so it's clearly visible */
+.hero__vector{
+  position: absolute;
+  inset: 0;
+  z-index: 3;
   display: grid;
   place-items: center;
   pointer-events: none;
 }
 
-.hero__overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.65) 100%);
-}
-
-.hero__inner { position: relative; padding: 2rem 1rem; max-width: 900px; z-index: 3; }
+.hero__inner{ position: relative; padding: 2rem 1rem; max-width: 900px; z-index: 4; }
 .hero__title { font-family: "Oswald", sans-serif; font-size: clamp(2.5rem, 8vw, 4.25rem); font-weight: 700; color: var(--flush-light); text-transform: uppercase; margin: 0 0 .5rem 0; }
 .hero__sub   { font-family: "Oswald", sans-serif; font-weight: 400; font-size: clamp(1.05rem, 2.5vw, 1.35rem); color: var(--flush-yellow); margin: 0; }
 </style>
