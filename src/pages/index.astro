@@ -1,51 +1,81 @@
 ---
 import HomeLayout from "../layouts/HomeLayout.astro";
 import RandomMark from "../components/RandomMark.astro";
+import TagCloud from "../components/TagCloud.astro";
 ---
 
 <HomeLayout title="Flush" description="Let’s do some entertainment">
-  <!-- Random white vector (changes each load). No other layout changes. -->
+  <!-- HERO with background mark layer -->
   <section class="home-hero">
-    <RandomMark />
+    <!-- Vector layer (behind content) -->
+    <div class="mark-layer" aria-hidden="true">
+      <RandomMark />
+    </div>
+
+    <!-- Foreground content (copy kept verbatim) -->
+    <div class="hero-content">
+      <div class="home-copy long-text">
+        <p>Hello Friend! Welcome to the Flush internets!</p>
+        <p>
+          Flush is a rock band from Helsinki, Finland, we like to describe ourselves as community rock.
+          Once described as “an ideal band to book for funerals”, we are  bit of punk rock, quite a lot
+          of alternative rock, and many other flavours of rock and metal. But most of all, we are a safe
+          space or sometimes an escape for when the world feels like a bit too much. A community for those
+          who don’t always fit in. A community for anyone.
+        </p>
+        <p>
+          On this website of ours you’ll find the usual stuff you would expect from a band. Links to music,
+          gigs, etc. But there will be more! There will be games, gig trackers, scrapbooks, blogs, links to
+          stories you might have missed… who knows what else. So come back as we grow the site and make this
+          a part of the community.
+        </p>
+        <p>We’re glad you found us. Welcome to our community.</p>
+      </div>
+    </div>
   </section>
 
-  <!-- HOME COPY — preserved exactly as requested -->
-  <section class="home-copy long-text">
-    <p>Hello Friend! Welcome to the Flush internets!</p>
-    <p>
-      Flush is a rock band from Helsinki, Finland, we like to describe ourselves as community rock.
-      Once described as “an ideal band to book for funerals”, we are  bit of punk rock, quite a lot
-      of alternative rock, and many other flavours of rock and metal. But most of all, we are a safe
-      space or sometimes an escape for when the world feels like a bit too much. A community for those
-      who don’t always fit in. A community for anyone.
-    </p>
-    <p>
-      On this website of ours you’ll find the usual stuff you would expect from a band. Links to music,
-      gigs, etc. But there will be more! There will be games, gig trackers, scrapbooks, blogs, links to
-      stories you might have missed… who knows what else. So come back as we grow the site and make this
-      a part of the community.
-    </p>
-    <p>We’re glad you found us. Welcome to our community.</p>
+  <!-- Tag cloud stays on the page -->
+  <section class="home-tags">
+    <TagCloud />
   </section>
-
-  <!-- If your repo has additional sections (e.g., <TagCloud />), keep them below. -->
-  <!-- Example:
-  <TagCloud />
-  -->
 
   <style>
+    /* Container establishes a stacking context */
     .home-hero {
-      display: flex;
-      justify-content: center;
-      padding-block: 1.5rem 0.5rem;
+      position: relative;
+      min-height: 40vh;
+      display: grid;
+      place-items: center;
+      padding-block: 2rem 1rem;
     }
+
+    /* Mark sits behind content and is non-interactive */
+    .mark-layer {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.9; /* subtle; adjust if needed */
+    }
+
+    /* Copy sits above the mark */
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+    }
+
     .home-copy {
       max-width: 56rem;
       margin-inline: auto;
       padding-inline: 1rem;
-      padding-bottom: 2rem;
-      text-align: left;
     }
-    /* rely on your global fonts/colors; no overrides here */
+
+    .home-tags {
+      margin-top: 1.25rem;
+      padding-inline: 1rem;
+    }
   </style>
 </HomeLayout>
