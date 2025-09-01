@@ -1,10 +1,9 @@
 ---
 /**
  * RandomMark.astro
- * Shows one random SVG from src/assets/marks/ on each page load.
- * Self-contained: no props, safe to drop anywhere.
- *
- * IMPORTANT: Vectors must live at: src/assets/marks/*.svg
+ * Shows ONE random SVG on each page load.
+ * REQUIREMENT: put your vectors in src/assets/marks/*.svg
+ * This component is self-contained and safe to slot into the hero overlay.
  */
 const modules = import.meta.glob("../assets/marks/*.svg", {
   eager: true,
@@ -19,28 +18,24 @@ const markUrls = Object.values(modules) as string[];
 </div>
 
 <script type="module" data-urls={JSON.stringify(markUrls)}>
-  const URLS = JSON.parse(document.currentScript.dataset.urls || "[]");
-  if (Array.isArray(URLS) && URLS.length > 0) {
-    const url = URLS[Math.floor(Math.random() * URLS.length)];
-
-    const root = document.currentScript.previousElementSibling; // <div class="rm">
+  const urls = JSON.parse(document.currentScript.dataset.urls || "[]");
+  if (Array.isArray(urls) && urls.length > 0) {
+    const url = urls[Math.floor(Math.random() * urls.length)];
+    const root = document.currentScript.previousElementSibling;
     const mask = root.querySelector(".rm__mask");
     const img  = root.querySelector(".rm__img");
 
-    // Modern: CSS mask (white “ink”)
+    // CSS mask = white “ink”
     if (mask) {
       mask.style.maskImage = `url(${url})`;
       mask.style.webkitMaskImage = `url(${url})`;
-      mask.style.maskRepeat = "no-repeat";
-      mask.style.webkitMaskRepeat = "no-repeat";
-      mask.style.maskPosition = "center";
-      mask.style.webkitMaskPosition = "center";
-      mask.style.maskSize = "contain";
-      mask.style.webkitMaskSize = "contain";
+      mask.style.maskRepeat = mask.style.webkitMaskRepeat = "no-repeat";
+      mask.style.maskPosition = mask.style.webkitMaskPosition = "center";
+      mask.style.maskSize = mask.style.webkitMaskSize = "contain";
       mask.style.background = "white";
     }
 
-    // Fallback for browsers without CSS masks
+    // Fallback when masks unsupported
     if (img) {
       img.src = url;
       img.loading = "lazy";
@@ -52,7 +47,6 @@ const markUrls = Object.values(modules) as string[];
 </script>
 
 <style>
-  /* Component sizes the mark; parent can position it */
   .rm { position: relative; display: grid; place-items: center; }
   .rm__mask, .rm__img { width: min(60vmin, 720px); height: min(60vmin, 720px); }
   .rm__img { position: absolute; inset: 0; margin: auto; object-fit: contain; opacity: 0; }
