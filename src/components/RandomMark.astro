@@ -1,50 +1,39 @@
 ---
 /**
  * RandomMark.astro
- * One subtle, centered vector for the hero.
+ * Shows ONE clean hero mark on each page load.
+ * Put only approved hero SVGs in: src/assets/marks/hero/*.svg
  *
- * Curated source (preferred):  src/assets/marks/hero/*.svg
- * Fallback source:             src/assets/marks/*.svg
- *
- * Action for repo: put ONLY the clean hero shapes into src/assets/marks/hero/
+ * Build-time step: we collect the URLs.
+ * Runtime step: we randomly pick one in the browser on each load.
  */
 const heroModules = import.meta.glob("../assets/marks/hero/*.svg", {
   import: "default",
   query: "?url",
   eager: true,
 });
-const fallbackModules = import.meta.glob("../assets/marks/*.svg", {
-  import: "default",
-  query: "?url",
-  eager: true,
-});
-
-// Prefer curated hero set; otherwise fallback to everything
 const heroUrls = Object.values(heroModules) as string[];
-const allUrls = Object.values(fallbackModules) as string[];
-const source = heroUrls.length ? heroUrls : allUrls;
-
-const pick = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
-const choice = source.length ? pick(source) : null;
-
-// Light randomization to avoid sameness (rotation, scale)
-const rot = Math.floor(Math.random() * 360);
-const scale = 0.9 + Math.random() * 0.25; // 0.9–1.15
 ---
 
-{choice && (
-  <div
-    class="rm"
-    aria-hidden="true"
-    style={`--rm-url: url('${choice}'); --rm-rot: ${rot}deg; --rm-scale: ${scale}`}
-  >
-    <div class="rm__bg" />
-  </div>
-)}
+<!-- Root sized by parent (the hero). This block is the visible mark -->
+<div class="rm" aria-hidden="true">
+  <div class="rm__bg"></div>
+  {heroUrls.length === 0 && (
+    <div class="rm__debug">Put SVGs in <code>src/assets/marks/hero/</code></div>
+  )}
+</div>
 
-{!choice && (
-  <div class="rm rm--empty" aria-hidden="true"></div>
-)}
+<script type="module" data-urls={JSON.stringify(heroUrls)}>
+  const urls = JSON.parse(document.currentScript.dataset.urls || "[]");
+  const root = document.currentScript.previousElementSibling;
+  const bg = root?.querySelector(".rm__bg");
+  if (Array.isArray(urls) && urls.length && bg) {
+    const pick = () => urls[Math.floor(Math.random() * urls.length)];
+    const url = pick();
+    // Change per page load (client-side)
+    bg.style.backgroundImage = `url(${url})`;
+  }
+</script>
 
 <style>
   .rm {
@@ -53,23 +42,24 @@ const scale = 0.9 + Math.random() * 0.25; // 0.9–1.15
     place-items: center;
     width: 100%;
     height: 100%;
+    pointer-events: none;
   }
-
-  /* The visible vector (background-image on a sized block) */
   .rm__bg {
+    /* Fixed, centered, no tilt */
     width: min(60vmin, 760px);
     height: min(60vmin, 760px);
-    background-image: var(--rm-url);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    /* subtle + white: */
+    /* subtle white look so it never fights the title */
     filter: grayscale(1) brightness(8);
     opacity: 0.25;
-    transform: rotate(var(--rm-rot)) scale(var(--rm-scale));
-    will-change: transform;
   }
-
-  /* Empty state takes no space but keeps layout safe */
-  .rm--empty { width: 0; height: 0; }
+  .rm__debug {
+    position: absolute; bottom: 8px; left: 8px;
+    padding: 2px 6px; border-radius: 4px;
+    background:#f5d547; color:#0f0d0d;
+    font: 600 12px/1.2 system-ui, sans-serif;
+  }
+  .rm__debug code { font: 600 12px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; }
 </style>
