@@ -1,12 +1,96 @@
 ---
-import HomeLayout from "../layouts/HomeLayout.astro";
-import RandomMark from "../components/RandomMark.astro";
-import TagCloud from "../components/TagCloud.astro";
+const { title = "Flush", description = "Let’s do some entertainment" } = Astro.props;
+import "../styles/global.css";
 ---
 
-<HomeLayout title="Flush" description="Let’s do some entertainment">
-  <RandomMark slot="hero-vector" />
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title} | Flush</title>
+    <meta name="description" content={description} />
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-inner">
+        <a href="/"><img src="/images/logo-flush-white.png" alt="Flush" class="logo" /></a>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/gigs">Gigs</a>
+          <a href="/music">Music</a>
+          <a href="/content/lyrics/">Lyrics</a>
+          <a href="/videos">Videos</a>
+          <a href="/about">About</a>
+        </nav>
+      </div>
+    </header>
 
-  <!-- keep your existing copy and TagCloud exactly as they are -->
-  <!-- ... -->
-</HomeLayout>
+    <!-- HERO -->
+    <section class="hero">
+      <!-- Random vector goes here from the page via named slot -->
+      <div class="hero__vector" aria-hidden="true">
+        <slot name="hero-vector" />
+      </div>
+
+      <!-- Gradient shade -->
+      <div class="hero__overlay" aria-hidden="true"></div>
+
+      <!-- Title & tagline -->
+      <div class="hero__inner">
+        <h1 class="hero__title">FLUSH</h1>
+        <p class="hero__sub">Let’s do some entertainment</p>
+      </div>
+    </section>
+
+    <main class="page">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <ul>
+        <li><a class="link-plain" href="mailto:flushrock@gmail.com">Email</a></li>
+        <li><a class="link-plain" href="https://www.instagram.com/flush_music/" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a class="link-plain" href="https://www.facebook.com/flushmusic" target="_blank" rel="noopener">Facebook</a></li>
+        <li><a class="link-plain" href="https://open.spotify.com/artist/0M9RMWUBIGsJ9D123qGuW9" target="_blank" rel="noopener">Spotify</a></li>
+      </ul>
+    </footer>
+  </body>
+</html>
+
+<style>
+/* Hero styles (kept); vector layer added & ordered for clarity */
+.hero{
+  position: relative;
+  min-height: 55vh;
+  width: 100%;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  background-image: url("/images/logo-flush-white-orange_vex.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Vector layer is ABOVE bg, BELOW gradient & text */
+.hero__vector{
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+/* Gradient shade sits above vector; keeps brand look */
+.hero__overlay{
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.65) 100%);
+}
+
+.hero__inner{ position: relative; padding: 2rem 1rem; max-width: 900px; z-index: 3; }
+.hero__title { font-family: "Oswald", sans-serif; font-size: clamp(2.5rem, 8vw, 4.25rem); font-weight: 700; color: var(--flush-light); text-transform: uppercase; letter-spacing: .5px; margin: 0 0 .5rem 0; }
+.hero__sub   { font-family: "Oswald", sans-serif; font-weight: 400; font-size: clamp(1.05rem, 2.5vw, 1.35rem); color: var(--flush-yellow); margin: 0; }
+</style>
