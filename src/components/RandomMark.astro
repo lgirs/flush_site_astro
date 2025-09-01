@@ -1,7 +1,11 @@
 ---
 /**
- * RandomMark.astro — picks one random SVG each load.
- * REQUIREMENT: vectors in src/assets/marks/*.svg
+ * RandomMark.astro
+ * Shows ONE random SVG each load.
+ * Vectors should live in: src/assets/marks/*.svg
+ *
+ * We render a visible <img> (filtered to white) to remove any chance of mask issues.
+ * If no vectors are found, a yellow debug badge appears so it's obvious.
  */
 const modules = import.meta.glob("../assets/marks/*.svg", {
   import: "default",
@@ -13,42 +17,40 @@ const count = markUrls.length;
 ---
 
 <div class="rm" aria-hidden="true">
-  <div class="rm__mask"></div>
   <img class="rm__img" alt="" />
-  {count === 0 && (
-    <div class="rm__debug">NO VECTORS FOUND (src/assets/marks)</div>
-  )}
+  {count === 0 && <div class="rm__debug">NO VECTORS FOUND (src/assets/marks)</div>}
 </div>
 
 <script type="module" data-urls={JSON.stringify(markUrls)}>
   const urls = JSON.parse(document.currentScript.dataset.urls || "[]");
   console.log("[RandomMark] vectors:", urls.length, urls.slice(0, 3));
-  if (Array.isArray(urls) && urls.length) {
+  const root = document.currentScript.previousElementSibling;
+  const img  = root?.querySelector(".rm__img");
+
+  if (Array.isArray(urls) && urls.length && img) {
     const url = urls[Math.floor(Math.random() * urls.length)];
-    const root = document.currentScript.previousElementSibling;
-    const mask = root?.querySelector(".rm__mask");
-    const img  = root?.querySelector(".rm__img");
-    if (mask) {
-      mask.style.maskImage = `url(${url})`;
-      mask.style.webkitMaskImage = `url(${url})`;
-      mask.style.maskRepeat = mask.style.webkitMaskRepeat = "no-repeat";
-      mask.style.maskPosition = mask.style.webkitMaskPosition = "center";
-      mask.style.maskSize = mask.style.webkitMaskSize = "contain";
-      mask.style.background = "white";
-    }
-    if (img) {
-      img.src = url;
-      img.loading = "lazy";
-      img.decoding = "async";
-    }
+    img.src = url;
+    img.loading = "lazy";
+    img.decoding = "async";
   }
 </script>
 
 <style>
-  .rm { position: relative; display: grid; place-items: center; }
-  .rm__mask, .rm__img { width: min(60vmin, 720px); height: min(60vmin, 720px); }
-  .rm__img { position: absolute; inset: 0; margin: auto; object-fit: contain; opacity: 0; }
-  @supports not (mask-image: url("")) { .rm__mask { display: none; } .rm__img { opacity: 1; } }
+  .rm {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+  }
+  .rm__img {
+    width: min(65vmin, 820px);
+    height: min(65vmin, 820px);
+    object-fit: contain;
+    /* Turn any dark SVG white; sits on dark hero bg */
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+  }
 
   /* visible diagnostic if no vectors were found */
   .rm__debug {
