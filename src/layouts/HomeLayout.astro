@@ -24,14 +24,41 @@ import "../styles/global.css";
       </div>
     </header>
 
-    <!-- HERO -->
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="hero__overlay"></div>
-      <div class="hero__inner">
-        <h1 id="hero-title" class="hero__title">{title}</h1>
-        <p class="hero__sub">{description}</p>
-      </div>
-    </section>
+    ---
+// keep your existing frontmatter/imports from this layout
+---
+<!-- HERO (drop-in replacement) -->
+<section class="hero">
+  <!-- Background/visuals you already had for the hero (unchanged) -->
+  <div class="hero__bg"><!-- keep your existing bg or background image/style --></div>
+
+  <!-- NEW: overlay layer for page-specific visuals (e.g., random vector) -->
+  <div class="hero__overlay" aria-hidden="true">
+    <slot name="hero-overlay" />
+  </div>
+
+  <!-- Your existing hero content (title + tagline) -->
+  <div class="hero__content">
+    <h1 class="hero__title">FLUSH</h1>
+    <p class="hero__tagline">Let’s do some entertainment</p>
+  </div>
+</section>
+
+<style>
+  /* minimal, non-invasive additions; keep your existing hero styles */
+  .hero { position: relative; }
+  .hero__bg  { position: relative; z-index: 0; }    /* your background layer */
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+    z-index: 1;                                      /* BELOW text, ABOVE bg */
+  }
+  .hero__content { position: relative; z-index: 2; }  /* text stays on top */
+</style>
+
 
     <main class="page">
       <slot />
