@@ -1,11 +1,7 @@
 ---
 /**
- * RandomMark.astro
- * Shows ONE random SVG on each page load.
- * REQUIREMENT: put your vectors in src/assets/marks/*.svg
- *
- * Uses the current Vite/Astro glob API:
- *   import: 'default', query: '?url', eager: true
+ * RandomMark.astro — picks one random SVG each load.
+ * REQUIREMENT: vectors live in src/assets/marks/*.svg
  */
 const modules = import.meta.glob("../assets/marks/*.svg", {
   import: "default",
@@ -20,15 +16,13 @@ const markUrls = Object.values(modules) as string[];
   <img class="rm__img" alt="" />
 </div>
 
-<!-- Keep runtime tiny. No async, no loops beyond one pick. -->
 <script type="module" data-urls={JSON.stringify(markUrls)}>
   const urls = JSON.parse(document.currentScript.dataset.urls || "[]");
-  if (Array.isArray(urls) && urls.length > 0) {
+  if (urls.length > 0) {
     const url = urls[Math.floor(Math.random() * urls.length)];
     const root = document.currentScript.previousElementSibling;
     const mask = root?.querySelector(".rm__mask");
     const img  = root?.querySelector(".rm__img");
-
     if (mask) {
       mask.style.maskImage = `url(${url})`;
       mask.style.webkitMaskImage = `url(${url})`;
@@ -37,20 +31,15 @@ const markUrls = Object.values(modules) as string[];
       mask.style.maskSize = mask.style.webkitMaskSize = "contain";
       mask.style.background = "white";
     }
-    if (img) {
-      img.src = url;
-      img.loading = "lazy";
-      img.decoding = "async";
-    }
+    if (img) { img.src = url; }
   } else {
-    // Non-fatal: page still renders, just no vector.
-    console.warn("[RandomMark] No SVGs found under src/assets/marks/");
+    console.warn("[RandomMark] No vectors found in src/assets/marks/");
   }
 </script>
 
 <style>
-  .rm { position: relative; display: grid; place-items: center; }
-  .rm__mask, .rm__img { width: min(60vmin, 720px); height: min(60vmin, 720px); }
-  .rm__img { position: absolute; inset: 0; margin: auto; object-fit: contain; opacity: 0; }
-  @supports not (mask-image: url("")) { .rm__mask { display:none; } .rm__img { opacity:1; } }
+.rm { position: relative; display: grid; place-items: center; }
+.rm__mask, .rm__img { width: min(60vmin, 720px); height: min(60vmin, 720px); }
+.rm__img { position: absolute; inset: 0; margin: auto; object-fit: contain; opacity: 0; }
+@supports not (mask-image: url("")) { .rm__mask { display:none; } .rm__img { opacity:1; } }
 </style>
