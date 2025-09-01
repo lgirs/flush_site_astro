@@ -2,7 +2,7 @@
 const { title = "Flush", description = "Let’s do some entertainment" } = Astro.props;
 import "../styles/global.css";
 
-/* If page provides a hero vector, disable the old background image */
+/* If the page provides a hero vector, disable the old background image */
 const hasVector = Astro.slots.has("hero-vector");
 const heroClass = hasVector ? "hero hero--vector" : "hero";
 ---
@@ -36,7 +36,7 @@ const heroClass = hasVector ? "hero hero--vector" : "hero";
         <slot name="hero-vector" />
       </div>
 
-      <!-- Soft overlay (keeps bg in check, does not dim the vector) -->
+      <!-- Soft overlay -->
       <div class="hero__overlay" aria-hidden="true"></div>
 
       <!-- Title + Tagline -->
@@ -62,7 +62,7 @@ const heroClass = hasVector ? "hero hero--vector" : "hero";
 </html>
 
 <style>
-/* Default hero background (when no vector slot is provided) */
+/* Default hero background (used when no vector is supplied) */
 .hero{
   position: relative;
   min-height: 55vh;
@@ -81,7 +81,7 @@ const heroClass = hasVector ? "hero hero--vector" : "hero";
   background-color: #0f0d0d;
 }
 
-/* Z-order: bg -> overlay(z1) -> vector(z2) -> text(z3) */
+/* Z order: bg -> overlay(z1) -> vector(z2) -> text(z3) */
 .hero__overlay{
   position: absolute;
   inset: 0;
@@ -91,13 +91,13 @@ const heroClass = hasVector ? "hero hero--vector" : "hero";
 .hero__vector{
   position: absolute;
   inset: 0;
-  z-index: 2;               /* above overlay so the mark is always visible */
+  z-index: 2; /* above overlay so mark is visible */
   display: grid;
   place-items: center;
   pointer-events: none;
 }
 
 .hero__inner{ position: relative; padding: 2rem 1rem; max-width: 900px; z-index: 3; }
-.hero__title{ font-family: "Oswald", sans-serif; font-size: clamp(2.5rem, 8vw, 4.25rem); font-weight: 700; color: var(--flush-light); text-transform: uppercase; margin: 0 0 .5rem 0; }
-.hero__sub  { font-family: "Oswald", sans-serif; font-weight: 400; font-size: clamp(1.05rem, 2.5vw, 1.35rem); color: var(--flush-yellow); margin: 0; }
+.hero__title{ font-family:"Oswald",sans-serif; font-size:clamp(2.5rem,8vw,4.25rem); font-weight:700; color:var(--flush-light); text-transform:uppercase; margin:0 0 .5rem 0; }
+.hero__sub  { font-family:"Oswald",sans-serif; font-weight:400; font-size:clamp(1.05rem,2.5vw,1.35rem); color:var(--flush-yellow); margin:0; }
 </style>
