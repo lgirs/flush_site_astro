@@ -1,0 +1,75 @@
+---
+/**
+ * RandomMark.astro
+ * Shows one random SVG from /public/images/marks/ on each page load.
+ * Self-contained. Safe to drop anywhere.
+ */
+const modules = import.meta.glob("../../public/images/marks/*.svg", {
+  eager: true,
+  as: "url",
+});
+const markUrls = Object.values(modules) as string[];
+---
+
+<div class="rm" aria-hidden="true">
+  <div class="rm__mask"></div>
+  <img class="rm__img" alt="" />
+</div>
+
+<script type="module" data-urls={JSON.stringify(markUrls)}>
+  const URLS = JSON.parse(document.currentScript.dataset.urls || "[]");
+  if (!Array.isArray(URLS) || URLS.length === 0) {
+    console.warn("[RandomMark] No SVGs found under /public/images/marks");
+  } else {
+    const pick = () => URLS[Math.floor(Math.random() * URLS.length)];
+    const url = pick();
+
+    const root = document.currentScript.previousElementSibling; // <div class="rm">
+    const mask = root.querySelector(".rm__mask");
+    const img  = root.querySelector(".rm__img");
+
+    if (mask) {
+      mask.style.maskImage = `url(${url})`;
+      mask.style.webkitMaskImage = `url(${url})`;
+      mask.style.maskRepeat = "no-repeat";
+      mask.style.webkitMaskRepeat = "no-repeat";
+      mask.style.maskPosition = "center";
+      mask.style.webkitMaskPosition = "center";
+      mask.style.maskSize = "contain";
+      mask.style.webkitMaskSize = "contain";
+      mask.style.background = "white"; // “ink” for the mask
+    }
+
+    // Fallback for browsers without CSS masks
+    if (img) {
+      img.src = url;
+      img.loading = "lazy";
+      img.decoding = "async";
+    }
+  }
+</script>
+
+<style>
+  .rm {
+    position: relative;
+    display: grid;
+    place-items: center;
+    margin-block: 2rem;
+  }
+  .rm__mask,
+  .rm__img {
+    width: min(60vmin, 720px);
+    height: min(60vmin, 720px);
+  }
+  .rm__img {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    object-fit: contain;
+    opacity: 0; /* visible only when masks unsupported */
+  }
+  @supports not (mask-image: url("")) {
+    .rm__mask { display: none; }
+    .rm__img { opacity: 1; }
+  }
+</style>
