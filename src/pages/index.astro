@@ -5,58 +5,33 @@ import TagCloud from "../components/TagCloud.astro";
 ---
 
 <HomeLayout title="Flush" description="Let’s do some entertainment">
-  <!-- HERO with background random vector -->
-  <section class="home-hero">
-    <!-- Vector layer (behind everything, non-interactive) -->
-    <div class="mark-layer" aria-hidden="true">
-      <RandomMark />
-    </div>
+  <!-- Send the random vector INTO the hero via the named slot -->
+  <RandomMark slot="hero-overlay" />
 
-    <!-- Foreground content (copy kept EXACTLY as in repo) -->
-    <div class="hero-content">
-      <div class="home-copy long-text">
-        <p>Hello Friend! Welcome to the Flush internets!</p>
-        <p>
-          Flush is a rock band from Helsinki, Finland, we like to describe ourselves as community rock.
-          Once described as “an ideal band to book for funerals”, we are  bit of punk rock, quite a lot
-          of alternative rock, and many other flavours of rock and metal. But most of all, we are a safe
-          space or sometimes an escape for when the world feels like a bit too much. A community for those
-          who don’t always fit in. A community for anyone.
-        </p>
-        <p>
-          On this website of ours you’ll find the usual stuff you would expect from a band. Links to music,
-          gigs, etc. But there will be more! There will be games, gig trackers, scrapbooks, blogs, links to
-          stories you might have missed… who knows what else. So come back as we grow the site and make this
-          a part of the community.
-        </p>
-        <p>We’re glad you found us. Welcome to our community.</p>
-      </div>
-    </div>
+  <!-- Page content (UNCHANGED COPY) -->
+  <section class="home-copy long-text">
+    <p>Hello Friend! Welcome to the Flush internets!</p>
+    <p>
+      Flush is a rock band from Helsinki, Finland, we like to describe ourselves as community rock.
+      Once described as “an ideal band to book for funerals”, we are  bit of punk rock, quite a lot
+      of alternative rock, and many other flavours of rock and metal. But most of all, we are a safe
+      space or sometimes an escape for when the world feels like a bit too much. A community for those
+      who don’t always fit in. A community for anyone.
+    </p>
+    <p>
+      On this website of ours you’ll find the usual stuff you would expect from a band. Links to music,
+      gigs, etc. But there will be more! There will be games, gig trackers, scrapbooks, blogs, links to
+      stories you might have missed… who knows what else. So come back as we grow the site and make this
+      a part of the community.
+    </p>
+    <p>We’re glad you found us. Welcome to our community.</p>
   </section>
 
-  <!-- Tag cloud stays -->
   <section class="home-tags">
     <TagCloud />
   </section>
 
   <style>
-    .home-hero {
-      position: relative;
-      display: grid;
-      place-items: center;
-      padding-block: 2rem 1rem;
-      min-height: 40vh;
-    }
-    .mark-layer {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.9; /* adjust if needed */
-    }
-    .hero-content { position: relative; z-index: 1; width: 100%; }
     .home-copy { max-width: 56rem; margin-inline: auto; padding-inline: 1rem; }
     .home-tags { margin-top: 1.25rem; padding-inline: 1rem; }
   </style>
