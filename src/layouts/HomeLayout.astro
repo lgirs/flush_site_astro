@@ -2,7 +2,7 @@
 const { title = "Flush", description = "Let’s do some entertainment" } = Astro.props;
 import "../styles/global.css";
 
-/* If page supplies a hero vector, disable the old background image */
+/* If page provides a hero vector, disable the old background image */
 const hasVector = Astro.slots.has("hero-vector");
 const heroClass = hasVector ? "hero hero--vector" : "hero";
 ---
@@ -31,12 +31,12 @@ const heroClass = hasVector ? "hero hero--vector" : "hero";
 
     <!-- HERO -->
     <section class={heroClass}>
-      <!-- Vector layer -->
+      <!-- Vector layer (ABOVE overlay, BELOW text) -->
       <div class="hero__vector" aria-hidden="true">
         <slot name="hero-vector" />
       </div>
 
-      <!-- Soft overlay (keeps hero text readable on all marks) -->
+      <!-- Soft overlay (keeps bg in check, does not dim the vector) -->
       <div class="hero__overlay" aria-hidden="true"></div>
 
       <!-- Title + Tagline -->
@@ -62,7 +62,7 @@ const heroClass = hasVector ? "hero hero--vector" : "hero";
 </html>
 
 <style>
-/* Default hero background (used when no vector supplied) */
+/* Default hero background (when no vector slot is provided) */
 .hero{
   position: relative;
   min-height: 55vh;
@@ -75,28 +75,29 @@ const heroClass = hasVector ? "hero hero--vector" : "hero";
   background-position: center;
   background-repeat: no-repeat;
 }
-/* Vector mode: plain site black */
+/* Vector mode = plain site black */
 .hero--vector{
   background-image: none;
   background-color: #0f0d0d;
 }
 
-/* Layers: vector (z1) -> overlay (z2) -> text (z3) */
-.hero__vector{
+/* Z-order: bg -> overlay(z1) -> vector(z2) -> text(z3) */
+.hero__overlay{
   position: absolute;
   inset: 0;
   z-index: 1;
+  background: linear-gradient(180deg, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.18) 40%, rgba(0,0,0,0.25) 100%);
+}
+.hero__vector{
+  position: absolute;
+  inset: 0;
+  z-index: 2;               /* above overlay so the mark is always visible */
   display: grid;
   place-items: center;
   pointer-events: none;
 }
-.hero__overlay{
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  background: linear-gradient(180deg, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.18) 40%, rgba(0,0,0,0.25) 100%);
-}
+
 .hero__inner{ position: relative; padding: 2rem 1rem; max-width: 900px; z-index: 3; }
-.hero__title{ font-family:"Oswald",sans-serif; font-size:clamp(2.5rem,8vw,4.25rem); font-weight:700; color:var(--flush-light); text-transform:uppercase; margin:0 0 .5rem 0; }
-.hero__sub  { font-family:"Oswald",sans-serif; font-weight:400; font-size:clamp(1.05rem,2.5vw,1.35rem); color:var(--flush-yellow); margin:0; }
+.hero__title{ font-family: "Oswald", sans-serif; font-size: clamp(2.5rem, 8vw, 4.25rem); font-weight: 700; color: var(--flush-light); text-transform: uppercase; margin: 0 0 .5rem 0; }
+.hero__sub  { font-family: "Oswald", sans-serif; font-weight: 400; font-size: clamp(1.05rem, 2.5vw, 1.35rem); color: var(--flush-yellow); margin: 0; }
 </style>
