@@ -1,6 +1,10 @@
 ---
 const { title = "Flush", description = "Let’s do some entertainment" } = Astro.props;
 import "../styles/global.css";
+
+// detect if a vector is supplied
+const hasVector = Astro.slots.has("hero-vector");
+const heroClass = hasVector ? "hero hero--vector" : "hero";
 ---
 
 <html lang="en">
@@ -26,16 +30,16 @@ import "../styles/global.css";
     </header>
 
     <!-- HERO -->
-    <section class="hero">
-      <!-- Random vector goes here from the page via named slot -->
+    <section class={heroClass}>
+      <!-- Random vector from page -->
       <div class="hero__vector" aria-hidden="true">
         <slot name="hero-vector" />
       </div>
 
-      <!-- Gradient shade -->
+      <!-- Gradient overlay -->
       <div class="hero__overlay" aria-hidden="true"></div>
 
-      <!-- Title & tagline -->
+      <!-- Hero text -->
       <div class="hero__inner">
         <h1 class="hero__title">FLUSH</h1>
         <p class="hero__sub">Let’s do some entertainment</p>
@@ -58,8 +62,7 @@ import "../styles/global.css";
 </html>
 
 <style>
-/* Hero styles (kept); vector layer added & ordered for clarity */
-.hero{
+.hero {
   position: relative;
   min-height: 55vh;
   width: 100%;
@@ -72,8 +75,13 @@ import "../styles/global.css";
   background-repeat: no-repeat;
 }
 
-/* Vector layer is ABOVE bg, BELOW gradient & text */
-.hero__vector{
+/* disable default background if vector is present */
+.hero--vector {
+  background-image: none;
+  background-color: #0f0d0d;
+}
+
+.hero__vector {
   position: absolute;
   inset: 0;
   z-index: 1;
@@ -82,15 +90,14 @@ import "../styles/global.css";
   pointer-events: none;
 }
 
-/* Gradient shade sits above vector; keeps brand look */
-.hero__overlay{
+.hero__overlay {
   position: absolute;
   inset: 0;
   z-index: 2;
   background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.65) 100%);
 }
 
-.hero__inner{ position: relative; padding: 2rem 1rem; max-width: 900px; z-index: 3; }
-.hero__title { font-family: "Oswald", sans-serif; font-size: clamp(2.5rem, 8vw, 4.25rem); font-weight: 700; color: var(--flush-light); text-transform: uppercase; letter-spacing: .5px; margin: 0 0 .5rem 0; }
+.hero__inner { position: relative; padding: 2rem 1rem; max-width: 900px; z-index: 3; }
+.hero__title { font-family: "Oswald", sans-serif; font-size: clamp(2.5rem, 8vw, 4.25rem); font-weight: 700; color: var(--flush-light); text-transform: uppercase; margin: 0 0 .5rem 0; }
 .hero__sub   { font-family: "Oswald", sans-serif; font-weight: 400; font-size: clamp(1.05rem, 2.5vw, 1.35rem); color: var(--flush-yellow); margin: 0; }
 </style>
