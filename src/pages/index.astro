@@ -5,13 +5,15 @@ import TagCloud from "../components/TagCloud.astro";
 ---
 
 <HomeLayout title="Flush" description="Let’s do some entertainment">
+  <!-- Hero: random vector (no hero text) -->
   <RandomMark slot="hero-vector" />
 
+  <!-- Body copy (unchanged) -->
   <section class="home-copy long-text">
     <p>Hello Friend! Welcome to the Flush internets!</p>
     <p>
       Flush is a rock band from Helsinki, Finland, we like to describe ourselves as community rock.
-      Once described as “an ideal band to book for funerals”, we are  bit of punk rock, quite a lot
+      Once described as “an ideal band to book for funerals”, we are bit of punk rock, quite a lot
       of alternative rock, and many other flavours of rock and metal. But most of all, we are a safe
       space or sometimes an escape for when the world feels like a bit too much. A community for those
       who don’t always fit in. A community for anyone.
@@ -25,12 +27,46 @@ import TagCloud from "../components/TagCloud.astro";
     <p>We’re glad you found us. Welcome to our community.</p>
   </section>
 
+  <!-- NEW: vexed FLUSH logo (centered) -->
+  <section class="home-logo-vex" aria-label="Flush vexed logo">
+    <img
+      src="/images/logo-flush-white-black_vex.png"
+      alt="Flush logo"
+      loading="lazy"
+      decoding="async"
+      width="800"
+      height="400"
+    />
+  </section>
+
+  <!-- Tag cloud -->
   <section class="home-tags">
     <TagCloud />
   </section>
 
   <style>
-    .home-copy { max-width: 56rem; margin-inline: auto; padding-inline: 1rem; }
-    .home-tags { margin-top: 1.25rem; padding-inline: 1rem; }
+    .home-copy {
+      max-width: 56rem;
+      margin-inline: auto;
+      padding-inline: 1rem;
+    }
+
+    .home-logo-vex {
+      display: grid;
+      place-items: center;
+      margin: 1.75rem auto 0;
+      padding-inline: 1rem;
+    }
+    .home-logo-vex img {
+      width: min(68vw, 480px);
+      height: auto;
+      display: block;
+      opacity: 0.95; /* tweak if you want it stronger/weaker */
+    }
+
+    .home-tags {
+      margin-top: 1.25rem;
+      padding-inline: 1rem;
+    }
   </style>
 </HomeLayout>
