@@ -2,7 +2,7 @@
 /**
  * RandomMark.astro
  * Shows one random SVG from /public/images/marks/ on each page load.
- * Self-contained. Safe to drop anywhere.
+ * Self-contained. No props. Safe to drop anywhere.
  */
 const modules = import.meta.glob("../../public/images/marks/*.svg", {
   eager: true,
@@ -50,11 +50,11 @@ const markUrls = Object.values(modules) as string[];
 </script>
 
 <style>
+  /* Sizes the mark; parent may position it (absolute/relative) */
   .rm {
     position: relative;
     display: grid;
     place-items: center;
-    margin-block: 2rem;
   }
   .rm__mask,
   .rm__img {
