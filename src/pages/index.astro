@@ -1,155 +1,96 @@
 ---
 import HomeLayout from "../layouts/HomeLayout.astro";
-import TagCloud from "../components/TagCloud.astro";
 
-// Page metadata / tags
-export const pageTitle = "Flush";
-export const pageTags = ["Home"];
-
-/**
- * Build-time: collect ALL SVGs in /public/images/marks via import.meta.glob
- * - No filesystem APIs (works reliably on Netlify)
- * - Result is a list of URLs we can pass to the client
- */
-const modules = import.meta.glob("/public/images/marks/*.svg", {
+// Import all mark SVGs from /public/images/marks
+// IMPORTANT: Use relative path, not "/public/..."
+const modules = import.meta.glob("../../public/images/marks/*.svg", {
   eager: true,
   as: "url",
 });
-const markFiles: string[] = Object.values(modules);
+const markUrls = Object.values(modules);
 ---
 
-<HomeLayout title="Flush" description="Official Flush site">
-  <!-- HERO: one random white-tinted vector -->
-  <section class="hero">
-    <div class="hero__inner">
-      <span class="hero__mark" aria-hidden="true"></span>
-      <img class="hero__markImg" alt="" aria-hidden="true" />
-    </div>
-  </section>
+<HomeLayout title="Flush" description="Let’s do some entertainment">
+  <div class="hero">
+    <div class="hero__mark" aria-hidden="true"></div>
+    <img class="hero__markImg" alt="" />
+  </div>
 
-  <!-- INTRO COPY -->
-  <section class="intro long-text">
-    <p>Hello Friend! Welcome to the Flush internets!</p>
-    <p>
-      Flush is a rock band from Helsinki, Finland, we like to describe ourselves as community rock.
-      Once described as “an ideal band to book for funerals”, we are  bit of punk rock, quite a lot
-      of alternative rock, and many other flavours of rock and metal. But most of all, we are a safe
-      space or sometimes an escape for when the world feels like a bit too much. A community for those
-      who don’t always fit in. A community for anyone.
-    </p>
-    <p>
-      On this website of ours you’ll find the usual stuff you would expect from a band. Links to music,
-      gigs, etc. But there will be more! There will be games, gig trackers, scrapbooks, blogs, links to
-      stories you might have missed… who knows what else. So come back as we grow the site and make this
-      a part of the community.
-    </p>
-    <p>We’re glad you found us. Welcome to our community.</p>
-  </section>
+  <p class="intro">
+    Welcome to Flush. This is our space for music, words, and whatever else
+    comes along. Stick around and explore.
+  </p>
 
-  <!-- LOGO (smaller) -->
-  <section class="logo-wrap">
-    <img
-      src="/images/logo-flush-white-orange_vex.png"
-      alt="Flush"
-      class="home-logo"
-      loading="eager"
-    />
-  </section>
+  <!-- Tag cloud component already wired here if present -->
+  <!-- Example: <TagCloud /> -->
 
-  <!-- TAG CLOUD (unchanged) -->
-  <TagCloud />
+  <script type="module" data-marks={JSON.stringify(markUrls)}>
+    const MARK_URLS = JSON.parse(document.currentScript.dataset.marks || "[]");
+    if (Array.isArray(MARK_URLS) && MARK_URLS.length > 0) {
+      const pick = () =>
+        MARK_URLS[Math.floor(Math.random() * MARK_URLS.length)];
+      const url = pick();
 
-  <!-- Ship the list to the browser for per-load random choice -->
-  <script type="application/json" id="marks-json">
-    {JSON.stringify(markFiles)}
-  </script>
+      const markEl = document.querySelector(".hero__mark");
+      const imgEl = document.querySelector(".hero__markImg");
 
-  <!-- Client: pick one SVG each page load -->
-  <script is:inline>
-    (() => {
-      try {
-        const dataEl = document.getElementById("marks-json");
-        const list = dataEl ? JSON.parse(dataEl.textContent || "[]") : [];
-        if (!Array.isArray(list) || list.length === 0) return;
-
-        // pick one
-        const chosen = list[Math.floor(Math.random() * list.length)];
-
-        // masked (white tint)
-        const maskEl = document.querySelector(".hero__mark");
-        if (maskEl) {
-          const url = `url('${chosen}')`;
-          maskEl.style.webkitMaskImage = url;
-          maskEl.style.maskImage = url;
-          maskEl.classList.add("is-ready");
-        }
-
-        // fallback <img> if masks unsupported
-        const imgEl = document.querySelector(".hero__markImg");
-        if (imgEl) imgEl.src = chosen;
-      } catch {}
-    })();
+      if (markEl) {
+        markEl.style.maskImage = `url(${url})`;
+        markEl.style.webkitMaskImage = `url(${url})`;
+        markEl.style.maskRepeat = "no-repeat";
+        markEl.style.maskPosition = "center";
+        markEl.style.maskSize = "contain";
+        markEl.style.webkitMaskRepeat = "no-repeat";
+        markEl.style.webkitMaskPosition = "center";
+        markEl.style.webkitMaskSize = "contain";
+        markEl.style.background = "white"; // makes the mask visible
+      }
+      if (imgEl) {
+        imgEl.src = url;
+        imgEl.loading = "lazy";
+        imgEl.decoding = "async";
+      }
+    } else {
+      console.warn("[home hero] No mark URLs found");
+    }
   </script>
 
   <style>
-    /* LOCAL ONLY — does not touch site containers, header, footer, or TagCloud */
-
     .hero {
-      background: var(--flush-black);
-      padding-block: clamp(2.2rem, 7vw, 6rem);
-    }
-    .hero__inner {
-      max-width: 1100px;    /* match existing site container */
-      margin-inline: auto;
-      padding-inline: 1rem; /* match existing site padding */
+      position: relative;
       display: grid;
       place-items: center;
+      margin-block: 2rem;
     }
-
-    /* Random vector as white mask (with image fallback) */
     .hero__mark {
-      display: none; /* revealed when mask is set */
-      width: clamp(260px, 70vw, 680px);
-      height: auto;
-      aspect-ratio: 16 / 10; /* generic; mask-size contain keeps the real shape */
-      background: var(--flush-light);
-      filter: drop-shadow(0 8px 18px rgba(0,0,0,.35));
-      opacity: .96;
-
-      -webkit-mask-repeat: no-repeat;  mask-repeat: no-repeat;
-      -webkit-mask-position: center;   mask-position: center;
-      -webkit-mask-size: contain;      mask-size: contain;
+      width: min(60vmin, 720px);
+      height: min(60vmin, 720px);
     }
-    .hero__mark.is-ready { display: block; }
-
     .hero__markImg {
-      display: block;
-      width: clamp(260px, 70vw, 680px);
-      height: auto;
-      filter: drop-shadow(0 8px 18px rgba(0,0,0,.35));
-      opacity: .96;
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      width: min(60vmin, 720px);
+      height: min(60vmin, 720px);
+      object-fit: contain;
+      opacity: 0; /* hidden unless mask unsupported */
     }
-    @supports (mask-image: url("")) or (-webkit-mask-image: url("")) {
-      .hero__markImg { display: none; }
+    @supports not (mask-image: url("")) {
+      .hero__mark {
+        display: none;
+      }
+      .hero__markImg {
+        opacity: 1;
+      }
     }
 
     .intro {
-      max-width: 760px;
-      margin: 1.5rem auto 1rem;
-      padding-inline: 1rem;
-      color: var(--flush-light);
-    }
-
-    .logo-wrap {
-      display: grid;
-      place-items: center;
-      margin: 2rem 0;
-    }
-    .home-logo {
-      width: clamp(160px, 32vw, 280px);
-      height: auto;
-      display: block;
-      filter: drop-shadow(0 6px 14px rgba(0,0,0,.45));
+      font-family: var(--font-body, Montserrat, sans-serif);
+      font-size: 1.25rem;
+      margin-block: 2rem;
+      text-align: center;
+      max-width: 42rem;
+      margin-inline: auto;
     }
   </style>
 </HomeLayout>
