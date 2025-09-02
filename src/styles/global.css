@@ -13,7 +13,6 @@
 html,body {
   margin: 0; 
   padding: 0;
-  background: var(--flush-black);
   color: var(--flush-light);
   font-family: "Oswald", Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   line-height: 1.6;
