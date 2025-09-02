@@ -29,17 +29,13 @@ const heroClass = hasVector ? "hero hero--vector" : "hero";
       </div>
     </header>
 
-    <!-- HERO -->
     <section class={heroClass}>
-      <!-- Soft overlay BELOW the vector -->
       <div class="hero__overlay" aria-hidden="true"></div>
 
-      <!-- Vector ABOVE overlay -->
       <div class="hero__vector" aria-hidden="true">
         <slot name="hero-vector" />
       </div>
-      <!-- No title / tagline -->
-    </section>
+      </section>
 
     <main class="page">
       <slot />
@@ -91,5 +87,10 @@ const heroClass = hasVector ? "hero hero--vector" : "hero";
   display: grid;
   place-items: center;
   pointer-events: none;
+}
+
+/* FIX: Remove top padding on the main content area for a seamless background */
+main.page {
+  padding-top: 0;
 }
 </style>
