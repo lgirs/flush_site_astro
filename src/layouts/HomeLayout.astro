@@ -14,7 +14,7 @@ const heroClass = hasVector ? "hero hero--vector" : "hero";
     <title>{title} | Flush</title>
     <meta name="description" content={description} />
   </head>
-  <body>
+  <body class="bg-[var(--flush-black)]">
     <header class="header">
       <div class="header-inner">
         <a href="/"><img src="/images/logo-flush-white.png" alt="Flush" class="logo" /></a>
@@ -73,7 +73,7 @@ const heroClass = hasVector ? "hero hero--vector" : "hero";
 /* Vector mode = plain site black */
 .hero--vector{
   background-image: none;
-  background-color: #0f0d0d;
+  background-color: var(--flush-black);
 }
 
 /* Z order: bg -> overlay(z1) -> vector(z2) */
