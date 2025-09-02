@@ -53,7 +53,8 @@ main a:hover {
 .page{
   max-width: 760px;
   margin: 0 auto;
-  padding: 24px 16px 72px;
+  /* The top padding has been removed from here */
+  padding: 0 16px 72px;
 }
 .content{
   display: grid;
