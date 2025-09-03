@@ -11,7 +11,7 @@ const venues = [
   },
   {
     name: 'Semifinal',
-    url: 'https://tavastiaklubi.fi/semifinal/#days',
+    url: 'https://tavastiaklubi.fi/en/semifinal-2/?show_all=1', // <-- NEW, CLEANER URL
     scraper: scrapeSemifinal
   },
 ];
@@ -28,16 +28,30 @@ function parseLepisDate(dateString) {
   return `${year}-${month}-${day}`;
 }
 
-function parseSemifinalDate(dayAndMonthString, currentYear) {
-    if (!currentYear) return `${new Date().getFullYear()}-01-01`;
+function parseSemifinalDate(dateString) {
+    const now = new Date();
+    let year = now.getFullYear();
+    
+    // Create a date object from a string like "5.9."
+    const parts = dateString.replace('.', '').trim().split('.');
+    if (parts.length < 2) return `${year}-01-01`;
+    
+    const day = parts[0];
+    const month = parts[1] - 1; // JS months are 0-indexed
+    
+    let potentialDate = new Date(year, month, day);
 
-    const parts = dayAndMonthString.replace('.', '').trim().split('.');
-    if (parts.length < 2) return `${new Date().getFullYear()}-01-01`;
+    // If the date is in the past, assume it's next year's gig
+    now.setHours(0, 0, 0, 0);
+    if (potentialDate < now) {
+        potentialDate.setFullYear(year + 1);
+    }
     
-    const day = parts[0].padStart(2, '0');
-    const month = parts[1].padStart(2, '0');
-    
-    return `${currentYear}-${month}-${day}`;
+    const finalYear = potentialDate.getFullYear();
+    const finalMonth = String(potentialDate.getMonth() + 1).padStart(2, '0');
+    const finalDay = String(potentialDate.getDate()).padStart(2, '0');
+
+    return `${finalYear}-${finalMonth}-${finalDay}`;
 }
 
 
@@ -67,7 +81,7 @@ async function main() {
 
   // Write to file
   fs.writeFileSync(outputFile, JSON.stringify(allGigs, null, 2));
-  console.log(`Scraping complete. Data saved to ${outputFile}`);
+  console.log(`Scraping complete. Data saved to ./src/data/gigs-scraped.json`);
 }
 
 // --- Venue-Specific Scrapers ---
@@ -90,43 +104,21 @@ async function scrapeLepakkomies(page, venue) {
 }
 
 async function scrapeSemifinal(page, venue) {
-    // Wait for the main event container to be loaded and visible
-    await page.waitForSelector('.table-event-table', { timeout: 15000 });
-
+    // This site has a clean, flat structure, so we can get all items at once.
+    const gigElements = await page.locator('.event-list-event').all();
     const gigs = [];
-    let currentYear = null;
 
-    // Get all rows from the event table
-    const rows = await page.locator('.table-event-table tbody tr').all();
+    for (const el of gigElements) {
+        const dayAndMonthText = await el.locator('.event-list-date').textContent();
+        const title = await el.locator('.event-list-title').textContent();
+        const link = await el.locator('a.event-list-link').getAttribute('href');
 
-    for (const row of rows) {
-        // Check if the row is a month header
-        const headerEl = await row.locator('td[colspan="5"]');
-        if (await headerEl.count() > 0) {
-            const headerText = await headerEl.textContent();
-            const yearMatch = headerText.match(/(\d{4})/);
-            if (yearMatch) {
-                currentYear = yearMatch[0];
-            }
-        } else {
-            // If it's not a header, it must be a gig
-            const dayEl = await row.locator('.day-name');
-            const titleEl = await row.locator('.title');
-            const linkEl = await row.locator('a.item');
-
-            if (await dayEl.count() > 0 && await titleEl.count() > 0) {
-                const dayAndMonthText = await dayEl.textContent();
-                const title = await titleEl.textContent();
-                const link = await linkEl.getAttribute('href');
-
-                gigs.push({
-                    venue: venue.name,
-                    date: parseSemifinalDate(dayAndMonthText, currentYear),
-                    event: title.trim(),
-                    link: new URL(link, venue.url).href,
-                });
-            }
-        }
+        gigs.push({
+            venue: venue.name,
+            date: parseSemifinalDate(dayAndMonthText.trim()),
+            event: title.trim(),
+            link: link,
+        });
     }
     return gigs;
 }
