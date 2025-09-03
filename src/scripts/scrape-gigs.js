@@ -100,33 +100,22 @@ async function scrapeSemifinal(page, venue) {
 }
 
 async function scrapeBarLoose(page, venue) {
+  // Scrape only the first page, do not try to paginate.
+  await page.waitForSelector('.tribe-events-pro-photo__event', { timeout: 15000 });
+  const gigElements = await page.locator('.tribe-events-pro-photo__event').all();
   const gigs = [];
-  const nextButtonSelector = 'a.tribe-events-c-nav__next';
-  while (true) {
-    await page.waitForSelector('.tribe-events-pro-photo__event', { timeout: 15000 });
-    const gigElements = await page.locator('.tribe-events-pro-photo__event').all();
-    for (const el of gigElements) {
-      const dateEl = await el.locator('.tribe-events-pro-photo__event-date-tag').all();
-      // Only process elements that have the clean date tag
-      if (dateEl.length > 0) {
-        const dateText = await dateEl[0].textContent();
-        const title = await el.locator('.tribe-events-pro-photo__event-title').textContent();
-        const link = await el.locator('.tribe-events-pro-photo__event-title-link').getAttribute('href');
-        gigs.push({
-          venue: venue.name,
-          date: parseEnglishDate(dateText.trim()),
-          event: title.trim(),
-          link: link,
-        });
-      }
-    }
-    const nextButton = page.locator(nextButtonSelector);
-    if (await nextButton.count() > 0 && await nextButton.isVisible()) {
-      console.log('Clicking "Next Events" button for Bar Loose...');
-      await nextButton.click();
-      await page.waitForLoadState('networkidle');
-    } else {
-      break; // Exit loop if no next button is found
+  for (const el of gigElements) {
+    const dateEl = await el.locator('.tribe-events-pro-photo__event-date-tag').all();
+    if (dateEl.length > 0) {
+      const dateText = await dateEl[0].textContent();
+      const title = await el.locator('.tribe-events-pro-photo__event-title').textContent();
+      const link = await el.locator('.tribe-events-pro-photo__event-title-link').getAttribute('href');
+      gigs.push({
+        venue: venue.name,
+        date: parseEnglishDate(dateText.trim()),
+        event: title.trim(),
+        link: link,
+      });
     }
   }
   return gigs;
