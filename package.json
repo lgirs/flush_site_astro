@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "scrape": "node ./src/scripts/scrape-gigs.js",
-    "build": "npm run scrape && astro build",
+    "build": "npx playwright install --with-deps && npm run scrape && astro build",
     "preview": "astro preview",
     "format": "prettier --write ."
   },
