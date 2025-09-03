@@ -29,19 +29,34 @@ function parseFinnishDate(dateString) {
     tammi: '01', helmi: '02', maalis: '03', huhti: '04', touko: '05', kesä: '06',
     heinä: '07', elo: '08', syys: '09', loka: '10', marras: '11', joulu: '12'
   };
-  const currentYear = new Date().getFullYear();
+  const now = new Date();
+  const currentYear = now.getFullYear();
+
+  // Clean the string: remove times (e.g., 21:00), extra spaces, and make lowercase
+  const cleanedString = dateString.replace(/\d{1,2}:\d{2}/g, '').trim().toLowerCase();
   
-  const [monthName, day] = dateString.toLowerCase().split(' ');
+  const parts = cleanedString.split(' ');
+  const monthName = parts[0];
+  const day = parts[1];
+
   const month = monthMap[monthName];
 
-  if (!month || !day) return `${currentYear}-01-01`; // Fallback date
-
-  // Assume the gig is this year. If the date is in the past, assume it's next year.
-  const gigDate = new Date(`${currentYear}-${month}-${day}`);
-  if (gigDate < new Date()) {
-    return `${currentYear + 1}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+  if (!month || !day) {
+    // If parsing fails, return a known fallback date for easy debugging
+    return `${currentYear}-01-01`; 
   }
-  return `${currentYear}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+
+  const dayPadded = day.padStart(2, '0');
+  let year = currentYear;
+  
+  // Check if the parsed date is in the past. If so, assume it's for the next year.
+  const potentialDate = new Date(`${year}-${month}-${dayPadded}`);
+  now.setHours(0, 0, 0, 0); // Compare dates only, ignoring time
+  if (potentialDate < now) {
+    year = currentYear + 1;
+  }
+  
+  return `${year}-${month}-${dayPadded}`;
 }
 
 
