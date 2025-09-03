@@ -92,30 +92,44 @@ async function scrapeSemifinal(page, venue) {
 }
 
 async function scrapeBarLoose(page, venue) {
-  const gigElements = await page.locator('.tribe-events-pro-photo__event').all();
   const gigs = [];
-  let lastSeenDate = null; // Variable to remember the last valid date
+  const nextButtonSelector = 'a.tribe-events-c-nav__next';
 
-  for (const el of gigElements) {
-    const dateText = await el.locator('.tribe-events-pro-photo__event-datetime').textContent();
-    const title = await el.locator('.tribe-events-pro-photo__event-title').textContent();
-    const link = await el.locator('.tribe-events-pro-photo__event-title-link').getAttribute('href');
+  while (true) {
+    const gigElements = await page.locator('.tribe-events-pro-photo__event').all();
+    let lastSeenDate = null;
 
-    let currentDate = parseEnglishDate(dateText.trim());
-    
-    if (currentDate) {
-      lastSeenDate = currentDate; // If we find a new valid date, update our memory
-    } else {
-      currentDate = lastSeenDate; // If no date found, use the last one we saw
+    for (const el of gigElements) {
+        const dateText = await el.locator('.tribe-events-pro-photo__event-datetime').textContent();
+        const title = await el.locator('.tribe-events-pro-photo__event-title').textContent();
+        const link = await el.locator('.tribe-events-pro-photo__event-title-link').getAttribute('href');
+
+        let currentDate = parseEnglishDate(dateText.trim());
+        
+        if (currentDate) {
+          lastSeenDate = currentDate;
+        } else {
+          currentDate = lastSeenDate;
+        }
+
+        if (currentDate) {
+            gigs.push({
+              venue: venue.name,
+              date: currentDate,
+              event: title.trim(),
+              link: link,
+            });
+        }
     }
 
-    if (currentDate) { // Only add the gig if we have a valid date for it
-        gigs.push({
-          venue: venue.name,
-          date: currentDate,
-          event: title.trim(),
-          link: link,
-        });
+    const nextButton = page.locator(nextButtonSelector);
+    if (await nextButton.count() > 0 && await nextButton.isVisible()) {
+      console.log('Clicking "Next Events" button...');
+      await nextButton.click();
+      await page.waitForLoadState('networkidle');
+    } else {
+      console.log('No more pages to scrape.');
+      break; // Exit the loop if no next button is found
     }
   }
   return gigs;
