@@ -1,4 +1,5 @@
 ---
+import { slugifyTag } from "../utils/slugifyTag";
 export interface Props { tags: string[] }
 const { tags = [] } = Astro.props as Props;
 ---
@@ -6,7 +7,7 @@ const { tags = [] } = Astro.props as Props;
   <section aria-label="Tags">
     <h2>Tags</h2>
     <div>
-      {tags.map(t => <a class="tag" href={`/tags/${encodeURIComponent(t.toLowerCase())}/`}>{t}</a>)}
+      {tags.map(t => <a class="tag" href={`/tags/${encodeURIComponent(slugifyTag(t))}/`}>{t}</a>)}
     </div>
   </section>
 )}
