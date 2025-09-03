@@ -11,7 +11,7 @@ const venues = [
   // },
   { 
     name: 'Bar Loose', 
-    url: 'https://barloose.com/live/',
+    url: 'https://barloose.com/en/live/', // <-- CHANGED TO ENGLISH URL
     scraper: scrapeBarLoose
   },
   // { 
@@ -23,40 +23,28 @@ const venues = [
 
 const outputFile = './src/data/gigs-scraped.json';
 
-// --- Helper Function to Parse Finnish Dates ---
-function parseFinnishDate(dateString) {
-  const monthMap = {
-    tammikuun: '01', helmikuun: '02', maaliskuun: '03', huhtikuun: '04', toukokuun: '05', kesäkuun: '06',
-    heinäkuun: '07', elokuun: '08', syyskuun: '09', lokakuun: '10', marraskuun: '11', joulukuun: '12'
-  };
+// --- Helper Function to Parse English Dates ---
+function parseEnglishDate(dateString) {
   const now = new Date();
-  const currentYear = now.getFullYear();
+  let year = now.getFullYear();
 
-  // Create a regex pattern to find "(day_number) (month_name)"
-  const monthPattern = Object.keys(monthMap).join('|');
-  const regex = new RegExp(`(\\d+)\\s+(${monthPattern})`);
+  // Try to parse a date like "September 3"
+  const potentialDate = new Date(`${dateString} ${year}`);
   
-  const match = dateString.toLowerCase().match(regex);
-
-  if (!match) {
-    // If the regex finds no match, return the fallback date
-    return `${currentYear}-01-01`; 
+  if (isNaN(potentialDate.getTime())) {
+    return `${year}-01-01`; // Fallback
   }
-  
-  // match[1] is the day (e.g., "5"), match[2] is the month name (e.g., "syyskuun")
-  const day = match[1];
-  const month = monthMap[match[2]];
-  
-  const dayPadded = day.padStart(2, '0');
-  let year = currentYear;
-  
-  const potentialDate = new Date(`${year}-${month}-${dayPadded}`);
-  now.setHours(0, 0, 0, 0); // Compare dates only, ignoring time
+
+  // Check if the parsed date is in the past compared to today's date
+  now.setHours(0, 0, 0, 0); 
   if (potentialDate < now) {
-    year = currentYear + 1;
+    potentialDate.setFullYear(year + 1);
   }
   
-  return `${year}-${month}-${dayPadded}`;
+  const month = String(potentialDate.getMonth() + 1).padStart(2, '0');
+  const day = String(potentialDate.getDate()).padStart(2, '0');
+  
+  return `${potentialDate.getFullYear()}-${month}-${day}`;
 }
 
 
@@ -105,12 +93,12 @@ async function scrapeBarLoose(page, venue) {
     const title = await el.locator('.tribe-events-pro-photo__event-title').textContent();
     const link = await el.locator('.tribe-events-pro-photo__event-title-link').getAttribute('href');
 
-    // DEBUGGING LINE: This will print the raw date text to the build log.
+    // DEBUGGING LINE
     console.log('Raw date text:', dateText.trim());
 
     gigs.push({
       venue: venue.name,
-      date: parseFinnishDate(dateText.trim()),
+      date: parseEnglishDate(dateText.trim()),
       event: title.trim(),
       link: link,
     });
