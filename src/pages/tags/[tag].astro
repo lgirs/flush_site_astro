@@ -1,9 +1,10 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import { slugifyTag } from "../../utils/slugifyTag";
 
 /** Convert a module key (e.g. "../../pages/gigs/index.astro") into a route URL (e.g. "/gigs/"). */
-function pathToUrl(key) {
+function pathToUrl(key: string) {
   // drop any leading ../ segments before "pages"
   let p = key.replace(/^(\.\.\/)+pages/i, "");
   // ensure leading slash
@@ -23,8 +24,10 @@ function pathToUrl(key) {
 // Build all tag pages (tags discovered from content + route pages)
 export async function getStaticPaths() {
   const entries = await getCollection("pages");
-  const tagSet = new Set();
-  for (const e of entries) (e.data.tags || []).forEach((t) => tagSet.add(String(t).toLowerCase().trim()));
+  const tagSet = new Set<string>();
+  for (const e of entries) {
+    (e.data.tags || []).forEach((t) => tagSet.add(slugifyTag(t)));
+  }
 
   const routeMods = import.meta.glob("../../pages/**/*.astro", { eager: true }) as Record<string, any>;
   for (const [path, mod] of Object.entries(routeMods)) {
@@ -32,7 +35,7 @@ export async function getStaticPaths() {
     if (path.includes("/pages/tags/") || path.includes("/pages/content/")) continue;
     const arr = (mod?.pageTags || mod?.tags || []) as unknown[];
     arr?.forEach((t) => {
-      const key = String(t || "").toLowerCase().trim();
+      const key = slugifyTag(String(t || ""));
       if (key) tagSet.add(key);
     });
   }
@@ -45,7 +48,7 @@ const { tag } = Astro.props as { tag: string };
 // Gather matches from content collection
 const allContent = await getCollection("pages");
 const matchesContent = allContent
-  .filter((p) => (p.data.tags || []).map((t) => String(t).toLowerCase().trim()).includes(tag))
+  .filter((p) => (p.data.tags || []).map(slugifyTag).includes(tag))
   .map((p) => ({ title: p.data.title ?? p.slug, url: `/content/${p.slug}/` }));
 
 // Gather matches from route pages (require pageTags export)
@@ -54,7 +57,7 @@ const matchesRoutes: { title: string; url: string }[] = [];
 for (const [path, mod] of Object.entries(routeMods)) {
   if (path.includes("/pages/tags/") || path.includes("/pages/content/")) continue;
   const arr = (mod?.pageTags || mod?.tags || []) as unknown[];
-  const has = arr?.some((t) => String(t || "").toLowerCase().trim() === tag);
+  const has = arr?.some((t) => slugifyTag(String(t || "")) === tag);
   if (!has) continue;
   const title = String(mod?.pageTitle || mod?.title || pathToUrl(path)).trim();
   const url = pathToUrl(path);
