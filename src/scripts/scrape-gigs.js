@@ -11,14 +11,14 @@ const venues = [
   },
   {
     name: 'Semifinal',
-    url: 'https://tavastiaklubi.fi/en/semifinal-2/?show_all=1', // <-- NEW, CLEANER URL
+    url: 'https://tavastiaklubi.fi/en/semifinal-2/?show_all=1',
     scraper: scrapeSemifinal
   },
 ];
 
 const outputFile = './src/data/gigs-scraped.json';
 
-// --- Helper Functions ---
+// --- Helper Function ---
 function parseLepisDate(dateString) {
   const match = dateString.match(/(\d{1,2})\.(\d{1,2})\.(\d{4})/);
   if (!match) return `${new Date().getFullYear()}-01-01`;
@@ -27,33 +27,6 @@ function parseLepisDate(dateString) {
   const year = match[3];
   return `${year}-${month}-${day}`;
 }
-
-function parseSemifinalDate(dateString) {
-    const now = new Date();
-    let year = now.getFullYear();
-    
-    // Create a date object from a string like "5.9."
-    const parts = dateString.replace('.', '').trim().split('.');
-    if (parts.length < 2) return `${year}-01-01`;
-    
-    const day = parts[0];
-    const month = parts[1] - 1; // JS months are 0-indexed
-    
-    let potentialDate = new Date(year, month, day);
-
-    // If the date is in the past, assume it's next year's gig
-    now.setHours(0, 0, 0, 0);
-    if (potentialDate < now) {
-        potentialDate.setFullYear(year + 1);
-    }
-    
-    const finalYear = potentialDate.getFullYear();
-    const finalMonth = String(potentialDate.getMonth() + 1).padStart(2, '0');
-    const finalDay = String(potentialDate.getDate()).padStart(2, '0');
-
-    return `${finalYear}-${finalMonth}-${finalDay}`;
-}
-
 
 // --- Main Scraper Logic ---
 async function main() {
@@ -104,18 +77,21 @@ async function scrapeLepakkomies(page, venue) {
 }
 
 async function scrapeSemifinal(page, venue) {
-    // This site has a clean, flat structure, so we can get all items at once.
-    const gigElements = await page.locator('.event-list-event').all();
+    // Wait for the main event container to be loaded and visible
+    await page.waitForSelector('.tiketti-list-item', { timeout: 15000 });
+    
+    const gigElements = await page.locator('.tiketti-list-item').all();
     const gigs = [];
 
     for (const el of gigElements) {
-        const dayAndMonthText = await el.locator('.event-list-date').textContent();
-        const title = await el.locator('.event-list-title').textContent();
-        const link = await el.locator('a.event-list-link').getAttribute('href');
+        // Get data directly from attributes, which is very reliable
+        const date = await el.getAttribute('data-begin-date');
+        const title = await el.locator('h3').textContent();
+        const link = await el.getAttribute('href');
 
         gigs.push({
             venue: venue.name,
-            date: parseSemifinalDate(dayAndMonthText.trim()),
+            date: date, // Use the direct date from the attribute
             event: title.trim(),
             link: link,
         });
