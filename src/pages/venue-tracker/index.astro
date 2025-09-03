@@ -1,0 +1,80 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import scrapedGigs from "../../data/gigs-scraped.json";
+
+export const pageTitle = "Venue Tracker";
+export const pageTags = ["Gigs", "Helsinki"];
+---
+
+<BaseLayout title={pageTitle} description="An automated list of upcoming gigs at small venues in Helsinki.">
+  <h1>{pageTitle}</h1>
+  <p class="long-text">
+    This is an experimental, automated list of gigs happening at some of our favourite small venues in Helsinki. It's updated daily. Data may be incomplete or inaccurate. Always check the venue's official page.
+  </p>
+
+  <div class="gig-list">
+    {scrapedGigs.length === 0 ? (
+      <p class="muted">No gigs found at the moment. Check back later!</p>
+    ) : (
+      <ul>
+        {scrapedGigs.map(gig => (
+          <li class="item">
+            <span class="date">{gig.date}</span>
+            <span class="venue">{gig.venue}</span>
+            <span class="event">{gig.event}</span>
+            <a href={gig.link} class="link" target="_blank" rel="noopener">Details →</a>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .gig-list ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 2rem;
+  }
+  .item {
+    display: grid;
+    grid-template-columns: 10ch 1fr 2fr auto;
+    gap: 1rem;
+    align-items: baseline;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(233, 232, 241, 0.1);
+  }
+  .date {
+    font-variant-numeric: tabular-nums;
+  }
+  .venue {
+    font-weight: 700;
+    color: var(--flush-yellow);
+  }
+  .event {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .link {
+    white-space: nowrap;
+  }
+  .muted {
+    opacity: 0.8;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 640px) {
+    .item {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+      padding-bottom: 1.5rem;
+    }
+    .date, .venue, .event {
+      grid-column: 1 / -1;
+    }
+    .link {
+      margin-top: 0.5rem;
+    }
+  }
+</style>
