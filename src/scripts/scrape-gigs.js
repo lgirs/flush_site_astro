@@ -5,53 +5,32 @@ import fs from 'fs';
 // --- Configuration ---
 const venues = [
   // {
-  //   name: 'Semifinal',
-  //   url: 'https://tavastiaklubi.fi/semifinal/#days',
-  //   scraper: scrapeSemifinal
+  //   name: 'Bar Loose',
+  //   url: 'https://barloose.com/en/live/',
+  //   scraper: scrapeBarLoose
   // },
   {
-    name: 'Bar Loose',
-    url: 'https://barloose.com/en/live/',
-    scraper: scrapeBarLoose
+    name: 'Lepakkomies',
+    url: 'https://www.lepis.fi/tapahtumat/',
+    scraper: scrapeLepakkomies
   },
-  // {
-  //   name: 'Lepakkomies',
-  //   url: 'https://www.lepis.fi/tapahtumat/',
-  //   scraper: scrapeLepakkomies
-  // },
 ];
 
 const outputFile = './src/data/gigs-scraped.json';
 
-// --- Helper Function to Parse English Dates ---
-function parseEnglishDate(dateString) {
-  const now = new Date();
-  let year = now.getFullYear();
-
-  // Use a regex to find a pattern like "Month Day"
-  const match = dateString.match(/(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d+)/i);
-  
+// --- Helper Function to Parse DD.MM.YYYY Dates ---
+function parseLepisDate(dateString) {
+  // Matches a date like "KE 3.9.2025"
+  const match = dateString.match(/(\d{1,2})\.(\d{1,2})\.(\d{4})/);
   if (!match) {
-    return null; // Return null if no valid date is found in the string
+    return `${new Date().getFullYear()}-01-01`; // Fallback
   }
 
-  const fullDateString = `${match[1]} ${match[2]}`;
-  const potentialDate = new Date(`${fullDateString} ${year}`);
+  const day = match[1].padStart(2, '0');
+  const month = match[2].padStart(2, '0');
+  const year = match[3];
   
-  if (isNaN(potentialDate.getTime())) {
-    return null; // Return null on invalid date
-  }
-
-  // Check if the parsed date is in the past compared to today's date
-  now.setHours(0, 0, 0, 0); 
-  if (potentialDate < now) {
-    potentialDate.setFullYear(year + 1);
-  }
-  
-  const month = String(potentialDate.getMonth() + 1).padStart(2, '0');
-  const day = String(potentialDate.getDate()).padStart(2, '0');
-  
-  return `${potentialDate.getFullYear()}-${month}-${day}`;
+  return `${year}-${month}-${day}`;
 }
 
 
@@ -86,58 +65,28 @@ async function main() {
 
 // --- Venue-Specific Scrapers ---
 
-async function scrapeSemifinal(page, venue) {
-  // Placeholder - to be implemented
-  return [];
-}
-
 async function scrapeBarLoose(page, venue) {
-  const gigs = [];
-  const nextButtonSelector = 'a.tribe-events-c-nav__next';
-
-  while (true) {
-    const gigElements = await page.locator('.tribe-events-pro-photo__event').all();
-    let lastSeenDate = null;
-
-    for (const el of gigElements) {
-        const dateText = await el.locator('.tribe-events-pro-photo__event-datetime').textContent();
-        const title = await el.locator('.tribe-events-pro-photo__event-title').textContent();
-        const link = await el.locator('.tribe-events-pro-photo__event-title-link').getAttribute('href');
-
-        let currentDate = parseEnglishDate(dateText.trim());
-        
-        if (currentDate) {
-          lastSeenDate = currentDate;
-        } else {
-          currentDate = lastSeenDate;
-        }
-
-        if (currentDate) {
-            gigs.push({
-              venue: venue.name,
-              date: currentDate,
-              event: title.trim(),
-              link: link,
-            });
-        }
-    }
-
-    const nextButton = page.locator(nextButtonSelector);
-    if (await nextButton.count() > 0 && await nextButton.isVisible()) {
-      console.log('Clicking "Next Events" button...');
-      await nextButton.click();
-      await page.waitForLoadState('networkidle');
-    } else {
-      console.log('No more pages to scrape.');
-      break; // Exit the loop if no next button is found
-    }
-  }
-  return gigs;
+  // Placeholder - currently disabled
+  return [];
 }
 
 async function scrapeLepakkomies(page, venue) {
-  // Placeholder - to be implemented
-  return [];
+  const gigElements = await page.locator('.tapahtuma').all();
+  const gigs = [];
+
+  for (const el of gigElements) {
+    const dateText = await el.locator('.entry-details').textContent();
+    const title = await el.locator('h1.tapahtumatila').textContent();
+    const link = await el.locator('h1.tapahtumatila a').getAttribute('href');
+
+    gigs.push({
+      venue: venue.name,
+      date: parseLepisDate(dateText.trim()),
+      event: title.trim(),
+      link: link,
+    });
+  }
+  return gigs;
 }
 
 main();
