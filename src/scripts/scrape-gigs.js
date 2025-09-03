@@ -4,18 +4,18 @@ import fs from 'fs';
 
 // --- Configuration ---
 const venues = [
-  // { 
-  //   name: 'Semifinal', 
+  // {
+  //   name: 'Semifinal',
   //   url: 'https://tavastiaklubi.fi/semifinal/#days',
-  //   scraper: scrapeSemifinal 
+  //   scraper: scrapeSemifinal
   // },
-  { 
-    name: 'Bar Loose', 
-    url: 'https://barloose.com/en/live/', // <-- CHANGED TO ENGLISH URL
+  {
+    name: 'Bar Loose',
+    url: 'https://barloose.com/en/live/',
     scraper: scrapeBarLoose
   },
-  // { 
-  //   name: 'Lepakkomies', 
+  // {
+  //   name: 'Lepakkomies',
   //   url: 'https://www.lepis.fi/tapahtumat/',
   //   scraper: scrapeLepakkomies
   // },
@@ -28,11 +28,18 @@ function parseEnglishDate(dateString) {
   const now = new Date();
   let year = now.getFullYear();
 
-  // Try to parse a date like "September 3"
-  const potentialDate = new Date(`${dateString} ${year}`);
+  // Use a regex to find a pattern like "Month Day"
+  const match = dateString.match(/(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d+)/i);
+  
+  if (!match) {
+    return null; // Return null if no valid date is found in the string
+  }
+
+  const fullDateString = `${match[1]} ${match[2]}`;
+  const potentialDate = new Date(`${fullDateString} ${year}`);
   
   if (isNaN(potentialDate.getTime())) {
-    return `${year}-01-01`; // Fallback
+    return null; // Return null on invalid date
   }
 
   // Check if the parsed date is in the past compared to today's date
@@ -87,21 +94,29 @@ async function scrapeSemifinal(page, venue) {
 async function scrapeBarLoose(page, venue) {
   const gigElements = await page.locator('.tribe-events-pro-photo__event').all();
   const gigs = [];
+  let lastSeenDate = null; // Variable to remember the last valid date
 
   for (const el of gigElements) {
     const dateText = await el.locator('.tribe-events-pro-photo__event-datetime').textContent();
     const title = await el.locator('.tribe-events-pro-photo__event-title').textContent();
     const link = await el.locator('.tribe-events-pro-photo__event-title-link').getAttribute('href');
 
-    // DEBUGGING LINE
-    console.log('Raw date text:', dateText.trim());
+    let currentDate = parseEnglishDate(dateText.trim());
+    
+    if (currentDate) {
+      lastSeenDate = currentDate; // If we find a new valid date, update our memory
+    } else {
+      currentDate = lastSeenDate; // If no date found, use the last one we saw
+    }
 
-    gigs.push({
-      venue: venue.name,
-      date: parseEnglishDate(dateText.trim()),
-      event: title.trim(),
-      link: link,
-    });
+    if (currentDate) { // Only add the gig if we have a valid date for it
+        gigs.push({
+          venue: venue.name,
+          date: currentDate,
+          event: title.trim(),
+          link: link,
+        });
+    }
   }
   return gigs;
 }
