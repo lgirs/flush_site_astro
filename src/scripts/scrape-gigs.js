@@ -76,8 +76,9 @@ async function scrapeLepakkomies(page, venue) {
 
   for (const el of gigElements) {
     const dateText = await el.locator('.entry-details').textContent();
-    const title = await el.locator('h1.tapahtumatila').textContent();
-    const link = await el.locator('h1.tapahtumatila a').getAttribute('href');
+    // Using the new, more accurate selectors you found
+    const title = await el.locator('.entry-content h1').textContent();
+    const link = await el.locator('.entry-content h1 a').getAttribute('href');
 
     gigs.push({
       venue: venue.name,
