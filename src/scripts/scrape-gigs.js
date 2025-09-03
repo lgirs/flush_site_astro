@@ -90,6 +90,9 @@ async function scrapeLepakkomies(page, venue) {
 }
 
 async function scrapeSemifinal(page, venue) {
+    // Wait for the main event container to be loaded and visible
+    await page.waitForSelector('.table-event-table', { timeout: 15000 });
+
     const gigs = [];
     let currentYear = null;
 
