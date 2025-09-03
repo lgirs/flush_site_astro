@@ -116,4 +116,16 @@ async function scrapeSemifinal(page, venue) {
                 const title = await titleEl.textContent();
                 const link = await linkEl.getAttribute('href');
 
-                gigs.
+                gigs.push({
+                    venue: venue.name,
+                    date: parseSemifinalDate(dayAndMonthText, currentYear),
+                    event: title.trim(),
+                    link: new URL(link, venue.url).href,
+                });
+            }
+        }
+    }
+    return gigs;
+}
+
+main();
