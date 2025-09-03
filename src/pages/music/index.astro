@@ -2,14 +2,12 @@
 export const pageTitle = "Music";
 export const pageTags = ["Music", "Streaming"];
 
-import BaseLayout from "../../layouts/BaseLayout.astro";
-
+import BaseLayout from "../layouts/BaseLayout.astro";
 const album = {
   title: "Digital links to our latest album 'Noises' (2024)",
   url: "https://orcd.co/noises",
   cover: "/images/flush_digital_album_noises_cover.jpg", // lives in public/images/
 };
-
 const spotify = {
   id: "0M9RMWUBIGsJ9D123qGuW9",
   url: "https://open.spotify.com/artist/0M9RMWUBIGsJ9D123qGuW9?si=vSJTUbG8Scat8S25n7NW4g",
@@ -20,16 +18,14 @@ const spotify = {
   <section class="music">
     <h1 class="page-title">Music</h1>
 
-    <!-- Latest album -->
     <a class="album-card" href={album.url} target="_blank" rel="noopener">
-      <img class="cover" src={album.cover} alt="Flush — Noises album cover" />
+      <img class="cover" src={album.cover} alt="Flush — Noises album cover" width="1400" height="1400" />
       <div class="meta">
         <h2 class="album-title">{album.title}</h2>
         <p class="album-cta">Listen / buy →</p>
       </div>
     </a>
 
-    <!-- Spotify embed (compact) -->
     <div class="spotify">
       <h2 class="section-title">Our artist profile on Spotify</h2>
       <iframe
