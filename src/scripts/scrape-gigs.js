@@ -105,6 +105,9 @@ async function scrapeBarLoose(page, venue) {
     const title = await el.locator('.tribe-events-pro-photo__event-title').textContent();
     const link = await el.locator('.tribe-events-pro-photo__event-title-link').getAttribute('href');
 
+    // DEBUGGING LINE: This will print the raw date text to the build log.
+    console.log('Raw date text:', dateText.trim());
+
     gigs.push({
       venue: venue.name,
       date: parseFinnishDate(dateText.trim()),
