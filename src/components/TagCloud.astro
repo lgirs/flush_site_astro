@@ -1,21 +1,22 @@
 ---
 /**
  * TagCloud.astro – Builds the word cloud from:
- *  - Content collection (src/content/pages/**)
- *  - Route pages (src/pages/**) that export `pageTags`
+ * - Content collection (src/content/pages/**)
+ * - Route pages (src/pages/**) that export `pageTags`
  *
  * Drop this near the bottom of Home.
  */
 import { getCollection } from "astro:content";
+import { slugifyTag } from "../utils/slugifyTag";
 
-const { maxTags = 60, seed = "flush", minSize = 0.9, maxSize = 1.9 } = Astro.props;
+const { maxTags = 60, seed = "flush" } = Astro.props;
 
 // 1) Collect tags from content collection
 const entries = await getCollection("pages");
 const counts = new Map<string, number>();
 for (const e of entries) {
   (e.data.tags || []).forEach((t: string) => {
-    const key = String(t).toLowerCase().trim();
+    const key = slugifyTag(t);
     if (!key) return;
     counts.set(key, (counts.get(key) || 0) + 1);
   });
@@ -26,24 +27,21 @@ const routeMods = import.meta.glob("../pages/**/*.astro", { eager: true }) as Re
 for (const [path, mod] of Object.entries(routeMods)) {
   // ignore templates and tag-archive pages themselves
   if (path.includes("/pages/tags/") || path.includes("/pages/content/")) continue;
-
   const arr = (mod?.pageTags || mod?.tags || []) as unknown[];
   for (const t of arr) {
-    const key = String(t).toLowerCase().trim();
+    const key = slugifyTag(String(t));
     if (!key) continue;
     counts.set(key, (counts.get(key) || 0) + 1);
   }
 }
 
 const items = [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, maxTags);
-
 // Seeded RNG for stable rotation/weight
 function hash(s: string){let h=2166136261>>>0;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;}
 function rngFor(k: string){let x=(hash(seed+"|"+k)||1)>>>0;return ()=>{x^=x<<13;x>>>=0;x^=x>>17;x>>>=0;x^=x<<5;x>>>=0;return (x>>>0)/0xffffffff;};}
 
 const maxCount = items.length ? Math.max(...items.map(([,c])=>c)) : 1;
 const minCount = items.length ? Math.min(...items.map(([,c])=>c)) : 1;
-
 // Map each tag to responsive font-size (rem + vw) and font-weight.
 // Removes transform scale() to keep text pixel‑crisp on large/HiDPI screens.
 const cloud = items.map(([tag, c]) => {
@@ -57,7 +55,7 @@ const cloud = items.map(([tag, c]) => {
   const vw  = +(vwMin  + (vwMax  - vwMin)  * pct).toFixed(3);
 
   const rnd = rngFor(tag);
-  const rot = Math.round((rnd()*20 - 10) * 10) / 10;              // -10..+10 deg
+  const rot = Math.round((rnd()*20 - 10) * 10) / 10;             // -10..+10 deg
   const weight = rnd() > 0.66 ? 700 : 600;                         // bold range
 
   return { tag, rem, vw, rot, weight };
@@ -86,7 +84,8 @@ const cloud = items.map(([tag, c]) => {
 
   .cloud-tag {
     display:inline-block;
-    transform: rotate(var(--rot));            /* no scale → crisp text */
+    transform: rotate(var(--rot));
+    /* no scale → crisp text */
     transform-origin:center;
     font-family:"Oswald", Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
     font-weight:var(--w);
