@@ -26,24 +26,29 @@ const outputFile = './src/data/gigs-scraped.json';
 // --- Helper Function to Parse Finnish Dates ---
 function parseFinnishDate(dateString) {
   const monthMap = {
-    tammi: '01', helmi: '02', maalis: '03', huhti: '04', touko: '05', kesä: '06',
-    heinä: '07', elo: '08', syys: '09', loka: '10', marras: '11', joulu: '12'
+    tammikuun: '01', helmikuun: '02', maaliskuun: '03', huhtikuun: '04', toukokuun: '05', kesäkuun: '06',
+    heinäkuun: '07', elokuun: '08', syyskuun: '09', lokakuun: '10', marraskuun: '11', joulukuun: '12'
   };
   const now = new Date();
   const currentYear = now.getFullYear();
 
-  // Clean the string: remove times (e.g., 21:00), extra spaces, and make lowercase
-  const cleanedString = dateString.replace(/\d{1,2}:\d{2}/g, '').trim().toLowerCase();
+  const cleanedString = dateString.trim().toLowerCase();
   
+  // Find the first month and day in the string
   const parts = cleanedString.split(' ');
-  const monthName = parts[0];
-  const day = parts[1];
+  let month = null;
+  let day = null;
 
-  const month = monthMap[monthName];
+  for (let i = 0; i < parts.length; i++) {
+    if (monthMap[parts[i]]) {
+      month = monthMap[parts[i]];
+      day = parts[i - 1]; // Assume the day is right before the month
+      break;
+    }
+  }
 
-  if (!month || !day) {
-    // If parsing fails, return a known fallback date for easy debugging
-    return `${currentYear}-01-01`; 
+  if (!month || !day || isNaN(parseInt(day))) {
+    return `${currentYear}-01-01`; // Fallback
   }
 
   const dayPadded = day.padStart(2, '0');
@@ -51,7 +56,7 @@ function parseFinnishDate(dateString) {
   
   // Check if the parsed date is in the past. If so, assume it's for the next year.
   const potentialDate = new Date(`${year}-${month}-${dayPadded}`);
-  now.setHours(0, 0, 0, 0); // Compare dates only, ignoring time
+  now.setHours(0, 0, 0, 0);
   if (potentialDate < now) {
     year = currentYear + 1;
   }
@@ -104,9 +109,6 @@ async function scrapeBarLoose(page, venue) {
     const dateText = await el.locator('.tribe-events-pro-photo__event-datetime').textContent();
     const title = await el.locator('.tribe-events-pro-photo__event-title').textContent();
     const link = await el.locator('.tribe-events-pro-photo__event-title-link').getAttribute('href');
-
-    // DEBUGGING LINE: This will print the raw date text to the build log.
-    console.log('Raw date text:', dateText.trim());
 
     gigs.push({
       venue: venue.name,
