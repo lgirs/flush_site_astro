@@ -32,31 +32,36 @@ function parseFinnishDate(dateString) {
   const now = new Date();
   const currentYear = now.getFullYear();
 
+  // Clean the string and split into words
   const cleanedString = dateString.trim().toLowerCase();
-  
-  // Find the first month and day in the string
   const parts = cleanedString.split(' ');
+  
   let month = null;
   let day = null;
 
+  // Find the first valid month and the number right before it
   for (let i = 0; i < parts.length; i++) {
-    if (monthMap[parts[i]]) {
-      month = monthMap[parts[i]];
-      day = parts[i - 1]; // Assume the day is right before the month
-      break;
+    const part = parts[i];
+    if (monthMap[part]) {
+      // Check if the preceding part is a number
+      if (i > 0 && !isNaN(parseInt(parts[i - 1]))) {
+        month = monthMap[part];
+        day = parts[i - 1];
+        break; // Stop after finding the first valid date
+      }
     }
   }
 
-  if (!month || !day || isNaN(parseInt(day))) {
-    return `${currentYear}-01-01`; // Fallback
+  if (!month || !day) {
+    return `${currentYear}-01-01`; // Fallback if no valid date is found
   }
 
   const dayPadded = day.padStart(2, '0');
   let year = currentYear;
   
-  // Check if the parsed date is in the past. If so, assume it's for the next year.
+  // Check if the parsed date is in the past compared to today's date (ignoring time)
   const potentialDate = new Date(`${year}-${month}-${dayPadded}`);
-  now.setHours(0, 0, 0, 0);
+  now.setHours(0, 0, 0, 0); 
   if (potentialDate < now) {
     year = currentYear + 1;
   }
@@ -109,6 +114,9 @@ async function scrapeBarLoose(page, venue) {
     const dateText = await el.locator('.tribe-events-pro-photo__event-datetime').textContent();
     const title = await el.locator('.tribe-events-pro-photo__event-title').textContent();
     const link = await el.locator('.tribe-events-pro-photo__event-title-link').getAttribute('href');
+
+    // DEBUGGING LINE: This will print the raw date text to the build log.
+    console.log('Raw date text:', dateText.trim());
 
     gigs.push({
       venue: venue.name,
