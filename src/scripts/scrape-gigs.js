@@ -32,36 +32,26 @@ function parseFinnishDate(dateString) {
   const now = new Date();
   const currentYear = now.getFullYear();
 
-  // Clean the string and split into words
-  const cleanedString = dateString.trim().toLowerCase();
-  const parts = cleanedString.split(' ');
+  // Create a regex pattern to find "(day_number) (month_name)"
+  const monthPattern = Object.keys(monthMap).join('|');
+  const regex = new RegExp(`(\\d+)\\s+(${monthPattern})`);
   
-  let month = null;
-  let day = null;
+  const match = dateString.toLowerCase().match(regex);
 
-  // Find the first valid month and the number right before it
-  for (let i = 0; i < parts.length; i++) {
-    const part = parts[i];
-    if (monthMap[part]) {
-      // Check if the preceding part is a number
-      if (i > 0 && !isNaN(parseInt(parts[i - 1]))) {
-        month = monthMap[part];
-        day = parts[i - 1];
-        break; // Stop after finding the first valid date
-      }
-    }
+  if (!match) {
+    // If the regex finds no match, return the fallback date
+    return `${currentYear}-01-01`; 
   }
-
-  if (!month || !day) {
-    return `${currentYear}-01-01`; // Fallback if no valid date is found
-  }
-
+  
+  // match[1] is the day (e.g., "5"), match[2] is the month name (e.g., "syyskuun")
+  const day = match[1];
+  const month = monthMap[match[2]];
+  
   const dayPadded = day.padStart(2, '0');
   let year = currentYear;
   
-  // Check if the parsed date is in the past compared to today's date (ignoring time)
   const potentialDate = new Date(`${year}-${month}-${dayPadded}`);
-  now.setHours(0, 0, 0, 0); 
+  now.setHours(0, 0, 0, 0); // Compare dates only, ignoring time
   if (potentialDate < now) {
     year = currentYear + 1;
   }
