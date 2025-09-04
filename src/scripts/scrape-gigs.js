@@ -18,9 +18,15 @@ const venues = [
   },
   {
     name: 'Bar Loose',
-    url: 'https://barloose.com/en/live/photo/', // Base URL for scraping
+    url: 'https://barloose.com/en/live/photo/',
     city: 'Helsinki',
     scraper: scrapeBarLoose
+  },
+  {
+    name: 'Kuudes Linja',
+    url: 'https://www.kuudeslinja.com/',
+    city: 'Helsinki',
+    scraper: scrapeKuudeslinja
   },
 ];
 
@@ -50,12 +56,34 @@ function parseEnglishDate(dateString) {
   return `${potentialDate.getFullYear()}-${month}-${day}`;
 }
 
+function parseKuudeslinjaDate(dateString) {
+    const now = new Date();
+    let year = now.getFullYear();
+    const parts = dateString.toLowerCase().split(' ')[1]?.split('.');
+    if (!parts || parts.length < 2) return `${year}-01-01`;
+
+    const day = parts[0];
+    const month = parts[1] - 1;
+
+    let potentialDate = new Date(year, month, day);
+
+    now.setHours(0, 0, 0, 0);
+    if (potentialDate < now) {
+        potentialDate.setFullYear(year + 1);
+    }
+
+    const finalYear = potentialDate.getFullYear();
+    const finalMonth = String(potentialDate.getMonth() + 1).padStart(2, '0');
+    const finalDay = String(potentialDate.getDate()).padStart(2, '0');
+    
+    return `${finalYear}-${finalMonth}-${finalDay}`;
+}
+
 // --- Main Scraper Logic ---
 async function main() {
   console.log('Starting gig scraper...');
   const browser = await chromium.launch();
   const allGigs = [];
-
   for (const venue of venues) {
     try {
       console.log(`Scraping ${venue.name}...`);
@@ -66,7 +94,6 @@ async function main() {
       console.error(`Failed to scrape ${venue.name}:`, error);
     }
   }
-
   await browser.close();
   allGigs.sort((a, b) => new Date(a.date) - new Date(b.date));
   fs.writeFileSync(outputFile, JSON.stringify(allGigs, null, 2));
@@ -74,7 +101,6 @@ async function main() {
 }
 
 // --- Venue-Specific Scrapers ---
-
 async function scrapeLepakkomies(browser, venue) {
   const page = await browser.newPage();
   await page.goto(venue.url, { waitUntil: 'networkidle' });
@@ -108,41 +134,50 @@ async function scrapeSemifinal(browser, venue) {
 
 async function scrapeBarLoose(browser, venue) {
   const gigs = [];
-  const pagesToScrape = ['', 'page/2/', 'page/3/', 'page/4/']; // Scrape first 4 pages
-
+  const pagesToScrape = ['', 'page/2/', 'page/3/', 'page/4/'];
   for (const p of pagesToScrape) {
     const url = venue.url + p;
     console.log(`Scraping Bar Loose page: ${url}`);
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: 'networkidle' });
-    
     await page.waitForSelector('.tribe-events-pro-photo__event', { timeout: 15000 });
     const gigElements = await page.locator('.tribe-events-pro-photo__event').all();
-
     for (const el of gigElements) {
       const title = await el.locator('.tribe-events-pro-photo__event-title').textContent();
-
-      // Exclude the repeating event
       if (title.toUpperCase().includes('LOOSEN SUNNARIT')) {
-        continue; // Skip this event
+        continue;
       }
-
       const dateEl = await el.locator('.tribe-events-pro-photo__event-date-tag').all();
       if (dateEl.length > 0) {
         const dateText = await dateEl[0].textContent();
         const link = await el.locator('.tribe-events-pro-photo__event-title-link').getAttribute('href');
-        gigs.push({
-          venue: venue.name,
-          city: venue.city,
-          date: parseEnglishDate(dateText.trim()),
-          event: title.trim(),
-          link: link,
-        });
+        gigs.push({ venue: venue.name, city: venue.city, date: parseEnglishDate(dateText.trim()), event: title.trim(), link: link });
       }
     }
     await page.close();
   }
   return gigs;
+}
+
+async function scrapeKuudeslinja(browser, venue) {
+    const page = await browser.newPage();
+    await page.goto(venue.url, { waitUntil: 'networkidle' });
+    const gigElements = await page.locator('article.event').all();
+    const gigs = [];
+    for (const el of gigElements) {
+        const dateText = await el.locator('.pvm').textContent();
+        const title = await el.locator('.title').textContent();
+        
+        gigs.push({
+            venue: venue.name,
+            city: venue.city,
+            date: parseKuudeslinjaDate(dateText.trim()),
+            event: title.trim(),
+            link: venue.url, // Use the main venue URL as the link
+        });
+    }
+    await page.close();
+    return gigs;
 }
 
 main();
