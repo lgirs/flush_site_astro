@@ -111,7 +111,8 @@ main a:hover {
   .header-inner {
     /* Switch back to horizontal layout on larger screens */
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center; /* FIX: Changed from space-between to center */
+    gap: 2rem; /* Add a gap between logo and nav block */
     max-width: 1200px;
   }
   .header nav a {
@@ -215,7 +216,7 @@ a:focus-visible, .button:focus-visible {
   background: var(--flush-black);
   list-style: none;
   padding: 0.5rem 0;
-  margin: 0;
+  margin: 0; /* FIX: Removed the margin-top that created the gap */
   min-width: 100%;
   z-index: 10;
   border-radius: 4px;
