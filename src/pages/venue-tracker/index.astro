@@ -9,7 +9,11 @@ export const pageTags = ["Gigs", "Helsinki"];
 <BaseLayout title={pageTitle} description="An automated list of upcoming gigs at small venues in Helsinki.">
   <h1>{pageTitle}</h1>
   <p class="long-text">
-    This is an experimental, automated list of gigs happening at some of our favourite small venues in Helsinki. It's updated daily. Data may be incomplete or inaccurate. Always check the venue's official page.
+This is <strong>new and experimental</strong> so always validate directly with the venue before trusting everything you see on this page.
+<br>
+Back in the days there was something called <em>Clubland</em> in Helsinki. A printed leaflet with all rock club gigs for next month or so. Every time our gig was listed there, we felt incredibly proud and like we've accomplished something. Clubland has not existed for many, many years, and now all we have are algorithm-based event lists in Facebook or paid event catalogs, which are highly unreliable. We care about live music, independent venues and bands of our size, and we want to make it easier to find gigs, starting with our hometown Helsinki. That’s why we built this Venue Tracker. Now you know what’s available next Wednesday night at Loose or Lepis, and you know what options you have for gigs when you Friday after work bar session extends into the evening.
+<br>
+In this first version we are scraping Semifinal, Lepakkomies, Bar Loose, and Kuudes linja. We’ll add more if this proves to work. There are some tweaks in the scraping, e.g. we exclude Bar Loose’s ‘Sunnarit’ event on Sunday evening, but we can’t stop all the post-gig disco events from appearing. Also, getting the right date for an event listed on a website is not always as easy as you would think. Remember, always check with a reliable source that an event is actually happening on that day.
   </p>
 
   <div class="gig-list">
