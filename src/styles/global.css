@@ -76,31 +76,49 @@ main a:hover {
   border-radius: 999px;
 }
 
-/* Header / Nav */
+/* --- REVISED HEADER STYLES --- */
 .header{
   background: var(--flush-black);
+  padding: 1rem 0; /* Add some vertical padding */
 }
 .header-inner{
   margin: 0 auto; 
-  padding: 10px 16px;
+  padding: 0 1rem;
   display: flex;
+  /* Mobile First: Stack logo and nav vertically */
+  flex-direction: column; 
   align-items: center;
   justify-content: center;
-  gap: 2rem;
+  gap: 1rem;
 }
 .header nav {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  flex-wrap: wrap; /* FIX: Allows menu items to wrap on mobile */
-  justify-content: center; /* FIX: Keeps wrapped items centered */
+  gap: 1rem 1.5rem; /* Vertical and horizontal gap */
+  flex-wrap: wrap; 
+  justify-content: center;
 }
 .header nav a {
   font-family: "Oswald", Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   font-weight: 600;
   letter-spacing: 0.5px;
   text-transform: uppercase;
+  font-size: 1.1rem; /* Increase base font size for mobile */
 }
+
+/* Desktop Styles */
+@media (min-width: 820px) {
+  .header-inner {
+    /* Switch back to horizontal layout on larger screens */
+    flex-direction: row;
+    justify-content: space-between;
+    max-width: 1200px;
+  }
+  .header nav a {
+    font-size: 1rem; /* Slightly smaller font on desktop */
+  }
+}
+
 
 /* Footer layout */
 .site-footer {
@@ -152,7 +170,17 @@ main a:hover {
 img,video{ max-width: 100%; height: auto; display:block; border-radius: 6px; }
 
 /* Logo */
-.logo { height: 40px; width:auto; display:block; }
+.logo { 
+  height: 40px; 
+  width: 125px; /* Set an explicit width to prevent squishing */
+  object-fit: contain; /* Ensures aspect ratio is maintained */
+}
+@media (min-width: 820px) {
+  .logo {
+    height: 50px;
+    width: 156px;
+  }
+}
 
 /* Helpers */
 .centered { text-align:center; }
@@ -174,7 +202,6 @@ a:focus-visible, .button:focus-visible {
 /* Dropdown Navigation */
 .nav-item {
   position: relative;
-  /* FIX: Add padding to create a hoverable area that includes the gap */
   padding-bottom: 10px;
   margin-bottom: -10px;
 }
@@ -183,11 +210,12 @@ a:focus-visible, .button:focus-visible {
   display: none;
   position: absolute;
   top: 100%;
-  left: 0;
+  left: 50%; /* Center dropdown relative to the parent */
+  transform: translateX(-50%); /* Adjust for centering */
   background: var(--flush-black);
   list-style: none;
   padding: 0.5rem 0;
-  margin: 0; /* FIX: Removed the margin-top that created the gap */
+  margin: 0;
   min-width: 100%;
   z-index: 10;
   border-radius: 4px;
