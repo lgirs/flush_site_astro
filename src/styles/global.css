@@ -89,9 +89,11 @@ main a:hover {
   gap: 2rem;
 }
 .header nav {
-  display: flex; /* Aligns all nav items in a row */
+  display: flex;
   align-items: center;
-  gap: 1.5rem; /* Adjust spacing between nav items */
+  gap: 1.5rem;
+  flex-wrap: wrap; /* FIX: Allows menu items to wrap on mobile */
+  justify-content: center; /* FIX: Keeps wrapped items centered */
 }
 .header nav a {
   font-family: "Oswald", Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
@@ -172,6 +174,9 @@ a:focus-visible, .button:focus-visible {
 /* Dropdown Navigation */
 .nav-item {
   position: relative;
+  /* FIX: Add padding to create a hoverable area that includes the gap */
+  padding-bottom: 10px;
+  margin-bottom: -10px;
 }
 
 .dropdown {
@@ -182,11 +187,11 @@ a:focus-visible, .button:focus-visible {
   background: var(--flush-black);
   list-style: none;
   padding: 0.5rem 0;
-  margin-top: 10px; /* Add a small gap between main menu and dropdown */
+  margin: 0; /* FIX: Removed the margin-top that created the gap */
   min-width: 100%;
   z-index: 10;
-  border-radius: 4px; /* Optional: adds slightly rounded corners */
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5); /* Optional: adds depth */
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
 
 .nav-item:hover .dropdown,
