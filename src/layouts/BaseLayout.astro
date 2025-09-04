@@ -13,17 +13,16 @@ const shareImage = new URL("/images/logo-flush-white-orange_vex.png", Astro.site
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
 
+    {/* Social Media Meta Tags */}
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={shareImage} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url.href} />
-
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={shareImage} />
-
   </head>
   <body class="bg-[var(--flush-black)]">
     <header class="header">
@@ -36,6 +35,12 @@ const shareImage = new URL("/images/logo-flush-white-orange_vex.png", Astro.site
           <a href="/content/lyrics/">Lyrics</a>
           <a href="/videos">Videos</a>
           <a href="/about">About</a>
+          <div class="nav-item">
+            <a href="#" class="nav-extras">Extras</a>
+            <ul class="dropdown">
+              <li><a href="/venue-tracker/">Venue Tracker</a></li>
+            </ul>
+          </div>
         </nav>
       </div>
     </header>
@@ -45,19 +50,33 @@ const shareImage = new URL("/images/logo-flush-white-orange_vex.png", Astro.site
       {tags.length ? <TagList tags={tags} /> : null}
     </main>
 
-<footer class="site-footer">
-  <ul>
-    <li><a class="link-plain" href="mailto:flushrock@gmail.com">Email</a></li>
-    <li><a class="link-plain" href="https://www.instagram.com/flush_music/" target="_blank" rel="noopener">Instagram</a></li>
-    <li><a class="link-plain" href="https://www.facebook.com/flushmusic" target="_blank" rel="noopener">Facebook</a></li>
-    <li><a class="link-plain" href="https://open.spotify.com/artist/0M9RMWUBIGsJ9D123qGuW9" target="_blank" rel="noopener">Spotify</a></li>
-  </ul>
-</footer>
+    <footer class="site-footer">
+      <ul>
+        <li><a class="link-plain" href="mailto:flushrock@gmail.com">Email</a></li>
+        <li><a class="link-plain" href="https://www.instagram.com/flush_music/" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a class="link-plain" href="https://www.facebook.com/flushmusic" target="_blank" rel="noopener">Facebook</a></li>
+        <li><a class="link-plain" href="https://open.spotify.com/artist/0M9RMWUBIGsJ9D123qGuW9" target="_blank" rel="noopener">Spotify</a></li>
+      </ul>
+    </footer>
   </body>
 </html>
 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const extrasMenu = document.querySelector('.nav-extras');
+    if (extrasMenu) {
+      extrasMenu.addEventListener('click', (e) => {
+        // Allow hover on desktop, but toggle on click for touch
+        if (window.innerWidth < 768) {
+          e.preventDefault();
+          extrasMenu.parentElement.classList.toggle('open');
+        }
+      });
+    }
+  });
+</script>
+
 <style>
-  /* Add spacing back to the top of the main content area */
   main.page {
     padding-top: 24px;
   }
