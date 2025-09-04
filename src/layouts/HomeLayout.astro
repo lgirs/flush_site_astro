@@ -2,7 +2,6 @@
 const { title = "Flush", description = "Let’s do some entertainment" } = Astro.props;
 import "../styles/global.css";
 
-/* If the page provides a hero vector, disable the old background image */
 const hasVector = Astro.slots.has("hero-vector");
 const heroClass = hasVector ? "hero hero--vector" : "hero";
 
@@ -17,17 +16,16 @@ const shareImage = new URL("/images/logo-flush-white-orange_vex.png", Astro.site
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
 
+    {/* Social Media Meta Tags */}
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={shareImage} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url.href} />
-
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={shareImage} />
-    
   </head>
   <body class="bg-[var(--flush-black)]">
     <header class="header">
@@ -40,17 +38,22 @@ const shareImage = new URL("/images/logo-flush-white-orange_vex.png", Astro.site
           <a href="/content/lyrics/">Lyrics</a>
           <a href="/videos">Videos</a>
           <a href="/about">About</a>
+          <div class="nav-item">
+            <a href="#" class="nav-extras">Extras</a>
+            <ul class="dropdown">
+              <li><a href="/venue-tracker/">Venue Tracker</a></li>
+            </ul>
+          </div>
         </nav>
       </div>
     </header>
 
     <section class={heroClass}>
       <div class="hero__overlay" aria-hidden="true"></div>
-
       <div class="hero__vector" aria-hidden="true">
         <slot name="hero-vector" />
       </div>
-      </section>
+    </section>
 
     <main class="page">
       <slot />
@@ -67,8 +70,22 @@ const shareImage = new URL("/images/logo-flush-white-orange_vex.png", Astro.site
   </body>
 </html>
 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const extrasMenu = document.querySelector('.nav-extras');
+    if (extrasMenu) {
+      extrasMenu.addEventListener('click', (e) => {
+        // Allow hover on desktop, but toggle on click for touch
+        if (window.innerWidth < 768) {
+          e.preventDefault();
+          extrasMenu.parentElement.classList.toggle('open');
+        }
+      });
+    }
+  });
+</script>
+
 <style>
-/* Default hero background (used when no vector is supplied) */
 .hero{
   position: relative;
   min-height: 55vh;
@@ -81,30 +98,24 @@ const shareImage = new URL("/images/logo-flush-white-orange_vex.png", Astro.site
   background-position: center;
   background-repeat: no-repeat;
 }
-/* Vector mode = plain site black */
 .hero--vector{
   background-image: none;
   background-color: var(--flush-black);
 }
-
-/* Z order: bg -> overlay(z1) -> vector(z2) */
 .hero__overlay{
   position: absolute;
   inset: 0;
   z-index: 1;
-  /* softer than before; keeps page cohesion without dimming the vector */
   background: linear-gradient(180deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.10) 40%, rgba(0,0,0,0.14) 100%);
 }
 .hero__vector{
   position: absolute;
   inset: 0;
-  z-index: 2; /* above overlay so mark is fully visible */
+  z-index: 2;
   display: grid;
   place-items: center;
   pointer-events: none;
 }
-
-/* FIX: Remove top padding on the main content area for a seamless background */
 main.page {
   padding-top: 0;
 }
