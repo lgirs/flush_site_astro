@@ -14,8 +14,28 @@ function pathToUrl(key: string) {
   return p;
 }
 
+// Build all tag pages (tags discovered from content + route pages)
 export async function getStaticPaths() {
-  // ... (this part remains unchanged)
+  const entries = await getCollection("pages");
+  const tagSet = new Set<string>();
+
+  // 1. Get tags from MDX content
+  for (const e of entries) {
+    (e.data.tags || []).forEach((t) => tagSet.add(slugifyTag(t)));
+  }
+
+  // 2. Get tags from .astro pages
+  const routeMods = import.meta.glob("../../pages/**/*.astro", { eager: true }) as Record<string, any>;
+  for (const [path, mod] of Object.entries(routeMods)) {
+    if (path.includes("/pages/tags/") || path.includes("/pages/content/")) continue;
+    const arr = (mod?.pageTags || mod?.tags || []) as unknown[];
+    arr?.forEach((t) => {
+      const key = slugifyTag(String(t || ""));
+      if (key) tagSet.add(key);
+    });
+  }
+
+  return Array.from(tagSet).map((tag) => ({ params: { tag }, props: { tag } }));
 }
 
 const { tag } = Astro.props as { tag: string };
@@ -37,7 +57,6 @@ for (const [path, mod] of Object.entries(routeMods)) {
   const arr = (mod?.pageTags || mod?.tags || []) as unknown[];
   const has = arr?.some((t) => slugifyTag(String(t || "")) === tag);
   if (!has) continue;
-  // Use tagPageTitle if available, otherwise fall back
   const title = String(mod?.tagPageTitle || mod?.pageTitle || mod?.title || pathToUrl(path)).trim();
   const url = pathToUrl(path);
   matchesRoutes.push({ title, url });
