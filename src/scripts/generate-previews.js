@@ -1,7 +1,7 @@
 // src/scripts/generate-previews.js
 import fs from 'fs';
 import axios from 'axios';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio'; // <-- CORRECTED IMPORT SYNTAX
 
 const linksFile = './src/data/intertainment-links.json';
 const outputFile = './src/data/intertainment-data.json';
@@ -32,6 +32,14 @@ async function fetchMetadata(url) {
 
 async function main() {
   console.log('Generating link previews...');
+  // Check if the source file exists before trying to read it
+  if (!fs.existsSync(linksFile)) {
+    console.log(`Source file not found at ${linksFile}. Skipping preview generation.`);
+    // Create an empty data file to prevent the build from breaking
+    fs.writeFileSync(outputFile, JSON.stringify([], null, 2));
+    return;
+  }
+
   const links = JSON.parse(fs.readFileSync(linksFile, 'utf-8'));
   const fullData = [];
 
