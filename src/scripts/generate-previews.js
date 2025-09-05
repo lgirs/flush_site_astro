@@ -1,7 +1,7 @@
 // src/scripts/generate-previews.js
 import fs from 'fs';
 import axios from 'axios';
-import * as cheerio from 'cheerio'; // <-- CORRECTED IMPORT SYNTAX
+import * as cheerio from 'cheerio';
 
 const linksFile = './src/data/intertainment-links.json';
 const outputFile = './src/data/intertainment-data.json';
@@ -32,10 +32,8 @@ async function fetchMetadata(url) {
 
 async function main() {
   console.log('Generating link previews...');
-  // Check if the source file exists before trying to read it
   if (!fs.existsSync(linksFile)) {
     console.log(`Source file not found at ${linksFile}. Skipping preview generation.`);
-    // Create an empty data file to prevent the build from breaking
     fs.writeFileSync(outputFile, JSON.stringify([], null, 2));
     return;
   }
@@ -45,6 +43,12 @@ async function main() {
 
   for (const link of links) {
     const metadata = await fetchMetadata(link.url);
+    
+    // If an overrideImage is provided, use it. Otherwise, use the scraped one.
+    if (link.overrideImage) {
+        metadata.image = link.overrideImage;
+    }
+    
     fullData.push({
       ...link,
       preview: metadata
