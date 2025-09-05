@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "astro dev",
     "scrape": "node ./src/scripts/scrape-gigs.js",
-    "build": "npx playwright install && npm run scrape && astro build",
+    "generate-previews": "node ./src/scripts/generate-previews.js",
+    "build": "npx playwright install && npm run scrape && npm run generate-previews && astro build",
     "preview": "astro preview",
     "format": "prettier --write ."
   },
@@ -15,7 +16,9 @@
     "@astrojs/mdx": "^3.1.1",
     "@astrojs/netlify": "^5.3.0",
     "@astrojs/sitemap": "^3.1.6",
-    "playwright": "^1.45.1"
+    "playwright": "^1.45.1",
+    "axios": "^1.7.2",
+    "cheerio": "^1.0.0-rc.12"
   },
   "devDependencies": {
     "prettier": "^3.3.3"
