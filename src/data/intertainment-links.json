@@ -35,6 +35,7 @@
   {  
     "url": "https://arkisto.punkmuseo.fi/",
     "headline": "The Finnish punk museum archives",
-    "annotation": "We just simply love that this exists!"
+    "annotation": "We just simply love that this exists!",
+    "overrideImage": "https://arkisto.punkmuseo.fi/files/fullsize/eb5c645c5a9d130b3aaaa8d619efa40e.jpg"
   }
 ]
