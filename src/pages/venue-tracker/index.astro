@@ -4,6 +4,17 @@ import scrapedGigs from "../../data/gigs-scraped.json";
 
 export const pageTitle = "Venue Tracker";
 export const pageTags = ["Gigs", "Helsinki"];
+
+// --- FILTER LOGIC ---
+// Get today's date, with time set to the beginning of the day for accurate comparison
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+// Filter the gigs to only include ones that are today or in the future
+const upcomingGigs = scrapedGigs.filter(gig => {
+  const gigDate = new Date(gig.date);
+  return gigDate >= today;
+});
 ---
 
 <BaseLayout title={pageTitle} description="An automated list of upcoming gigs at small venues in Helsinki.">
@@ -11,15 +22,18 @@ export const pageTags = ["Gigs", "Helsinki"];
   <p class="long-text">
 This is <strong>new and experimental</strong> so always validate directly with the venue before trusting everything you see on this page.
 <br>
-In this first version we are scraping Helsinki clubs Semifinal, Lepakkomies, Bar Loose, and Kuudes linja for their live events. We’ll add more if this proves to work. We do some cleaning e.g. exclude Bar Loose’s ‘Sunnarit’ events, but we can’t stop all the post-gig disco events from appearing. Also, getting the right date for an event listed on a website is not always as easy as you would think.
+In this first version we are scraping Helsinki clubs Semifinal, Lepakkomies, Bar Loose, and Kuudes linja for their live events.
+We’ll add more if this proves to work. We do some cleaning e.g.
+exclude Bar Loose’s ‘Sunnarit’ events, but we can’t stop all the post-gig disco events from appearing.
+Also, getting the right date for an event listed on a website is not always as easy as you would think.
   </p>
 
   <div class="gig-list">
-    {scrapedGigs.length === 0 ? (
+    {upcomingGigs.length === 0 ? (
       <p class="muted">No gigs found at the moment. Check back later!</p>
     ) : (
       <ul>
-        {scrapedGigs.map(gig => (
+        {upcomingGigs.map(gig => (
           <li class="item">
             <span class="date">{gig.date}</span>
             <span class="venue">{gig.venue}</span>
@@ -40,7 +54,6 @@ In this first version we are scraping Helsinki clubs Semifinal, Lepakkomies, Bar
   }
   .item {
     display: grid;
-    /* Adjusted to give event title more space */
     grid-template-columns: 10ch 1fr 5fr auto; 
     gap: 1rem;
     align-items: baseline;
