@@ -2,8 +2,9 @@ name: Trigger Daily Netlify Build
 
 on:
   schedule:
-    # Runs at 05:00 UTC every day (you can adjust this time)
+    # Runs at 05:00 UTC every day
     - cron: '0 5 * * *'
+  workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
 
 jobs:
   build:
