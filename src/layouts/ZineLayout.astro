@@ -1,0 +1,74 @@
+---
+import '../styles/global.css';
+
+const { title = "X/V Zine", description = "From the Flush archives." } = Astro.props;
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title} | Flush</title>
+    <meta name="description" content={description} />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+
+    <slot name="head" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-inner">
+        <a href="/"><img src="/images/logo-flush-white.png" alt="Flush" class="logo" width="125" height="40" /></a>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/gigs">Gigs</a>
+          <a href="/music">Music</a>
+          <a href="/content/lyrics/">Lyrics</a>
+          <a href="/videos">Videos</a>
+          <a href="/about">About</a>
+          <div class="nav-item">
+            <a href="#" class="nav-extras">Extras</a>
+            <ul class="dropdown">
+              <li><a href="/venue-tracker/">Venue Tracker</a></li>
+              <li><a href="/extras/intertainment/">Intertainment</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <main class="zine-page">
+      <slot />
+    </main>
+    <footer class="site-footer">
+        </footer>
+  </body>
+</html>
+
+<style is:global>
+  /* Zine-specific styles */
+  .zine-page {
+    font-family: 'Special Elite', monospace;
+    background-color: var(--flush-black);
+    color: var(--flush-light);
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .zine-page h1, .zine-page h2, .zine-page h3 {
+    font-family: 'Oswald', sans-serif; /* Keep headings readable */
+    color: var(--flush-yellow);
+  }
+
+  .zine-page a {
+    color: var(--flush-red);
+    text-decoration: underline;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .zine-page a:hover {
+    background-color: var(--flush-red);
+    color: var(--flush-black);
+  }
+</style>
