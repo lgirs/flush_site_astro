@@ -24,27 +24,28 @@ const { title = "X/V Zine", description = "From the Flush archives." } = Astro.p
         <div class="zine-title">
             <h1>X/V Zine<br>by Flush</h1>
         </div>
+    </header>
+
+    <div class="zine-body">
         <nav class="zine-nav">
             <a href="/venue-tracker/">Venue Tracker</a>
             <a href="/extras/intertainment/">Intertainment</a>
-        </nav>
-    </header>
+            </nav>
 
-    <main class="zine-page">
-      <slot />
-    </main>
+        <main class="zine-page">
+            <slot />
+        </main>
+    </div>
 
     <footer class="site-footer">
         </footer>
 
     <script>
-      // SCRIPT FOR RANDOM YELLOW CHARACTERS
       function addRandomYellowChars() {
         const paragraphs = document.querySelectorAll('.zine-page p');
         paragraphs.forEach(p => {
           let newHTML = '';
           for (const char of p.innerText) {
-            // Roughly 1 in 20 characters will be yellow
             if (Math.random() < 0.05 && char !== ' ') {
               newHTML += `<span class="yellow-char">${char}</span>`;
             } else {
@@ -54,7 +55,6 @@ const { title = "X/V Zine", description = "From the Flush archives." } = Astro.p
           p.innerHTML = newHTML;
         });
       }
-      // Run the script after the page loads
       document.addEventListener('DOMContentLoaded', addRandomYellowChars);
     </script>
   </body>
@@ -62,14 +62,57 @@ const { title = "X/V Zine", description = "From the Flush archives." } = Astro.p
 
 <style is:global>
   /* Zine-specific styles */
-  .zine-page {
-    font-family: 'Special Elite', monospace;
-    background-color: var(--flush-black);
-    color: var(--flush-light);
-    max-width: 900px;
+  .zine-body {
+    display: grid;
+    grid-template-columns: 200px 1fr; /* Sidebar and main content */
+    gap: 2rem;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
+  }
+
+  .zine-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border-right: 2px dashed var(--flush-yellow);
+    padding-right: 2rem;
+  }
+  
+  .zine-nav a {
+    font-family: 'Special Elite', monospace;
+    text-decoration: none;
+    color: var(--flush-light);
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+
+  .zine-nav a:hover {
+    color: var(--flush-yellow);
+    background-color: transparent;
+  }
+
+  .zine-page {
+    font-family: 'Special Elite', monospace;
+    color: var(--flush-light);
     line-height: 1.8;
+    /* BACKGROUND OPTION 1: Animated Grain */
+    background-color: var(--flush-black);
+    background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22 opacity=%220.15%22/%3E%3C/svg%3E');
+    animation: grain 8s steps(10) infinite;
+  }
+
+  @keyframes grain {
+    0%, 100% { transform:translate(0, 0) }
+    10% { transform:translate(-5%, -10%) }
+    20% { transform:translate(-15%, 5%) }
+    30% { transform:translate(7%, -25%) }
+    40% { transform:translate(-5%, 25%) }
+    50% { transform:translate(-25%, 10%) }
+    60% { transform:translate(15%, 5%) }
+    70% { transform:translate(0%, 15%) }
+    80% { transform:translate(25%, 35%) }
+    90% { transform:translate(-10%, 10%) }
   }
 
   .zine-page p {
@@ -98,14 +141,15 @@ const { title = "X/V Zine", description = "From the Flush archives." } = Astro.p
     color: var(--flush-yellow);
   }
 
-  /* New Zine Header Styles */
+  /* Zine Header Styles */
   .zine-header {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
     text-align: center;
     padding: 1rem;
-    border-bottom: 2px dashed var(--flush-yellow);
+    max-width: 1200px;
+    margin: 0 auto;
   }
 
   .zine-logo-link {
@@ -113,27 +157,10 @@ const { title = "X/V Zine", description = "From the Flush archives." } = Astro.p
   }
 
   .zine-title h1 {
+    font-family: 'Special Elite', monospace;
     font-size: 1.5rem;
     color: var(--flush-light);
     line-height: 1.2;
     margin: 0;
-  }
-
-  .zine-nav {
-    justify-self: end;
-    display: flex;
-    gap: 1rem;
-  }
-
-  .zine-nav a {
-    font-family: 'Oswald', sans-serif;
-    text-decoration: none;
-    color: var(--flush-light);
-    font-weight: 600;
-  }
-
-  .zine-nav a:hover {
-    color: var(--flush-yellow);
-    background-color: transparent;
   }
 </style>
