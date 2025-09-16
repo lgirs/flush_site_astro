@@ -96,23 +96,16 @@ const { title = "X/V Zine", description = "From the Flush archives." } = Astro.p
     font-family: 'Special Elite', monospace;
     color: var(--flush-light);
     line-height: 1.8;
-    /* BACKGROUND OPTION 1: Animated Grain */
-    background-color: var(--flush-black);
-    background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22 opacity=%220.15%22/%3E%3C/svg%3E');
-    animation: grain 8s steps(10) infinite;
+    /* BACKGROUND OPTION 3: Animated Gradient */
+    background: linear-gradient(270deg, #0f0d0d, #200, #0f0d0d);
+    background-size: 600% 600%;
+    animation: gradient-shift 16s ease infinite;
   }
 
-  @keyframes grain {
-    0%, 100% { transform:translate(0, 0) }
-    10% { transform:translate(-5%, -10%) }
-    20% { transform:translate(-15%, 5%) }
-    30% { transform:translate(7%, -25%) }
-    40% { transform:translate(-5%, 25%) }
-    50% { transform:translate(-25%, 10%) }
-    60% { transform:translate(15%, 5%) }
-    70% { transform:translate(0%, 15%) }
-    80% { transform:translate(25%, 35%) }
-    90% { transform:translate(-10%, 10%) }
+  @keyframes gradient-shift {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
   }
 
   .zine-page p {
