@@ -16,7 +16,8 @@ const { title = "X/V Zine", description = "From the Flush archives." } = Astro.p
 
     <slot name="head" />
   </head>
-  <body>
+  {/* FIX 1: Add a unique class to the body tag */}
+  <body class="zine-scope">
     <header class="zine-header">
         <a href="/" class="zine-logo-link">
             <img src="/images/logo-flush-white.png" alt="Back to Flush main site" class="logo" width="125" height="40" />
@@ -60,9 +61,10 @@ const { title = "X/V Zine", description = "From the Flush archives." } = Astro.p
   </body>
 </html>
 
-<style is:global>
-  /* Zine-specific styles */
-  body {
+{/* FIX 2: Remove the is:global directive */}
+<style>
+  /* Zine-specific styles are now scoped */
+  .zine-scope {
     background-color: var(--flush-black); /* Fallback */
     background-image: url('/images/zine-background.png');
     background-size: cover;
