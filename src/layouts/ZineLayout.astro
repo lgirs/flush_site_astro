@@ -62,6 +62,14 @@ const { title = "X/V Zine", description = "From the Flush archives." } = Astro.p
 
 <style is:global>
   /* Zine-specific styles */
+  body {
+    background-color: var(--flush-black); /* Fallback */
+    background-image: url('/images/zine-background.png');
+    background-size: cover;
+    background-attachment: fixed; /* Keeps background still when scrolling */
+    background-position: center;
+  }
+
   .zine-body {
     display: grid;
     grid-template-columns: 200px 1fr; /* Sidebar and main content */
@@ -77,6 +85,11 @@ const { title = "X/V Zine", description = "From the Flush archives." } = Astro.p
     gap: 1rem;
     border-right: 2px dashed var(--flush-yellow);
     padding-right: 2rem;
+    /* Semi-transparent background for readability */
+    background-color: rgba(0, 0, 0, 0.6); 
+    padding: 2rem 2rem 2rem 0; /* Adjust padding for better look */
+    border-radius: 8px; /* Slightly rounded corners */
+    height: fit-content; /* Only take up necessary height */
   }
   
   .zine-nav a {
@@ -96,18 +109,11 @@ const { title = "X/V Zine", description = "From the Flush archives." } = Astro.p
     font-family: 'Special Elite', monospace;
     color: var(--flush-light);
     line-height: 1.8;
-    /* BACKGROUND OPTION 3: Animated Gradient */
-    background: linear-gradient(270deg, #0f0d0d, #200, #0f0d0d);
-    background-size: 600% 600%;
-    animation: gradient-shift 16s ease infinite;
+    background-color: rgba(0, 0, 0, 0.75); /* Semi-transparent background for text */
+    padding: 2rem; /* Inner padding for content */
+    border-radius: 8px; /* Slightly rounded corners */
   }
-
-  @keyframes gradient-shift {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
-  }
-
+  
   .zine-page p {
     font-size: 1.1rem;
   }
@@ -143,6 +149,9 @@ const { title = "X/V Zine", description = "From the Flush archives." } = Astro.p
     padding: 1rem;
     max-width: 1200px;
     margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent header background */
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
   }
 
   .zine-logo-link {
