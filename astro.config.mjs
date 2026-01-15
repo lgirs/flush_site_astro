@@ -4,11 +4,14 @@ import netlify from '@astrojs/netlify';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  // Adding the trailing slash here is vital for the sitemap plugin
-  site: 'https://flush.rocks/', 
+  site: 'https://flush.rocks',
   integrations: [
     mdx(), 
-    sitemap()
+    sitemap({
+      // We are explicitly telling the sitemap plugin the URL here 
+      // to bypass the error it's having in the new Netlify environment
+      site: 'https://flush.rocks'
+    })
   ],
   adapter: netlify(),
   output: 'static',
