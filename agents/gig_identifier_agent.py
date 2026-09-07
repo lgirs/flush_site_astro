@@ -15,7 +15,6 @@ if not api_key:
     logging.error("GEMINI_API_KEY is missing. Please add it to your .env file.")
     exit(1)
 
-# Initialize the correct Google GenAI client
 client = genai.Client(api_key=api_key)
 
 HEADERS = {
@@ -69,13 +68,12 @@ def run_identifier():
                 f"Here is the scraped text:\n{cleaned_text}"
             )
             
-            # Use client.models.generate_content correctly with gemini-2.5-flash
+            # Use gemini-3.6-flash via the Google GenAI SDK client
             response_llm = client.models.generate_content(
-                model="gemini-2.5-flash",
+                model="gemini-3.6-flash",
                 contents=full_prompt,
                 config=types.GenerateContentConfig(
-                    response_mime_type="application/json",
-                    temperature=0.1
+                    response_mime_type="application/json"
                 )
             )
             
