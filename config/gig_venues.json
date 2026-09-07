@@ -1,0 +1,47 @@
+[
+  {
+    "name": "Bar Loose",
+    "city": "Helsinki",
+    "url": "https://barloose.com/live/"
+  },
+  {
+    "name": "Semifinal",
+    "city": "Helsinki",
+    "url": "https://tavastiaklubi.fi/semifinal/"
+  },
+  {
+    "name": "Kuudes Linja",
+    "city": "Helsinki",
+    "url": "https://www.kuudeslinja.com/"
+  },
+  {
+    "name": "Lepakkomies",
+    "city": "Helsinki",
+    "url": "https://www.lepis.fi/tapahtumat/"
+  },
+  {
+    "name": "Olarin Panimo",
+    "city": "Helsinki",
+    "url": "https://olarinpanimo.fi/tapahtumat/"
+  },
+  {
+    "name": "Hard Rock House",
+    "city": "Helsinki",
+    "url": "https://www.hardrockhouse.fi/#keikat"
+  },
+  {
+    "name": "Vernissa",
+    "city": "Vantaa",
+    "url": "https://tapahtumat.vantaa.fi/fi-FI/page/66e7eddab3bdad14c7689808?count=24&sort=creationDate&reverse=true"
+  },
+  {
+    "name": "Skenesali",
+    "city": "Vantaa",
+    "url": "https://www.velmu.net/tapahtumat/tulevat-tapahtumat/"
+  },
+  {
+    "name": "Tapper",
+    "city": "Tallinn",
+    "url": "https://www.tapper.ee/kava/"
+  }
+]
