@@ -3,26 +3,21 @@ import json
 import logging
 import requests
 from bs4 import BeautifulSoup
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 from dotenv import load_dotenv
 
-# Load environment variables (e.g., GEMINI_API_KEY)
 load_dotenv()
-
-# Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 
-# Initialize Gemini API
 api_key = os.getenv("GEMINI_API_KEY")
 if not api_key:
     logging.error("GEMINI_API_KEY is missing. Please add it to your .env file.")
     exit(1)
 
-genai.configure(api_key=api_key)
-# Using gemini-2.5-flash as the active extraction model
-model = genai.GenerativeModel('gemini-2.5-flash') 
+# Initialize the new GoogleGenAI client
+ai = genai.Client(api_key=api_key)
 
-# Headers to mimic a real browser request
 HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -33,12 +28,9 @@ HEADERS = {
 }
 
 def clean_html_text(html_content: str) -> str:
-    """Strips unnecessary HTML tags to save tokens and clean the text."""
     soup = BeautifulSoup(html_content, "html.parser")
-
     for element in soup(["script", "style", "nav", "footer", "header", "noscript", "svg"]):
         element.decompose()
-
     text = soup.get_text(separator="\n")
     lines = [line.strip() for line in text.splitlines() if line.strip()]
     return "\n".join(lines)
@@ -48,7 +40,6 @@ def run_identifier():
     prompt_path = "config/identifier_prompt.txt"
     output_path = "data/gigs_raw.json"
     
-    # Ensure data directory exists
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
     with open(venues_path, "r", encoding="utf-8") as f:
@@ -67,32 +58,29 @@ def run_identifier():
         logging.info(f"Crawling venue: {name} at {url}")
         
         try:
-            # 1. Scrape the HTML
             response = requests.get(url, headers=HEADERS, timeout=15)
             response.raise_for_status()
             
-            # 2. Clean and trim the text to fit comfortably in token limits
             cleaned_text = clean_html_text(response.text)[:20000] 
             
-            # 3. Construct the prompt
             full_prompt = (
                 f"{system_prompt}\n\n"
                 f"Context: You are looking at the website for {name} located in {city}.\n\n"
                 f"Here is the scraped text:\n{cleaned_text}"
             )
             
-            # 4. Request JSON extraction from Gemini
-            llm_response = model.generate_content(
-                full_prompt,
-                generation_config=genai.GenerationConfig(
+            # Use the new Interactions API call with gemini-3.6-flash
+            interaction = ai.interactions.create(
+                model="gemini-3.6-flash",
+                input=full_prompt,
+                config=types.GenerateContentConfig(
                     response_mime_type="application/json",
-                    temperature=0.1 # Low temperature for factual extraction
+                    temperature=0.1
                 )
             )
             
-            # 5. Parse and append results
             try:
-                gigs = json.loads(llm_response.text)
+                gigs = json.loads(interaction.output_text)
                 if isinstance(gigs, list):
                     all_raw_gigs.extend(gigs)
                     logging.info(f"Identified {len(gigs)} gigs for {name}")
@@ -104,7 +92,6 @@ def run_identifier():
         except Exception as e:
             logging.error(f"Error processing {name}: {str(e)}")
 
-    # Write the compiled raw list to the data folder
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(all_raw_gigs, f, indent=2, ensure_ascii=False)
     
