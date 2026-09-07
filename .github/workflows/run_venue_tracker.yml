@@ -1,0 +1,40 @@
+name: Run Venue Tracker Agents
+
+on:
+  schedule:
+    # Runs twice a week: Every Monday and Thursday at 02:00 UTC
+    - cron: '0 2 * * 1,4'
+  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+
+jobs:
+  run-tracker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Main Workflow
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python main_workflow.py
+
+      - name: Commit and Push Updated Gigs
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/data/gigs.json
+          git diff --staged --quiet || git commit -m "chore: automated venue tracker update [skip ci]"
+          git push
