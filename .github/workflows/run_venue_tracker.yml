@@ -2,7 +2,7 @@ name: Run Venue Tracker Agents
 
 on:
   schedule:
-    - cron: '0 2 * * 1,4'
+    - cron: '0 4 * * 1,5'
   workflow_dispatch: 
 
 jobs:
