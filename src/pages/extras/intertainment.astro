@@ -14,10 +14,10 @@ export const pageTags = ["Extras", "Links"];
 
   <div class="link-grid">
     {intertainmentData.map(item => (
-      <div class={`link-card ${item.preview?.image ? 'has-thumbnail' : ''}`}>
-        {item.preview?.image && (
+      <div class={`link-card ${item.overrideImage ? 'has-thumbnail' : ''}`}>
+        {item.overrideImage && (
           <a href={item.url} target="_blank" rel="noopener" class="thumbnail-link">
-            <img src={item.preview.image} alt="" loading="lazy" />
+            <img src={item.overrideImage} alt="" loading="lazy" />
           </a>
         )}
         <div class="card-content">
@@ -84,7 +84,7 @@ export const pageTags = ["Extras", "Links"];
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-width: 0; /* Prevents text overflow breaking grid */
+    min-width: 0;
   }
 
   .link-card h2 {
