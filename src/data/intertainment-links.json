@@ -2,22 +2,26 @@
   {
     "url": "https://www.gamepoems.com/issue01/",
     "headline": "Weird poem game",
-    "annotation": "Not quite sure what the point of this game is but it's beatiful."
+    "annotation": "Not quite sure what the point of this game is but it's beatiful.",
+    "overrideImage": "https://www.gamepoems.com/issue01/magazine_cover.png"
   },
   {
     "url": "https://www.theguardian.com/artanddesign/gallery/2025/mar/06/give-it-a-polish-classic-film-posters-with-a-twist-in-pictures",
     "headline": "Polish film posters!",
-    "annotation": "Insanely awesome film posters that are so much better than anything AI could produce. Highly recommended for anyone enjoying visual arts."
-  },
+    "annotation": "Insanely awesome film posters that are so much better than anything AI could produce. Highly recommended for anyone enjoying visual arts.",
+    "overrideImage": "https://i.guim.co.uk/img/media/4a78b4bfa389a00624299c915cf5231589e5a4a9/0_0_8072_11531/master/8072.jpg?width=740&dpr=2&s=none&crop=none"
+},
   {
     "url": "https://www.wired.com/story/delirious-violent-impossible-true-story-zizians/",
     "headline": "The Zizians",
-    "annotation": "Do you know who they were? Nor did we. But once you read this, you will know! There must be a film coming at some point… there must be."
+    "annotation": "Do you know who they were? Nor did we. But once you read this, you will know! There must be a film coming at some point… there must be.",
+    "overrideImage": "https://media.wired.com/photos/67b518cc6ee553c646da6bb7/3:2/w_2240,c_limit/wired_ziz_opnr_final.jpg"
   },
   {
     "url": "https://vole.wtf/vtv/",
     "headline": "Weirdest and worst novelty songs ever",
-    "annotation": "A TV channel with… unexpected... music."
+    "annotation": "A TV channel with… unexpected... music.",
+    "overrideImage": ""
   },
   {  
     "url": "https://www.instagram.com/mikkolinsio/?hl=en",
@@ -42,5 +46,89 @@
     "headline": "The Finnish punk museum archives",
     "annotation": "We just simply love that this exists!",
     "overrideImage": "https://arkisto.punkmuseo.fi/files/fullsize/eb5c645c5a9d130b3aaaa8d619efa40e.jpg"
+  },
+  {  
+    "url": "https://vole.wtf/glasses-cleaning/",
+    "headline": "Forever cleaning your glasses",
+    "annotation": "Clean, clean, clean...",
+    "overrideImage": ""
+  },
+  {  
+    "url": "https://citiesandmemory.com/obsolete-sounds/",
+    "headline": "Disappearing sounds",
+    "annotation": "Have a listen.. before they're forever gone.",
+    "overrideImage": "https://citiesandmemory.com/wp-content/uploads/2025/07/Cities-And-Memory-RGB-scaled.png"
+  },
+  {  
+    "url": "https://cloudhiker.net/",
+    "headline": "Random weird websites",
+    "annotation": "Be taken to any of the 33017 weird websites randomly.",
+    "overrideImage": "https://cloudhiker.net/assets/screens/featured_2025-08.webp"
+  },
+  {  
+    "url": "https://walkman.land/",
+    "headline": "All the WALKMANS ever!",
+    "annotation": "The only right way to do portable music. The Walkman.",
+    "overrideImage": "https://walkman.land/public/img/illu5.svg"
+  },
+  {  
+    "url": "https://wikiflix.toolforge.org",
+    "headline": "Stream old movies",
+    "annotation": "Old (mostly) movies streaming for free.",
+    "overrideImage": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ae/Night_Of_The_Living_Dead_trailer_screenshot.jpg/250px-Night_Of_The_Living_Dead_trailer_screenshot.jpg"
+  },
+  {  
+    "url": "https://freakpages.org/",
+    "headline": "Freak pages",
+    "annotation": "Esoteric articles from across the internet, mostly Wikipedia.",
+    "overrideImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Cholera-nlm_nlmuid-101393375-imgAA.JPG/960px-Cholera-nlm_nlmuid-101393375-imgAA.JPG"
+  },
+  {  
+    "url": "https://intertapes.net/",
+    "headline": "Cassette tapes from around the world",
+    "annotation": "Weird collection of tapes with all kinds of weird content. You have to listen to understand.",
+    "overrideImage": "https://intertapes.net/uploads/tapes/superacion-personal/back_image.webp"
+  },
+  {  
+    "url": "https://cloth.mikail-khan.com/",
+    "headline": "Break a cloth",
+    "annotation": "Complete and utter time waist.",
+    "overrideImage": ""
+  },
+  {  
+    "url": "https://filiph.github.io/unsure/",
+    "headline": "Unsure Calculator",
+    "annotation": "This could actually be of use so kind of does not belong here... ah, well.",
+    "overrideImage": "https://filiph.github.io/unsure/images/drake-results.png"
+  },
+  {  
+    "url": "https://spaceexplorationlogoarchive.webflow.io/",
+    "headline": "Space LOGOs",
+    "annotation": "Logos for all kinds of space things.",
+    "overrideImage": "https://cdn.prod.website-files.com/655bb28b1ce9dc561a40d4aa/655bb2b58d2ddfa675ee58f4_SELA.svg"
+  },
+  {  
+    "url": "https://messenger.abeto.co/",
+    "headline": "Messenger (a game)",
+    "annotation": "Weirdly calming game where you deliver messages.",
+    "overrideImage": ""
+  },
+  {  
+    "url": "https://www.myretrotvs.com/",
+    "headline": "Retro TV channels",
+    "annotation": "Time travel through TV.",
+    "overrideImage": "https://www.myretrotvs.com/assets/my70slogo-BPqSvWFZ.webp"
+  },
+  {  
+    "url": "https://managore.itch.io/print-gallery-of-an-artist",
+    "headline": "Weird Gallery(?) Game(?)",
+    "annotation": "If you figure this one out, then you are probably The One.",
+    "overrideImage": ""
+  },
+  {  
+    "url": "https://aadam-radio.vercel.app/",
+    "headline": "Aadam Radio",
+    "annotation": "Live concert recordings mostly from Chicago's alternative and indie scene. Awesome stuff!",
+    "overrideImage": ""
   }
 ]
