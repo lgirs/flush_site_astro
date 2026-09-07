@@ -2,7 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import gigsData from "../../data/gigs.json";
 
-export const pageTitle = "Venue Tracker";
+export const pageTitle = "Indie gigs around us";
 export const pageTags = ["Gigs", "Helsinki", "Vantaa", "Tallinn"];
 
 // --- FILTER LOGIC ---
@@ -19,10 +19,10 @@ const upcomingGigs = gigsData.filter(gig => {
 const cities = ["All", ...new Set(upcomingGigs.map(gig => gig.city))];
 ---
 
-<BaseLayout title={pageTitle} description="An automated list of upcoming gigs at small venues in the region.">
+<BaseLayout title={pageTitle} description="An automated list of upcoming indie gigs around our stomping grounds.">
   <h1>{pageTitle}</h1>
   <p class="long-text">
-    This is <strong>automated by AI agents</strong> and refreshed twice a week. Always validate directly with the venue before trusting everything you see on this page.
+    We went experimental and had some computer monkeys run around looking for gigs on our stomping grounds. This is a totally experimental page and you should verify all information with the actual venues. The genres are guess work by the computer monkeys and sometimes they miss or misinterpret important things so be careful.
   </p>
 
   <!-- City Filter Tags -->
@@ -45,7 +45,10 @@ const cities = ["All", ...new Set(upcomingGigs.map(gig => gig.city))];
         {upcomingGigs.map(gig => (
           <li class="item" data-city={gig.city}>
             <span class="date">{gig.date}</span>
-            <span class="venue">{gig.venue}</span>
+            <span class="venue-location">
+              <span class="venue">{gig.venue}</span>
+              <span class="city">, {gig.city}</span>
+            </span>
             <div class="event-wrapper">
               <span class="event">{gig.title}</span>
               {gig.genre && <span class="genre">({gig.genre})</span>}
@@ -91,7 +94,7 @@ const cities = ["All", ...new Set(upcomingGigs.map(gig => gig.city))];
 </script>
 
 <style>
-  /* City Filter Tags Styling (Consistent with site branding) */
+  /* City Filter Tags Styling */
   .city-filter-container {
     display: flex;
     flex-wrap: wrap;
@@ -129,7 +132,7 @@ const cities = ["All", ...new Set(upcomingGigs.map(gig => gig.city))];
   
   .item {
     display: grid;
-    grid-template-columns: 10ch 1fr 5fr auto; 
+    grid-template-columns: 10ch minmax(140px, auto) 5fr auto; 
     gap: 1rem;
     align-items: baseline;
     padding: 0.75rem 0;
@@ -140,9 +143,18 @@ const cities = ["All", ...new Set(upcomingGigs.map(gig => gig.city))];
     font-variant-numeric: tabular-nums;
   }
   
+  .venue-location {
+    white-space: nowrap;
+  }
+
   .venue {
     font-weight: 700;
     color: var(--flush-yellow, #ffe600);
+  }
+
+  .city {
+    opacity: 0.7;
+    font-size: 0.95em;
   }
   
   /* Fixed long title constraint: allows breaking and wrapping naturally */
@@ -184,7 +196,7 @@ const cities = ["All", ...new Set(upcomingGigs.map(gig => gig.city))];
       gap: 0.25rem;
       padding-bottom: 1.5rem;
     }
-    .date, .venue, .event-wrapper {
+    .date, .venue-location, .event-wrapper {
       grid-column: 1 / -1;
     }
     .link {
