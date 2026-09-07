@@ -15,27 +15,29 @@ export const pageTags = ["Extras", "Links"];
   <div class="card-grid">
     {intertainmentData.map(item => (
       <div class="card">
-        {item.preview.image && (
+        {item.preview?.image && (
           <a href={item.url} target="_blank" rel="noopener" class="card-image-link">
-            <img src={item.preview.image} alt={`Preview of ${item.preview.title}`} loading="lazy" />
+            <img src={item.preview.image} alt={`Preview of ${item.preview?.title || item.headline}`} loading="lazy" />
           </a>
         )}
         <div class="card-content">
           <h2 class="headline">{item.headline}</h2>
           {item.annotation && <p class="annotation">{item.annotation}</p>}
           
-          <div class="preview-box">
-            <a href={item.url} target="_blank" rel="noopener">
-              <div class="preview-header">
-                <span class="preview-title">{item.preview.title}</span>
-                <span class="external-icon">↗</span>
-              </div>
-              {item.preview.description && (
-                <p class="preview-description">{item.preview.description}</p>
-              )}
-              <span class="preview-url">{item.url}</span>
-            </a>
-          </div>
+          {item.preview && (
+            <div class="preview-box">
+              <a href={item.url} target="_blank" rel="noopener">
+                <div class="preview-header">
+                  <span class="preview-title">{item.preview.title}</span>
+                  <span class="external-icon">↗</span>
+                </div>
+                {item.preview.description && (
+                  <p class="preview-description">{item.preview.description}</p>
+                )}
+                <span class="preview-url">{item.url}</span>
+              </a>
+            </div>
+          )}
         </div>
       </div>
     ))}
