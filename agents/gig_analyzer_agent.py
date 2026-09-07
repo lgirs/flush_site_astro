@@ -14,8 +14,8 @@ if not api_key:
     logging.error("GEMINI_API_KEY is missing. Please add it to your .env file.")
     exit(1)
 
-# Initialize the new GoogleGenAI client
-ai = genai.Client(api_key=api_key)
+# Initialize the correct Google GenAI client
+client = genai.Client(api_key=api_key)
 
 def run_analyzer():
     raw_path = "data/gigs_raw.json"
@@ -48,20 +48,20 @@ def run_analyzer():
         f"{json.dumps(raw_gigs, ensure_ascii=False)}"
     )
 
-    logging.info("Sending raw gigs to Gig Analyzer Agent via Interactions API...")
+    logging.info("Sending raw gigs to Gig Analyzer Agent...")
 
     try:
-        # Use the Interactions API call with gemini-3.6-flash
-        interaction = ai.interactions.create(
-            model="gemini-3.6-flash",
-            input=full_prompt,
+        # Use client.models.generate_content correctly with gemini-2.5-flash
+        response_llm = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=full_prompt,
             config=types.GenerateContentConfig(
                 response_mime_type="application/json",
                 temperature=0.1
             )
         )
 
-        validated_gigs = json.loads(interaction.output_text)
+        validated_gigs = json.loads(response_llm.text)
         
         if not isinstance(validated_gigs, list):
             logging.error("Analyzer did not return a valid JSON list.")
