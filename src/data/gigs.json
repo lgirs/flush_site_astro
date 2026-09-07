@@ -1,1 +1,254 @@
-[]
+[
+  {
+    "date": "2026-09-08",
+    "city": "Helsinki",
+    "venue": "Semifinal",
+    "title": "Viivi Rättyä (Levyjulkkarikeikka)",
+    "genre": "Indie Pop / Singer-Songwriter",
+    "ticket_link": null,
+    "price": "10 € / 12 €"
+  },
+  {
+    "date": "2026-09-09",
+    "city": "Helsinki",
+    "venue": "Lepakkomies",
+    "title": "ANNIHILATION OF LEPIS: Traitors Among Us + Babestation + VALTA",
+    "genre": "Hardcore Punk / Metal",
+    "ticket_link": null,
+    "price": "6€/8€"
+  },
+  {
+    "date": "2026-09-10",
+    "city": "Helsinki",
+    "venue": "Semifinal",
+    "title": "Terromania, Falling Pyramids, Chapter Two",
+    "genre": "Hard Rock / Metal",
+    "ticket_link": null,
+    "price": "12 € / 14 €"
+  },
+  {
+    "date": "2026-09-10",
+    "city": "Helsinki",
+    "venue": "Lepakkomies",
+    "title": "Sonic Punter + KUOLIO + Mother Goose",
+    "genre": "Noise Rock / Punk",
+    "ticket_link": null,
+    "price": "10€"
+  },
+  {
+    "date": "2026-09-11",
+    "city": "Helsinki",
+    "venue": "Lepakkomies",
+    "title": "Autocamper (UK) + Lentävä Sirkkeli + Orvokki",
+    "genre": "Indie Pop / Rock",
+    "ticket_link": null,
+    "price": "8-12€"
+  },
+  {
+    "date": "2026-09-12",
+    "city": "Helsinki",
+    "venue": "Semifinal",
+    "title": "Mørket, Sgt. Slime, Terror Shark, Patouma",
+    "genre": "Hardcore Punk / Metal",
+    "ticket_link": null,
+    "price": "16 € / 18 €"
+  },
+  {
+    "date": "2026-09-12",
+    "city": "Helsinki",
+    "venue": "Lepakkomies",
+    "title": "Wasteland Six (EST) + Freedomination + Dead Samaritan",
+    "genre": "Thrash Metal / Heavy Metal",
+    "ticket_link": null,
+    "price": "8€"
+  },
+  {
+    "date": "2026-09-12",
+    "city": "Helsinki",
+    "venue": "Olarin Panimo",
+    "title": "Sunniva, Polttouhri, Askel – Support gig for Solidarity Collectives",
+    "genre": "Hardcore Punk / Sludge Metal",
+    "ticket_link": null,
+    "price": null
+  },
+  {
+    "date": "2026-09-12",
+    "city": "Tallinn",
+    "venue": "Tapper",
+    "title": "UNDER THE NEW MOON: VERMILIA (FIN), AETHER (POL), PAGANSARV, BESTIA",
+    "genre": "Pagan Black Metal",
+    "ticket_link": "https://fienta.com/…/under-the-new-moon-tallinn…",
+    "price": "20€"
+  },
+  {
+    "date": "2026-09-16",
+    "city": "Helsinki",
+    "venue": "Lepakkomies",
+    "title": "Zord (Hun) + Pornogeneraattori + Crackwhore",
+    "genre": "Metal / Punk",
+    "ticket_link": null,
+    "price": "6€/8€"
+  },
+  {
+    "date": "2026-09-17",
+    "city": "Helsinki",
+    "venue": "Semifinal",
+    "title": "Kontrolle (GER), [di:unru:], Fenetzar",
+    "genre": "Post-Punk / Coldwave",
+    "ticket_link": null,
+    "price": "12 € / 14 €"
+  },
+  {
+    "date": "2026-09-17",
+    "city": "Helsinki",
+    "venue": "Lepakkomies",
+    "title": "Camelia (ITA) + Kid, Feral (SWE) + Kärlekslösa",
+    "genre": "Screamo / Post-Hardcore",
+    "ticket_link": null,
+    "price": "10€"
+  },
+  {
+    "date": "2026-09-18",
+    "city": "Helsinki",
+    "venue": "Semifinal",
+    "title": "MTVKID (EP-julkkarit), Culture Trap",
+    "genre": "Alternative Hip-Hop",
+    "ticket_link": null,
+    "price": "12 € / 15 €"
+  },
+  {
+    "date": "2026-09-18",
+    "city": "Helsinki",
+    "venue": "Lepakkomies",
+    "title": "Pretty Affair + S.P.I.T. + Crisis Mode",
+    "genre": "Punk Rock",
+    "ticket_link": null,
+    "price": "10€"
+  },
+  {
+    "date": "2026-09-18",
+    "city": "Helsinki",
+    "venue": "Olarin Panimo",
+    "title": "Nättinassut live",
+    "genre": "Punk Rock",
+    "ticket_link": null,
+    "price": null
+  },
+  {
+    "date": "2026-09-19",
+    "city": "Helsinki",
+    "venue": "Lepakkomies",
+    "title": "Juno + Taisto Tapulist + Lucy",
+    "genre": "Hip-Hop / Rap",
+    "ticket_link": null,
+    "price": "17€/20€"
+  },
+  {
+    "date": "2026-09-19",
+    "city": "Helsinki",
+    "venue": "Olarin Panimo",
+    "title": "Santeri Sihvonen & Karjalan Konnat + Julia Delgado & Delegaatio ILMAISKEIKKA",
+    "genre": "Folk Rock / Pop",
+    "ticket_link": null,
+    "price": "Free"
+  },
+  {
+    "date": "2026-09-24",
+    "city": "Helsinki",
+    "venue": "Semifinal",
+    "title": "The Moon Trees, Jack’s Basket Room",
+    "genre": "Americana / Folk Rock",
+    "ticket_link": null,
+    "price": "13 € / 15 €"
+  },
+  {
+    "date": "2026-09-25",
+    "city": "Helsinki",
+    "venue": "Semifinal",
+    "title": "Poni, Jaanat, Albert",
+    "genre": "Indie Rock / Pop",
+    "ticket_link": null,
+    "price": "12 € / 14 €"
+  },
+  {
+    "date": "2026-09-25",
+    "city": "Helsinki",
+    "venue": "Lepakkomies",
+    "title": "TOXIC CLUB: Refusal + (Psychoparalysis) + Disgrave + Scythrow",
+    "genre": "Death Metal / Grindcore",
+    "ticket_link": null,
+    "price": "12€"
+  },
+  {
+    "date": "2026-09-26",
+    "city": "Helsinki",
+    "venue": "Semifinal",
+    "title": "Drug Store Raid (Levyjulkkarit)",
+    "genre": "Post-Punk / Garage Rock",
+    "ticket_link": null,
+    "price": "20 € / 22 €"
+  },
+  {
+    "date": "2026-09-26",
+    "city": "Tallinn",
+    "venue": "Tapper",
+    "title": "EVESTUS – AMPEST",
+    "genre": "Industrial Metal / Folk Metal",
+    "ticket_link": null,
+    "price": "20€"
+  },
+  {
+    "date": "2026-09-27",
+    "city": "Helsinki",
+    "venue": "Olarin Panimo",
+    "title": "Ringhold (EE/LV), Juuso Paason Tulevat käsitteet",
+    "genre": "Experimental Rock",
+    "ticket_link": null,
+    "price": null
+  },
+  {
+    "date": "2026-10-01",
+    "city": "Helsinki",
+    "venue": "Lepakkomies",
+    "title": "Automelodi + Waldemar Blom",
+    "genre": "Synthpop / Post-Punk",
+    "ticket_link": null,
+    "price": "10-20€"
+  },
+  {
+    "date": "2026-10-02",
+    "city": "Helsinki",
+    "venue": "Semifinal",
+    "title": "Armi Harmio (Levyjulkkarit), Keidas",
+    "genre": "Indie Rock / Pop",
+    "ticket_link": null,
+    "price": "13 € / 15 €"
+  },
+  {
+    "date": "2026-10-02",
+    "city": "Helsinki",
+    "venue": "Olarin Panimo",
+    "title": "Ahti Kulo + Underground Witch Rock + Felix Alexander Lybeck",
+    "genre": "Psychedelic Rock",
+    "ticket_link": null,
+    "price": null
+  },
+  {
+    "date": "2026-10-03",
+    "city": "Helsinki",
+    "venue": "Olarin Panimo",
+    "title": "Bus 63, 1961, Nolls, Vaiheet",
+    "genre": "Punk Rock / Alternative",
+    "ticket_link": null,
+    "price": null
+  },
+  {
+    "date": "2026-10-03",
+    "city": "Tallinn",
+    "venue": "Tapper",
+    "title": "RASKEMUUSIKA ESITLUSPÄEV 6",
+    "genre": "Heavy Metal / Rock",
+    "ticket_link": null,
+    "price": null
+  }
+]
