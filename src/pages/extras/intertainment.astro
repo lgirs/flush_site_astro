@@ -12,154 +12,78 @@ export const pageTags = ["Extras", "Links"];
     A curated collection of fun, weird, and wonderful things from the interwebs that we think you'll enjoy.
   </p>
 
-  <div class="card-grid">
+  <div class="link-grid">
     {intertainmentData.map(item => (
-      <div class="card">
-        {item.preview?.image && (
-          <a href={item.url} target="_blank" rel="noopener" class="card-image-link">
-            <img src={item.preview.image} alt={`Preview of ${item.preview?.title || item.headline}`} loading="lazy" />
+      <div class="link-card">
+        <h2>
+          <a href={item.url} target="_blank" rel="noopener" class="link-title">
+            {item.headline} <span class="external-icon">↗</span>
           </a>
-        )}
-        <div class="card-content">
-          <h2 class="headline">{item.headline}</h2>
-          {item.annotation && <p class="annotation">{item.annotation}</p>}
-          
-          {item.preview && (
-            <div class="preview-box">
-              <a href={item.url} target="_blank" rel="noopener">
-                <div class="preview-header">
-                  <span class="preview-title">{item.preview.title}</span>
-                  <span class="external-icon">↗</span>
-                </div>
-                {item.preview.description && (
-                  <p class="preview-description">{item.preview.description}</p>
-                )}
-                <span class="preview-url">{item.url}</span>
-              </a>
-            </div>
-          )}
-        </div>
+        </h2>
+        {item.annotation && <p class="annotation">{item.annotation}</p>}
       </div>
     ))}
   </div>
 </BaseLayout>
 
 <style>
-  .card-grid {
+  .link-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
     margin-top: 2rem;
   }
 
-  .card {
+  .link-card {
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(233, 232, 241, 0.08);
     border-radius: 6px;
-    overflow: hidden;
+    padding: 1rem 1.25rem;
     display: flex;
     flex-direction: column;
-    transition: border-color 0.2s ease, transform 0.2s ease;
+    justify-content: center;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
   }
 
-  .card:hover {
+  .link-card:hover {
     border-color: rgba(233, 232, 241, 0.2);
-  }
-
-  .card-image-link img {
-    width: 100%;
-    height: 140px;
-    object-fit: cover;
-    border-bottom: 1px solid rgba(233, 232, 241, 0.08);
-    opacity: 0.9;
-    transition: opacity 0.2s ease;
-  }
-
-  .card-image-link:hover img {
-    opacity: 1;
-  }
-
-  .card-content {
-    padding: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-  }
-
-  .headline {
-    margin-top: 0;
-    margin-bottom: 0.5rem;
-    font-size: 1.25rem;
-    color: #fff;
-  }
-
-  .annotation {
-    font-family: "Montserrat", sans-serif;
-    font-size: 0.9rem;
-    opacity: 0.8;
-    margin-bottom: 1.25rem;
-    line-height: 1.4;
-  }
-
-  .preview-box {
-    margin-top: auto;
-    border: 1px solid rgba(233, 232, 241, 0.06);
-    border-radius: 4px;
-    padding: 0.75rem 1rem;
-    background: rgba(0, 0, 0, 0.2);
-    transition: background-color 0.2s ease, border-color 0.2s ease;
-  }
-
-  .preview-box:hover {
     background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(233, 232, 241, 0.15);
   }
 
-  .preview-box a {
+  .link-card h2 {
+    margin: 0 0 0.35rem 0;
+    font-size: 1.05rem;
+    line-height: 1.3;
+  }
+
+  .link-title {
+    color: #fff;
     text-decoration: none;
-    color: var(--flush-light, #e9e8f1);
-    display: block;
-  }
-
-  .preview-header {
-    display: flex;
-    justify-content: space-between;
+    display: inline-flex;
     align-items: baseline;
-    gap: 0.5rem;
+    gap: 0.35ch;
   }
 
-  .preview-title {
-    font-weight: 600;
-    font-size: 0.95rem;
-    margin: 0;
+  .link-title:hover {
+    color: var(--flush-yellow, #ffe600);
   }
 
   .external-icon {
-    font-size: 0.8rem;
-    opacity: 0.5;
+    font-size: 0.75rem;
+    opacity: 0.4;
     transition: opacity 0.2s ease;
   }
 
-  .preview-box a:hover .external-icon {
+  .link-title:hover .external-icon {
     opacity: 1;
     color: var(--flush-yellow, #ffe600);
   }
 
-  .preview-description {
-    font-size: 0.85rem;
-    opacity: 0.6;
-    margin: 0.25rem 0 0.5rem 0;
+  .annotation {
     font-family: "Montserrat", sans-serif;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .preview-url {
-    font-size: 0.75rem;
-    opacity: 0.4;
-    word-break: break-all;
-    display: block;
+    font-size: 0.85rem;
+    opacity: 0.65;
+    margin: 0;
+    line-height: 1.35;
   }
 </style>
