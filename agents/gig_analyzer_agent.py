@@ -1,6 +1,7 @@
 import os
 import json
 import logging
+import time
 from datetime import datetime
 from google import genai
 from google.genai import types
@@ -15,6 +16,24 @@ if not api_key:
     exit(1)
 
 client = genai.Client(api_key=api_key)
+
+def generate_with_retry(prompt, retries=3, delay=5):
+    for attempt in range(retries):
+        try:
+            return client.models.generate_content(
+                model="gemini-3.6-flash",
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    response_mime_type="application/json"
+                )
+            )
+        except Exception as e:
+            if "503" in str(e) and attempt < retries - 1:
+                logging.warning(f"Model busy (503). Retrying analyzer in {delay}s (Attempt {attempt+1}/{retries})...")
+                time.sleep(delay)
+                delay *= 2
+            else:
+                raise e
 
 def run_analyzer():
     raw_path = "data/gigs_raw.json"
@@ -50,14 +69,7 @@ def run_analyzer():
     logging.info("Sending raw gigs to Gig Analyzer Agent...")
 
     try:
-        # Use gemini-3.6-flash via the Google GenAI SDK client
-        response_llm = client.models.generate_content(
-            model="gemini-3.6-flash",
-            contents=full_prompt,
-            config=types.GenerateContentConfig(
-                response_mime_type="application/json"
-            )
-        )
+        response_llm = generate_with_retry(full_prompt)
 
         validated_gigs = json.loads(response_llm.text)
         
