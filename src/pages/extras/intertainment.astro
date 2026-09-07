@@ -17,7 +17,12 @@ export const pageTags = ["Extras", "Links"];
       <div class={`link-card ${item.overrideImage ? 'has-thumbnail' : ''}`}>
         {item.overrideImage && (
           <a href={item.url} target="_blank" rel="noopener" class="thumbnail-link">
-            <img src={item.overrideImage} alt="" loading="lazy" />
+            <img 
+              src={item.overrideImage} 
+              alt="" 
+              loading="lazy" 
+              onerror="this.style.display='none'; this.closest('.link-card').classList.remove('has-thumbnail');" 
+            />
           </a>
         )}
         <div class="card-content">
