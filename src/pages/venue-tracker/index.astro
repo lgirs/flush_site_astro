@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import gigsData from "../../data/gigs.json";
+import venuesData from "../../config/gig_venues.json";
 
 export const pageTitle = "Indie gigs around us";
 export const pageTags = ["Gigs", "Helsinki", "Vantaa", "Tallinn"];
@@ -62,6 +63,19 @@ const cities = ["All", ...new Set(upcomingGigs.map(gig => gig.city))];
         ))}
       </ul>
     )}
+  </div>
+
+  <!-- Tracked Venues Disclosure Section -->
+  <div class="tracked-venues-section">
+    <p class="venues-intro">These are all the venues the monkeys are looking at, trying to figure out if they have gigs going on:</p>
+    <ul class="venues-grid">
+      {venuesData.map(venue => (
+        <li>
+          <a href={venue.url} target="_blank" rel="noopener">{venue.name}</a>
+          <span class="venue-city">({venue.city})</span>
+        </li>
+      ))}
+    </ul>
   </div>
 </BaseLayout>
 
@@ -195,6 +209,50 @@ const cities = ["All", ...new Set(upcomingGigs.map(gig => gig.city))];
   .muted {
     opacity: 0.8;
     margin-top: 2rem;
+  }
+
+  /* Tracked Venues Footer Section Style */
+  .tracked-venues-section {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(233, 232, 241, 0.08);
+    font-size: 0.8rem;
+    opacity: 0.65;
+  }
+
+  .venues-intro {
+    margin-bottom: 0.75rem;
+    font-style: italic;
+  }
+
+  .venues-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .venues-grid li {
+    display: inline-flex;
+    gap: 0.35ch;
+    align-items: baseline;
+  }
+
+  .venues-grid a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .venues-grid a:hover {
+    color: var(--flush-yellow, #ffe600);
+  }
+
+  .venue-city {
+    font-size: 0.9em;
+    opacity: 0.7;
   }
 
   @media (max-width: 768px) {
