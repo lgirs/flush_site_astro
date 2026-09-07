@@ -27,9 +27,22 @@ HEADERS = {
 }
 
 def clean_html_text(html_content: str) -> str:
+    """Strips unnecessary tags but preserves ticket links by converting <a> tags into text-readable links."""
     soup = BeautifulSoup(html_content, "html.parser")
+
     for element in soup(["script", "style", "nav", "footer", "header", "noscript", "svg"]):
         element.decompose()
+
+    # Preserve anchor links by converting them into text format before stripping tags
+    for a in soup.find_all("a", href=True):
+        href = a["href"]
+        text = a.get_text(strip=True)
+        if href and text:
+            # Replace the <a> tag with text that includes the URL explicitly for the LLM
+            a.replace_with(f" {text} [Link: {href}] ")
+        elif href:
+            a.replace_with(f" [Link: {href}] ")
+
     text = soup.get_text(separator="\n")
     lines = [line.strip() for line in text.splitlines() if line.strip()]
     return "\n".join(lines)
@@ -65,10 +78,9 @@ def run_identifier():
             full_prompt = (
                 f"{system_prompt}\n\n"
                 f"Context: You are looking at the website for {name} located in {city}.\n\n"
-                f"Here is the scraped text:\n{cleaned_text}"
+                f"Here is the scraped text (Note: Links are provided inline as [Link: URL]):\n{cleaned_text}"
             )
             
-            # Use gemini-3.6-flash via the Google GenAI SDK client
             response_llm = client.models.generate_content(
                 model="gemini-3.6-flash",
                 contents=full_prompt,
