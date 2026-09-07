@@ -19,8 +19,8 @@ if not api_key:
     exit(1)
 
 genai.configure(api_key=api_key)
-# gemini-1.5-flash is ideal for high-speed, low-cost data extraction tasks
-model = genai.GenerativeModel('gemini-1.5-flash') 
+# Using gemini-2.5-flash as the active extraction model
+model = genai.GenerativeModel('gemini-2.5-flash') 
 
 # Headers to mimic a real browser request
 HEADERS = {
