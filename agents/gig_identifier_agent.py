@@ -1,6 +1,7 @@
 import os
 import json
 import logging
+import time
 import requests
 from bs4 import BeautifulSoup
 from google import genai
@@ -27,18 +28,14 @@ HEADERS = {
 }
 
 def clean_html_text(html_content: str) -> str:
-    """Strips unnecessary tags but preserves ticket links by converting <a> tags into text-readable links."""
     soup = BeautifulSoup(html_content, "html.parser")
-
     for element in soup(["script", "style", "nav", "footer", "header", "noscript", "svg"]):
         element.decompose()
 
-    # Preserve anchor links by converting them into text format before stripping tags
     for a in soup.find_all("a", href=True):
         href = a["href"]
         text = a.get_text(strip=True)
         if href and text:
-            # Replace the <a> tag with text that includes the URL explicitly for the LLM
             a.replace_with(f" {text} [Link: {href}] ")
         elif href:
             a.replace_with(f" [Link: {href}] ")
@@ -46,6 +43,25 @@ def clean_html_text(html_content: str) -> str:
     text = soup.get_text(separator="\n")
     lines = [line.strip() for line in text.splitlines() if line.strip()]
     return "\n".join(lines)
+
+def generate_with_retry(prompt, retries=3, delay=5):
+    """Helper to retry API calls if a 503 high demand error occurs."""
+    for attempt in range(retries):
+        try:
+            return client.models.generate_content(
+                model="gemini-3.6-flash",
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    response_mime_type="application/json"
+                )
+            )
+        except Exception as e:
+            if "503" in str(e) and attempt < retries - 1:
+                logging.warning(f"Model busy (503). Retrying in {delay}s (Attempt {attempt+1}/{retries})...")
+                time.sleep(delay)
+                delay *= 2  # Exponential backoff
+            else:
+                raise e
 
 def run_identifier():
     venues_path = "config/gig_venues.json"
@@ -81,13 +97,8 @@ def run_identifier():
                 f"Here is the scraped text (Note: Links are provided inline as [Link: URL]):\n{cleaned_text}"
             )
             
-            response_llm = client.models.generate_content(
-                model="gemini-3.6-flash",
-                contents=full_prompt,
-                config=types.GenerateContentConfig(
-                    response_mime_type="application/json"
-                )
-            )
+            # Call with retry logic
+            response_llm = generate_with_retry(full_prompt)
             
             try:
                 gigs = json.loads(response_llm.text)
@@ -101,6 +112,9 @@ def run_identifier():
                 
         except Exception as e:
             logging.error(f"Error processing {name}: {str(e)}")
+        
+        # Brief pause between venues to be polite and avoid rate limits
+        time.sleep(2)
 
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(all_raw_gigs, f, indent=2, ensure_ascii=False)
