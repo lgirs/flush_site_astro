@@ -22,11 +22,17 @@ export const pageTags = ["Extras", "Links"];
         )}
         <div class="card-content">
           <h2 class="headline">{item.headline}</h2>
-          <p class="annotation">{item.annotation}</p>
+          {item.annotation && <p class="annotation">{item.annotation}</p>}
+          
           <div class="preview-box">
             <a href={item.url} target="_blank" rel="noopener">
-              <p class="preview-title">{item.preview.title}</p>
-              <p class="preview-description">{item.preview.description}</p>
+              <div class="preview-header">
+                <span class="preview-title">{item.preview.title}</span>
+                <span class="external-icon">↗</span>
+              </div>
+              {item.preview.description && (
+                <p class="preview-description">{item.preview.description}</p>
+              )}
               <span class="preview-url">{item.url}</span>
             </a>
           </div>
@@ -39,60 +45,119 @@ export const pageTags = ["Extras", "Links"];
 <style>
   .card-grid {
     display: grid;
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
     margin-top: 2rem;
   }
+
   .card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(233, 232, 241, 0.1);
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(233, 232, 241, 0.08);
+    border-radius: 6px;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s ease, transform 0.2s ease;
   }
+
+  .card:hover {
+    border-color: rgba(233, 232, 241, 0.2);
+  }
+
   .card-image-link img {
     width: 100%;
-    height: 180px;
+    height: 140px;
     object-fit: cover;
-    border-bottom: 1px solid rgba(233, 232, 241, 0.1);
+    border-bottom: 1px solid rgba(233, 232, 241, 0.08);
+    opacity: 0.9;
+    transition: opacity 0.2s ease;
   }
+
+  .card-image-link:hover img {
+    opacity: 1;
+  }
+
   .card-content {
-    padding: 1.5rem;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
   }
+
   .headline {
     margin-top: 0;
-    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+    color: #fff;
   }
+
   .annotation {
     font-family: "Montserrat", sans-serif;
-    opacity: 0.9;
-    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin-bottom: 1.25rem;
+    line-height: 1.4;
   }
+
   .preview-box {
-    border: 1px solid rgba(233, 232, 241, 0.1);
+    margin-top: auto;
+    border: 1px solid rgba(233, 232, 241, 0.06);
     border-radius: 4px;
-    padding: 1rem;
-    background: var(--flush-black);
-    transition: background-color 0.2s ease;
+    padding: 0.75rem 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s ease, border-color 0.2s ease;
   }
+
   .preview-box:hover {
-    background-color: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(233, 232, 241, 0.15);
   }
+
   .preview-box a {
     text-decoration: none;
-    color: var(--flush-light);
+    color: var(--flush-light, #e9e8f1);
+    display: block;
   }
+
+  .preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
   .preview-title {
     font-weight: 600;
+    font-size: 0.95rem;
     margin: 0;
   }
-  .preview-description {
-    font-size: 0.9rem;
-    opacity: 0.7;
-    margin: 0.25rem 0;
-    font-family: "Montserrat", sans-serif;
-  }
-  .preview-url {
+
+  .external-icon {
     font-size: 0.8rem;
     opacity: 0.5;
+    transition: opacity 0.2s ease;
+  }
+
+  .preview-box a:hover .external-icon {
+    opacity: 1;
+    color: var(--flush-yellow, #ffe600);
+  }
+
+  .preview-description {
+    font-size: 0.85rem;
+    opacity: 0.6;
+    margin: 0.25rem 0 0.5rem 0;
+    font-family: "Montserrat", sans-serif;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .preview-url {
+    font-size: 0.75rem;
+    opacity: 0.4;
     word-break: break-all;
+    display: block;
   }
 </style>
