@@ -130,5 +130,47 @@
     "headline": "Aadam Radio",
     "annotation": "Live concert recordings mostly from Chicago's alternative and indie scene. Awesome stuff!",
     "overrideImage": ""
+  },
+  {  
+    "url": "https://annualreport.gallery/",
+    "headline": "Beautiful collection of company annual reports",
+    "annotation": "Not something you expected to see here, but damn, annual reports used to be stunning.",
+    "overrideImage": "https://annualreport.gallery/covers/uw27182.jpg"
+  },
+  {  
+    "url": "https://theuselessweb.com/sites-we-lost/",
+    "headline": "Websites that don't exist anymore",
+    "annotation": "TBH some of these def should not exist anymore, but some we miss.",
+    "overrideImage": "https://theuselessweb.com/archive/nooooooooooooooo/vader.jpg"
+  },
+  {  
+    "url": "https://theoatmeal.com/comics/ai_art",
+    "headline": "Let's talk about AI art",
+    "annotation": "Read this. Seriously, read this.",
+    "overrideImage": "https://s3.amazonaws.com/theoatmeal-img/comics/ai_art/5.png"
+  },
+  {  
+    "url": "https://c64.krissz.hu/online-playable-games/",
+    "headline": "Commodore 64 games",
+    "annotation": "Play C64 games online, in your browser.",
+    "overrideImage": "https://cdn-blog.adafruit.com/uploads/2019/01/Untitled-17.png"
+  },
+  {  
+    "url": "https://www.calculators.de/",
+    "headline": "All the pocket calculators",
+    "annotation": "Obviously this site is from Germany.",
+    "overrideImage": "https://www.calculators.de/cc1869.jpg"
+  },
+  {  
+    "url": "https://www.rulesofthumb.org/",
+    "headline": "Rules of thumb",
+    "annotation": ""While improvising in jazz, if you make a mistake, just play it twice."And many more.",
+    "overrideImage": "https://www.rulesofthumb.org/wp-content/plugins/rot-plugin/images/pointinghand.png"
+  },
+  {  
+    "url": "https://sinceyouarrived.world/taken",
+    "headline": "Everything the computer knows about you",
+    "annotation": "In case you thought you were incognito.",
+    "overrideImage": ""
   }
 ]
