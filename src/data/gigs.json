@@ -4,18 +4,9 @@
     "city": "Helsinki",
     "venue": "Semifinal",
     "title": "Viivi Rättyä (Levyjulkkarikeikka)",
-    "genre": "Indie Pop / Singer-Songwriter",
-    "ticket_link": null,
+    "genre": "Indie Pop",
+    "ticket_link": "https://tavastiaklubi.fi/events/2026-09-08/viivi-rattya/119193/",
     "price": "10 € / 12 €"
-  },
-  {
-    "date": "2026-09-09",
-    "city": "Helsinki",
-    "venue": "Lepakkomies",
-    "title": "ANNIHILATION OF LEPIS: Traitors Among Us + Babestation + VALTA",
-    "genre": "Hardcore Punk / Metal",
-    "ticket_link": null,
-    "price": "6€/8€"
   },
   {
     "date": "2026-09-10",
@@ -23,15 +14,168 @@
     "venue": "Semifinal",
     "title": "Terromania, Falling Pyramids, Chapter Two",
     "genre": "Hard Rock / Metal",
-    "ticket_link": null,
+    "ticket_link": "https://tavastiaklubi.fi/events/2026-09-10/terromania-falling-pyramids-chapter-two/119591/",
     "price": "12 € / 14 €"
+  },
+  {
+    "date": "2026-09-12",
+    "city": "Helsinki",
+    "venue": "Semifinal",
+    "title": "Mørket, Sgt. Slime, Terror Shark, Patouma",
+    "genre": "Hardcore Punk / Heavy Metal",
+    "ticket_link": "https://tavastiaklubi.fi/events/2026-09-12/morket-sgt-slime-terror-shark-patouma/119396/",
+    "price": "16 € / 18 €"
+  },
+  {
+    "date": "2026-09-17",
+    "city": "Helsinki",
+    "venue": "Semifinal",
+    "title": "Kontrolle (GER), [di:unru:], Fenetzar",
+    "genre": "Post-Punk / Synth Punk",
+    "ticket_link": "https://tavastiaklubi.fi/events/2026-09-17/kontrolle-ger-diunru-fenetzar/119869/",
+    "price": "12 € / 14 €"
+  },
+  {
+    "date": "2026-09-18",
+    "city": "Helsinki",
+    "venue": "Semifinal",
+    "title": "MTVKID (EP-julkkarit), Culture Trap",
+    "genre": "Hip-Hop / Rap",
+    "ticket_link": "https://tavastiaklubi.fi/events/2026-09-18/mtvkid-ep-julkkarit-culture-trap/119317/",
+    "price": "12 € / 15 €"
+  },
+  {
+    "date": "2026-09-24",
+    "city": "Helsinki",
+    "venue": "Semifinal",
+    "title": "The Moon Trees, Jack’s Basket Room",
+    "genre": "Indie Rock / Americana",
+    "ticket_link": "https://tavastiaklubi.fi/events/2026-09-24/the-moon-trees-jacks-basket-room/120263/",
+    "price": "13 € / 15 €"
+  },
+  {
+    "date": "2026-09-25",
+    "city": "Helsinki",
+    "venue": "Semifinal",
+    "title": "Poni, Jaanat, Albert",
+    "genre": "Indie Rock / Pop",
+    "ticket_link": "https://tavastiaklubi.fi/events/2026-09-25/poni-jaanat-albert/120679/",
+    "price": "12 € / 14 €"
+  },
+  {
+    "date": "2026-09-26",
+    "city": "Helsinki",
+    "venue": "Semifinal",
+    "title": "Drug Store Raid (Levyjulkkarit)",
+    "genre": "Post-Punk / Alternative Rock",
+    "ticket_link": "https://tavastiaklubi.fi/events/2026-09-26/drug-store-raid-levyjulkkarit/119393/",
+    "price": "20 € / 22 €"
+  },
+  {
+    "date": "2026-10-02",
+    "city": "Helsinki",
+    "venue": "Semifinal",
+    "title": "Armi Harmio (Levyjulkkarit), Keidas",
+    "genre": "Indie Pop / Rock",
+    "ticket_link": "https://tavastiaklubi.fi/events/2026-10-02/armi-harmio-levyjulkkarit-keidas/120134/",
+    "price": "13 € / 15 €"
+  },
+  {
+    "date": "2026-09-11",
+    "city": "Helsinki",
+    "venue": "Kuudes Linja",
+    "title": "ERAKOSSA – TÄÄ ON SULLE (VITUN KUSIPÄÄ) -KULTAJUHLAT",
+    "genre": "Pop Rock",
+    "ticket_link": "https://www.tiketti.fi/erakossa-kuudes-linja-helsinki-lippuja/118928",
+    "price": "15 €"
+  },
+  {
+    "date": "2026-09-12",
+    "city": "Helsinki",
+    "venue": "Kuudes Linja",
+    "title": "CENOTAPH (MX) + CRYPTWORM (UK) + AZATOTH",
+    "genre": "Death Metal",
+    "ticket_link": "https://www.tiketti.fi/cenotaph-mex-cryptworm-uk-azatoth-kuudes-linja-helsinki-lippuja/118672",
+    "price": "20 €"
+  },
+  {
+    "date": "2026-09-18",
+    "city": "Helsinki",
+    "venue": "Kuudes Linja",
+    "title": "WHISPERED (HONORBOUND-LEVYJULKKARIT) + TORCHIA",
+    "genre": "Melodic Death Metal",
+    "ticket_link": "https://www.tiketti.fi/whispered-kuudes-linja-helsinki-lippuja/119434",
+    "price": "25 €"
+  },
+  {
+    "date": "2026-09-19",
+    "city": "Helsinki",
+    "venue": "Kuudes Linja",
+    "title": "JOOSE KESKITALO & THE MYSTIC REVELATION OF TEPPO REPO",
+    "genre": "Folk",
+    "ticket_link": "https://www.tiketti.fi/joose-keskitalo-the-mystic-revelation-of-teppo-repo-kuudes-lippuja/118771",
+    "price": "19 €"
+  },
+  {
+    "date": "2026-09-25",
+    "city": "Helsinki",
+    "venue": "Kuudes Linja",
+    "title": "KIELLETTY RUUSU + SIMBV",
+    "genre": "Indie Rock",
+    "ticket_link": "https://www.tiketti.fi/kielletty-ruusu-simbv-kuudes-linja-helsinki-lippuja/120144",
+    "price": "10 €"
+  },
+  {
+    "date": "2026-09-26",
+    "city": "Helsinki",
+    "venue": "Kuudes Linja",
+    "title": "HOPEASIIVET + EFKA CRUSH",
+    "genre": "Indie Pop",
+    "ticket_link": "https://www.tiketti.fi/hopeasiivet-efka-crush-kuudes-linja-helsinki-lippuja/119080",
+    "price": "17 €"
+  },
+  {
+    "date": "2026-10-02",
+    "city": "Helsinki",
+    "venue": "Kuudes Linja",
+    "title": "NICOLE + BISA",
+    "genre": "Metal",
+    "ticket_link": "https://www.tiketti.fi/nicole-bisa-kuudes-linja-helsinki-lippuja/120294",
+    "price": "15 €"
+  },
+  {
+    "date": "2026-10-03",
+    "city": "Helsinki",
+    "venue": "Kuudes Linja",
+    "title": "REPO WOMAN (LEVYJULKKARIT) + SÄÄDÖT + BAD VALENTINES",
+    "genre": "Punk Rock",
+    "ticket_link": "https://www.tiketti.fi/repo-woman-saadot-bad-valentines-kuudes-linja-helsinki-lippuja/119823",
+    "price": "14 €"
+  },
+  {
+    "date": "2026-10-05",
+    "city": "Helsinki",
+    "venue": "Kuudes Linja",
+    "title": "THE MOUNTAIN GOATS (US) + CRAIG FINN (US)",
+    "genre": "Indie Rock",
+    "ticket_link": "https://www.tiketti.fi/the-mountain-goats-us-kuudes-linja-helsinki-lippuja/112886",
+    "price": null
+  },
+  {
+    "date": "2026-09-09",
+    "city": "Helsinki",
+    "venue": "Lepakkomies",
+    "title": "ANNIHILATION OF LEPIS: Traitors Among Us + Babestation + VALTA",
+    "genre": "Hardcore Punk",
+    "ticket_link": null,
+    "price": "6€/8€"
   },
   {
     "date": "2026-09-10",
     "city": "Helsinki",
     "venue": "Lepakkomies",
     "title": "Sonic Punter + KUOLIO + Mother Goose",
-    "genre": "Noise Rock / Punk",
+    "genre": "Noise Rock",
     "ticket_link": null,
     "price": "10€"
   },
@@ -40,81 +184,36 @@
     "city": "Helsinki",
     "venue": "Lepakkomies",
     "title": "Autocamper (UK) + Lentävä Sirkkeli + Orvokki",
-    "genre": "Indie Pop / Rock",
+    "genre": "Indie Rock",
     "ticket_link": null,
     "price": "8-12€"
   },
   {
     "date": "2026-09-12",
     "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "Mørket, Sgt. Slime, Terror Shark, Patouma",
-    "genre": "Hardcore Punk / Metal",
-    "ticket_link": null,
-    "price": "16 € / 18 €"
-  },
-  {
-    "date": "2026-09-12",
-    "city": "Helsinki",
     "venue": "Lepakkomies",
     "title": "Wasteland Six (EST) + Freedomination + Dead Samaritan",
-    "genre": "Thrash Metal / Heavy Metal",
+    "genre": "Heavy Metal",
     "ticket_link": null,
     "price": "8€"
-  },
-  {
-    "date": "2026-09-12",
-    "city": "Helsinki",
-    "venue": "Olarin Panimo",
-    "title": "Sunniva, Polttouhri, Askel – Support gig for Solidarity Collectives",
-    "genre": "Hardcore Punk / Sludge Metal",
-    "ticket_link": null,
-    "price": null
-  },
-  {
-    "date": "2026-09-12",
-    "city": "Tallinn",
-    "venue": "Tapper",
-    "title": "UNDER THE NEW MOON: VERMILIA (FIN), AETHER (POL), PAGANSARV, BESTIA",
-    "genre": "Pagan Black Metal",
-    "ticket_link": "https://fienta.com/…/under-the-new-moon-tallinn…",
-    "price": "20€"
   },
   {
     "date": "2026-09-16",
     "city": "Helsinki",
     "venue": "Lepakkomies",
     "title": "Zord (Hun) + Pornogeneraattori + Crackwhore",
-    "genre": "Metal / Punk",
-    "ticket_link": null,
+    "genre": "Thrash Metal",
+    "ticket_link": "https://www.tiketti.fi/zord-puritan-fury-the-northern-targets-lepakkomies-helsinki-lippuja/120574",
     "price": "6€/8€"
-  },
-  {
-    "date": "2026-09-17",
-    "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "Kontrolle (GER), [di:unru:], Fenetzar",
-    "genre": "Post-Punk / Coldwave",
-    "ticket_link": null,
-    "price": "12 € / 14 €"
   },
   {
     "date": "2026-09-17",
     "city": "Helsinki",
     "venue": "Lepakkomies",
     "title": "Camelia (ITA) + Kid, Feral (SWE) + Kärlekslösa",
-    "genre": "Screamo / Post-Hardcore",
+    "genre": "Hardcore / Screamo",
     "ticket_link": null,
     "price": "10€"
-  },
-  {
-    "date": "2026-09-18",
-    "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "MTVKID (EP-julkkarit), Culture Trap",
-    "genre": "Alternative Hip-Hop",
-    "ticket_link": null,
-    "price": "12 € / 15 €"
   },
   {
     "date": "2026-09-18",
@@ -126,49 +225,13 @@
     "price": "10€"
   },
   {
-    "date": "2026-09-18",
-    "city": "Helsinki",
-    "venue": "Olarin Panimo",
-    "title": "Nättinassut live",
-    "genre": "Punk Rock",
-    "ticket_link": null,
-    "price": null
-  },
-  {
     "date": "2026-09-19",
     "city": "Helsinki",
     "venue": "Lepakkomies",
-    "title": "Juno + Taisto Tapulist + Lucy",
+    "title": "Juno + Bentality + Lucy",
     "genre": "Hip-Hop / Rap",
-    "ticket_link": null,
+    "ticket_link": "https://www.tiketti.fi/juno-taisto-tapulist-lucy-lepakkomies-helsinki-lippuja/120674",
     "price": "17€/20€"
-  },
-  {
-    "date": "2026-09-19",
-    "city": "Helsinki",
-    "venue": "Olarin Panimo",
-    "title": "Santeri Sihvonen & Karjalan Konnat + Julia Delgado & Delegaatio ILMAISKEIKKA",
-    "genre": "Folk Rock / Pop",
-    "ticket_link": null,
-    "price": "Free"
-  },
-  {
-    "date": "2026-09-24",
-    "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "The Moon Trees, Jack’s Basket Room",
-    "genre": "Americana / Folk Rock",
-    "ticket_link": null,
-    "price": "13 € / 15 €"
-  },
-  {
-    "date": "2026-09-25",
-    "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "Poni, Jaanat, Albert",
-    "genre": "Indie Rock / Pop",
-    "ticket_link": null,
-    "price": "12 € / 14 €"
   },
   {
     "date": "2026-09-25",
@@ -180,33 +243,6 @@
     "price": "12€"
   },
   {
-    "date": "2026-09-26",
-    "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "Drug Store Raid (Levyjulkkarit)",
-    "genre": "Post-Punk / Garage Rock",
-    "ticket_link": null,
-    "price": "20 € / 22 €"
-  },
-  {
-    "date": "2026-09-26",
-    "city": "Tallinn",
-    "venue": "Tapper",
-    "title": "EVESTUS – AMPEST",
-    "genre": "Industrial Metal / Folk Metal",
-    "ticket_link": null,
-    "price": "20€"
-  },
-  {
-    "date": "2026-09-27",
-    "city": "Helsinki",
-    "venue": "Olarin Panimo",
-    "title": "Ringhold (EE/LV), Juuso Paason Tulevat käsitteet",
-    "genre": "Experimental Rock",
-    "ticket_link": null,
-    "price": null
-  },
-  {
     "date": "2026-10-01",
     "city": "Helsinki",
     "venue": "Lepakkomies",
@@ -216,13 +252,40 @@
     "price": "10-20€"
   },
   {
-    "date": "2026-10-02",
+    "date": "2026-09-12",
     "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "Armi Harmio (Levyjulkkarit), Keidas",
-    "genre": "Indie Rock / Pop",
-    "ticket_link": null,
-    "price": "13 € / 15 €"
+    "venue": "Olarin Panimo",
+    "title": "Sunniva, Polttouhri, Askel – Support gig for Solidarity Collectives",
+    "genre": "Hardcore Punk / Metal",
+    "ticket_link": "https://olarinpanimo.fi/tapahtuma/sunniva-hauraus-askel/",
+    "price": null
+  },
+  {
+    "date": "2026-09-18",
+    "city": "Helsinki",
+    "venue": "Olarin Panimo",
+    "title": "Nättinassut live",
+    "genre": "Indie Rock",
+    "ticket_link": "https://olarinpanimo.fi/tapahtuma/nattinassut-live-18-9-olarin-panimo/",
+    "price": null
+  },
+  {
+    "date": "2026-09-19",
+    "city": "Helsinki",
+    "venue": "Olarin Panimo",
+    "title": "Santeri Sihvonen & Karjalan Konnat + Julia Delgado & Delegaatio",
+    "genre": "Folk Rock",
+    "ticket_link": "https://olarinpanimo.fi/tapahtuma/santeri-sihvonen-karjalan-konnat-julia-delgado-delegaatio-ilmaiskeikka/",
+    "price": "Free"
+  },
+  {
+    "date": "2026-09-27",
+    "city": "Helsinki",
+    "venue": "Olarin Panimo",
+    "title": "Ringhold (EE/LV), Juuso Paason Tulevat käsitteet",
+    "genre": "Avant-Garde Blues",
+    "ticket_link": "https://olarinpanimo.fi/tapahtuma/ringhold-ee-lv-tulevat-kasitteet/",
+    "price": null
   },
   {
     "date": "2026-10-02",
@@ -230,7 +293,7 @@
     "venue": "Olarin Panimo",
     "title": "Ahti Kulo + Underground Witch Rock + Felix Alexander Lybeck",
     "genre": "Psychedelic Rock",
-    "ticket_link": null,
+    "ticket_link": "https://olarinpanimo.fi/tapahtuma/ahti-kulo-underground-witch-rock-felix-alexander-lybeck-pe-2-10-at-olarin-panimo/",
     "price": null
   },
   {
@@ -238,17 +301,125 @@
     "city": "Helsinki",
     "venue": "Olarin Panimo",
     "title": "Bus 63, 1961, Nolls, Vaiheet",
-    "genre": "Punk Rock / Alternative",
+    "genre": "Punk Rock / Post-Punk",
+    "ticket_link": "https://olarinpanimo.fi/tapahtuma/bus-63-1961-nolls-vaiheet-olarin-panimo/",
+    "price": null
+  },
+  {
+    "date": "2026-09-11",
+    "city": "Vantaa",
+    "venue": "Skenesali",
+    "title": "Marianas Rest, Horizon Ignited",
+    "genre": "Melodic Death Metal",
     "ticket_link": null,
     "price": null
   },
   {
+    "date": "2026-09-12",
+    "city": "Vantaa",
+    "venue": "Skenesali",
+    "title": "Kneel Before Death, Lightbearer & Traitors Among Us",
+    "genre": "Deathcore / Metal",
+    "ticket_link": null,
+    "price": null
+  },
+  {
+    "date": "2026-09-18",
+    "city": "Vantaa",
+    "venue": "Skenesali",
+    "title": "BRYMIR, Omnivortex",
+    "genre": "Symphonic Death Metal",
+    "ticket_link": null,
+    "price": null
+  },
+  {
+    "date": "2026-09-19",
+    "city": "Vantaa",
+    "venue": "Skenesali",
+    "title": "Silence the Echo, Ode of Disgrace, BISA",
+    "genre": "Metal / Rock",
+    "ticket_link": null,
+    "price": null
+  },
+  {
+    "date": "2026-09-25",
+    "city": "Vantaa",
+    "venue": "Skenesali",
+    "title": "Leverage, Fire Action, RunJuliet",
+    "genre": "Hard Rock / Heavy Metal",
+    "ticket_link": null,
+    "price": null
+  },
+  {
+    "date": "2026-09-26",
+    "city": "Vantaa",
+    "venue": "Skenesali",
+    "title": "Varjokoodi, Sofia Voltti",
+    "genre": "Rock / Pop",
+    "ticket_link": null,
+    "price": null
+  },
+  {
+    "date": "2026-10-02",
+    "city": "Vantaa",
+    "venue": "Skenesali",
+    "title": "My Bloodline, Nervebreak, Last Call Disaster",
+    "genre": "Rock / Metal",
+    "ticket_link": null,
+    "price": null
+  },
+  {
+    "date": "2026-09-12",
+    "city": "Vantaa",
+    "venue": "Kulttuuritehdas Vernissa",
+    "title": "Synavernissa Sessions: Samuli Kemppi, Lau Nau",
+    "genre": "Electronic / Experimental",
+    "ticket_link": null,
+    "price": null
+  },
+  {
+    "date": "2026-09-26",
+    "city": "Vantaa",
+    "venue": "Kulttuuritehdas Vernissa",
+    "title": "Päivätanssit: Marino & Sunrise Orchestra",
+    "genre": "Orchestra",
+    "ticket_link": null,
+    "price": null
+  },
+  {
+    "date": "2026-09-26",
+    "city": "Vantaa",
+    "venue": "Kulttuuritehdas Vernissa",
+    "title": "Pop After Dark: RULES, Snowed Out, LUNK",
+    "genre": "Indie Pop",
+    "ticket_link": null,
+    "price": null
+  },
+  {
+    "date": "2026-09-12",
+    "city": "Tallinn",
+    "venue": "Rock Club Tapper",
+    "title": "UNDER THE NEW MOON: VERMILIA (FIN), AETHER (POL), PAGANSARV, BESTIA",
+    "genre": "Pagan Metal / Black Metal",
+    "ticket_link": "https://fienta.com/under-the-new-moon-tallinn-vermilia-aether-pagansarv-bestia",
+    "price": "20€"
+  },
+  {
+    "date": "2026-09-26",
+    "city": "Tallinn",
+    "venue": "Rock Club Tapper",
+    "title": "EVESTUS – AMPEST",
+    "genre": "Industrial Metal / Folk Metal",
+    "ticket_link": "https://fienta.com/evestus-ampest-tapper-rockclub-tallinn",
+    "price": "20€"
+  },
+  {
     "date": "2026-10-03",
     "city": "Tallinn",
-    "venue": "Tapper",
+    "venue": "Rock Club Tapper",
     "title": "RASKEMUUSIKA ESITLUSPÄEV 6",
-    "genre": "Heavy Metal / Rock",
-    "ticket_link": null,
+    "genre": "Heavy Metal",
+    "ticket_link": "https://www.facebook.com/events/27546912968307481",
     "price": null
   }
 ]
