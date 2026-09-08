@@ -43,5 +43,10 @@
     "name": "Tapper",
     "city": "Tallinn",
     "url": "https://www.tapper.ee/kava/"
+  },
+  {
+    "name": "Club Underground",
+    "city": "Helsinki",
+    "url": "https://www.elektrikproducts.com/club-underground"
   }
 ]
