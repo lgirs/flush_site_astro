@@ -10,11 +10,13 @@ export const pageTags = ["Gigs", "Helsinki", "Vantaa", "Tallinn"];
 const today = new Date();
 today.setHours(0, 0, 0, 0);
 
-// Filter gigs to only include today or future events
-const upcomingGigs = gigsData.filter(gig => {
-  const gigDate = new Date(gig.date);
-  return gigDate >= today;
-});
+// Filter gigs to only include today or future events, then sort chronologically
+const upcomingGigs = gigsData
+  .filter(gig => {
+    const gigDate = new Date(gig.date);
+    return gigDate >= today;
+  })
+  .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
 // Extract unique cities dynamically for the filter buttons
 const cities = ["All", ...new Set(upcomingGigs.map(gig => gig.city))];
