@@ -38,7 +38,7 @@ def generate_with_retry(prompt, retries=3, delay=5):
 def run_analyzer():
     raw_path = "data/gigs_raw.json"
     prompt_path = "config/analyzer_prompt.txt"
-    output_path = "src/data/gigs.json"
+    output_path = "src/data/venue_gigs.json"
 
     if not os.path.exists(raw_path):
         logging.error(f"Raw gigs file not found at {raw_path}. Run the Identifier agent first.")
