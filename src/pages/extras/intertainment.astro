@@ -31,7 +31,11 @@ export const pageTags = ["Extras", "Links"];
               {item.headline} <span class="external-icon">↗</span>
             </a>
           </h2>
-          {item.annotation && <p class="annotation">{item.annotation}</p>}
+          {item.annotation && (
+            <p class="annotation" title={item.annotation}>
+              {item.annotation}
+            </p>
+          )}
         </div>
       </div>
     ))}
