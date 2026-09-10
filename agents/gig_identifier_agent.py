@@ -3,6 +3,7 @@ import json
 import logging
 import time
 import requests
+from datetime import datetime
 from bs4 import BeautifulSoup
 from google import genai
 from google.genai import types
@@ -73,8 +74,6 @@ def run_identifier():
     with open(venues_path, "r", encoding="utf-8") as f:
         venues = json.load(f)
         
-from datetime import datetime  # Make sure this is at the top of your file!
-
     with open(prompt_path, "r", encoding="utf-8") as f:
         system_prompt = f.read()
         
