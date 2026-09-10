@@ -1,51 +1,25 @@
 import os
 import json
 import logging
-import time
 from datetime import datetime
-from google import genai
-from google.genai import types
-from dotenv import load_dotenv
 
-load_dotenv()
+# Set up logging to show up in GitHub Actions terminal
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
-
-api_key = os.getenv("GEMINI_API_KEY")
-if not api_key:
-    logging.error("GEMINI_API_KEY is missing. Please add it to your .env file.")
-    exit(1)
-
-client = genai.Client(api_key=api_key)
-
-def generate_with_retry(prompt, retries=3, delay=5):
-    for attempt in range(retries):
-        try:
-            return client.models.generate_content(
-                model="gemini-3.6-flash",
-                contents=prompt,
-                config=types.GenerateContentConfig(
-                    response_mime_type="application/json"
-                )
-            )
-        except Exception as e:
-            if "503" in str(e) and attempt < retries - 1:
-                logging.warning(f"Model busy (503). Retrying analyzer in {delay}s (Attempt {attempt+1}/{retries})...")
-                time.sleep(delay)
-                delay *= 2
-            else:
-                raise e
 
 def run_analyzer():
     raw_path = "data/gigs_raw.json"
-    prompt_path = "config/analyzer_prompt.txt"
-    output_path = "src/data/venue_gigs.json"
+    output_path = "src/data/venue-gigs.json"
 
     if not os.path.exists(raw_path):
         logging.error(f"Raw gigs file not found at {raw_path}. Run the Identifier agent first.")
         return
 
     with open(raw_path, "r", encoding="utf-8") as f:
-        raw_gigs = json.load(f)
+        try:
+            raw_gigs = json.load(f)
+        except json.JSONDecodeError:
+            logging.error(f"Could not parse {raw_path} as valid JSON.")
+            return
 
     if not raw_gigs:
         logging.warning("Raw gigs file is empty. Saving empty array to destination.")
@@ -54,38 +28,52 @@ def run_analyzer():
             json.dump([], out, indent=2, ensure_ascii=False)
         return
 
-    with open(prompt_path, "r", encoding="utf-8") as f:
-        prompt_template = f.read()
+    # --- PURE PYTHON FILTERING LOGIC ---
+    today = datetime.now().date()
+    validated_gigs = []
+    
+    logging.info(f"Starting Python-based analysis of {len(raw_gigs)} raw gigs...")
 
-    current_date_str = datetime.now().strftime("%Y-%m-%d")
-    system_prompt = prompt_template.replace("{{CURRENT_DATE}}", current_date_str)
+    for gig in raw_gigs:
+        title = gig.get("title", "Unknown Title")
+        date_str = gig.get("date")
+        venue = gig.get("venue", "Unknown Venue")
 
-    full_prompt = (
-        f"{system_prompt}\n\n"
-        f"Here is the raw JSON array of extracted gigs to evaluate:\n"
-        f"{json.dumps(raw_gigs, ensure_ascii=False)}"
-    )
-
-    logging.info("Sending raw gigs to Gig Analyzer Agent...")
-
-    try:
-        response_llm = generate_with_retry(full_prompt)
-
-        validated_gigs = json.loads(response_llm.text)
+        # Check 1: Missing Title
+        if not title or title == "Unknown Title":
+            logging.info(f"Dropped gig at {venue}: Missing title.")
+            continue
         
-        if not isinstance(validated_gigs, list):
-            logging.error("Analyzer did not return a valid JSON list.")
-            return
+        # Check 2: Missing Date
+        if not date_str:
+            logging.info(f"Dropped '{title}' at {venue}: Missing date.")
+            continue
 
-        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        # Check 3: Date formatting and Past Dates
+        try:
+            # We expect the Identifier to pass YYYY-MM-DD format
+            gig_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+            
+            if gig_date < today:
+                logging.info(f"Dropped '{title}' at {venue}: Date {date_str} is in the past.")
+                continue
+                
+        except ValueError:
+            logging.info(f"Dropped '{title}' at {venue}: Invalid date format '{date_str}'. Expected YYYY-MM-DD.")
+            continue
+            
+        # If it survives the checks, it's a valid gig!
+        validated_gigs.append(gig)
 
-        with open(output_path, "w", encoding="utf-8") as f:
-            json.dump(validated_gigs, f, indent=2, ensure_ascii=False)
+    # Sort them chronologically just to be tidy
+    validated_gigs.sort(key=lambda x: x.get("date"))
 
-        logging.info(f"Successfully analyzed and saved {len(validated_gigs)} approved gigs to {output_path}")
+    # Save output
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(validated_gigs, f, indent=2, ensure_ascii=False)
 
-    except Exception as e:
-        logging.error(f"Error during gig analysis: {str(e)}")
+    logging.info(f"Successfully analyzed and saved {len(validated_gigs)} approved gigs to {output_path}")
 
 if __name__ == "__main__":
     run_analyzer()
