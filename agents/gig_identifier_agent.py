@@ -73,8 +73,14 @@ def run_identifier():
     with open(venues_path, "r", encoding="utf-8") as f:
         venues = json.load(f)
         
+from datetime import datetime  # Make sure this is at the top of your file!
+
     with open(prompt_path, "r", encoding="utf-8") as f:
         system_prompt = f.read()
+        
+    # Inject today's date so Gemini knows the current year
+    current_date_str = datetime.now().strftime("%Y-%m-%d")
+    system_prompt = system_prompt.replace("{{CURRENT_DATE}}", current_date_str)
 
     all_raw_gigs = []
 
