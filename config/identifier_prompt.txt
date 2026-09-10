@@ -14,8 +14,7 @@ Analyze the text and extract these exact fields for each event:
 7. "price": The ticket price (e.g., "15€", "Free"). If missing, use null.
 8. "reasoning": Briefly explain why you identified this as a valid live music gig and how you determined the genre.
 
-JSON Schema Requirements:
-[
+JSON Schema Requirements:[
   {
     "date": "YYYY-MM-DD",
     "city": "String",
@@ -27,7 +26,10 @@ JSON Schema Requirements:
     "reasoning": "String"
   }
 ]
-
+CRITICAL DATE RULES:
+1. Every gig must have a "date" field formatted strictly as YYYY-MM-DD (e.g., 2026-10-15). Do not use any other format.
+2. If the website does not specify a year (e.g., "Oct 15" or "15.10"), you must calculate and infer the correct year based on today's date: {{CURRENT_DATE}}.
+3. If the advertised month has already passed in the current year, assume the event belongs to the next calendar year.
 If you do not find any valid live music events in the provided text, output an empty array: []
 
 Here is the scraped venue text to analyze:
