@@ -9,6 +9,7 @@ List EVERY event you find on the page (not only music), and label each one with 
 - "private_booking": reservations, prebookings, private events, closed events (e.g. "D-reservation", "Prebooking X").
 - "other": everything else (karaoke, quiz, workshops, film screenings, markets, talks, etc.).
 If you are not sure whether an event is live music, choose the most likely label based on the title, description and names.
+Many venue pages show only the event title (the description is on a separate page you cannot see). Most pages are in Finnish. Words like "musa", "musiikki", "keikka", "konsertti", "bändi"/"bändit", "levynjulkkarit"/"julkkarit", "festivaali", "live" mean music. If an event title mentions music, or it is an anniversary, birthday or party night ("20v", "juhlat", "synttärit") that is most likely musical, label it "live_music" rather than "other" — unless it clearly mentions DJs, disco, comedy or a quiz.
 
 For every event you find, extract the following information and output it STRICTLY as a JSON array of objects. Do not include markdown formatting like ```json, just output the raw JSON array.
 
