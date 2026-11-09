@@ -120,10 +120,19 @@ def run_identifier():
             
             # Call with retry logic
             response_llm = generate_with_retry(full_prompt)
-            
+
             gigs = json.loads(response_llm.text)
             if not isinstance(gigs, list):
                 raise ValueError("Unexpected JSON format from LLM (not a list).")
+
+            # Sudden 0 events for a venue that had gigs last time is probably an AI hiccup:
+            # ask once more, and if still 0, treat it as a failure (keeps previous gigs).
+            if len(gigs) == 0 and load_previous_gigs(name):
+                logging.warning(f"0 events for {name}, but it had gigs last time. Asking the AI again...")
+                time.sleep(5)
+                gigs = json.loads(generate_with_retry(full_prompt).text)
+                if not isinstance(gigs, list) or len(gigs) == 0:
+                    raise ValueError("AI returned 0 events twice for a venue that had gigs last time.")
 
             for gig in gigs:
                 if isinstance(gig, dict):
