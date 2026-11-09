@@ -45,7 +45,23 @@ def clean_html_text(html_content: str) -> str:
     lines = [line.strip() for line in text.splitlines() if line.strip()]
     return "\n".join(lines)
 
-def generate_with_retry(prompt, retries=3, delay=5):
+def load_previous_gigs(venue_name, previous_path="src/data/venue_gigs.json"):
+    """Return the gigs this venue had in the last successful run (used when a venue fails now)."""
+    if not os.path.exists(previous_path):
+        return []
+    try:
+        with open(previous_path, "r", encoding="utf-8") as f:
+            previous = json.load(f)
+    except (json.JSONDecodeError, OSError):
+        return []
+    name = venue_name.lower()
+    return [
+        g for g in previous
+        if g.get("source_venue") == venue_name
+        or (not g.get("source_venue") and name in str(g.get("venue", "")).lower())
+    ]
+
+def generate_with_retry(prompt, retries=5, delay=5):
     """Helper to retry API calls if a 503 high demand error occurs."""
     for attempt in range(retries):
         try:
@@ -105,18 +121,24 @@ def run_identifier():
             # Call with retry logic
             response_llm = generate_with_retry(full_prompt)
             
-            try:
-                gigs = json.loads(response_llm.text)
-                if isinstance(gigs, list):
-                    all_raw_gigs.extend(gigs)
-                    logging.info(f"Identified {len(gigs)} gigs for {name}")
-                else:
-                    logging.warning(f"Unexpected JSON format from LLM for {name}.")
-            except json.JSONDecodeError:
-                logging.error(f"Failed to decode JSON from LLM for {name}.")
-                
+            gigs = json.loads(response_llm.text)
+            if not isinstance(gigs, list):
+                raise ValueError("Unexpected JSON format from LLM (not a list).")
+
+            for gig in gigs:
+                if isinstance(gig, dict):
+                    gig["source_venue"] = name  # remember which tracked venue this came from
+            all_raw_gigs.extend(gigs)
+            logging.info(f"Identified {len(gigs)} gigs for {name}")
+
         except Exception as e:
             logging.error(f"Error processing {name}: {str(e)}")
+            # Keep this venue's gigs from the previous run instead of losing them
+            old_gigs = load_previous_gigs(name)
+            for gig in old_gigs:
+                gig["source_venue"] = name
+            all_raw_gigs.extend(old_gigs)
+            logging.info(f"Kept {len(old_gigs)} gigs for {name} from the previous run")
         
         # Brief pause between venues to be polite and avoid rate limits
         time.sleep(2)
