@@ -1,123 +1,63 @@
 [
   {
-    "date": "2026-11-10",
-    "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "Kuudesta Kymmeneen",
-    "genre": "Unknown",
-    "ticket_link": "https://tavastiaklubi.fi/events/2026-11-10/kuudesta-kymmeneen/120769/",
-    "price": "16,50€",
-    "reasoning": "Extracted from the upcoming events list for Semifinal venue in Helsinki with a ticket price and date."
-  },
-  {
-    "date": "2026-11-11",
-    "city": "Helsinki",
-    "venue": "Bar Loose",
-    "title": "Läppävika, Nollapiste21, SA-INT",
-    "genre": "Rock",
-    "ticket_link": "https://barloose.com/live/lappavika-nollapiste21-sa-int/",
-    "price": "10€",
-    "reasoning": "Live music gig featuring multiple bands at Bar Loose."
-  },
-  {
-    "date": "2026-11-11",
-    "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "Joka v*tun keskiviikko: Yllätysesiintyjä",
-    "genre": "Unknown",
-    "ticket_link": "https://tavastiaklubi.fi/events/2026-11-11/joka-vtun-keskiviikko-yllatysesiintyja/121629/",
-    "price": "15 €",
-    "reasoning": "Identified as a live performance event featuring a surprise artist ('Yllätysesiintyjä') with scheduled showtime."
-  },
-  {
     "date": "2026-11-11",
     "city": "Helsinki",
     "venue": "Kuudes Linja",
     "title": "MAYOHK (JP)",
-    "genre": "Electronic",
+    "genre": "Unknown",
     "ticket_link": "https://www.tickettailor.com/events/asiarec/2363173",
     "price": "55 €",
-    "reasoning": "Identified as a live concert featuring artist MAYOHK, genre inferred as Electronic based on typical event context and formatting."
+    "reasoning": "Identified as a live concert based on 'ALKUILLAN KONSERTTI' and 'LIVE' text indicators."
   },
   {
     "date": "2026-11-11",
     "city": "Helsinki",
     "venue": "Lepakkomies",
     "title": "Pepita Vanni + Ville Miettinen + Sanni Mäntyranta",
-    "genre": "Indie / Singer-songwriter",
-    "ticket_link": "https://www.lepis.fi/tapahtumat/pepita-vanni-ville-miettinen-sanni-mantyranta/",
+    "genre": "Indie Pop",
+    "ticket_link": null,
     "price": "6€",
-    "reasoning": "Identified as a club gig featuring multiple performing artists based on the event description."
-  },
-  {
-    "date": "2026-11-12",
-    "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "3:37",
-    "genre": "Unknown",
-    "ticket_link": "https://tavastiaklubi.fi/events/2026-11-12/337/121671/",
-    "price": null,
-    "reasoning": "Listed as an event with doors opening and sold out status ('Loppuunvarattu')."
+    "reasoning": "Identified as a live music club event featuring performing singer-songwriters/artists."
   },
   {
     "date": "2026-11-12",
     "city": "Helsinki",
     "venue": "Kuudes Linja",
     "title": "THE OBSESSED (US) + KLASTOS (SE)",
-    "genre": "Doom Metal",
+    "genre": "Doom Metal / Stoner Rock",
     "ticket_link": "https://www.tiketti.fi/the-obsessed-us-klatos-swe-kuudes-linja-helsinki-lippuja/118318",
     "price": "37,50 €",
-    "reasoning": "Identified as a live gig featuring metal bands The Obsessed and Klastos; genre determined as Doom Metal/Rock based on the headliners."
+    "reasoning": "Identified as a live music event featuring touring bands The Obsessed and Klastos with ticket details."
   },
   {
     "date": "2026-11-12",
     "city": "Helsinki",
     "venue": "Lepakkomies",
     "title": "Marrasvieraat: Absolute Key + Animal Sociale + Kuolema-duo",
-    "genre": "Dark Electronic / Industrial / Post-Punk",
-    "ticket_link": "https://www.lepis.fi/tapahtumat/marrasvieraat-absolute-key-animal-sociale-kuolema-duo/",
+    "genre": "Gothic",
+    "ticket_link": "https://fb.me/e/81zF9hfSv",
     "price": "8€",
-    "reasoning": "Live music club event featuring dark/underground music acts."
-  },
-  {
-    "date": "2026-11-13",
-    "city": "Helsinki",
-    "venue": "Bar Loose",
-    "title": "Sinner’s Corner (levynjulkkarit) + Los Bastardos Finlandeses",
-    "genre": "Rock",
-    "ticket_link": "https://barloose.com/live/sinners-corner-levynjulkkarit-los-bastardos-finlandeses/",
-    "price": "14€",
-    "reasoning": "Album release concert featuring rock bands Sinner's Corner and Los Bastardos Finlandeses."
-  },
-  {
-    "date": "2026-11-13",
-    "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "The Chiefs, Trashcan Dance, Escabroso",
-    "genre": "Rock",
-    "ticket_link": "https://tavastiaklubi.fi/events/2026-11-13/the-chiefs-trashcan-dance-escabroso/121822/",
-    "price": "12 €",
-    "reasoning": "Multi-band lineup with specific set times indicating a live gig."
+    "reasoning": "Live club event featuring multiple dark/experimental music acts."
   },
   {
     "date": "2026-11-13",
     "city": "Helsinki",
     "venue": "Kuudes Linja",
     "title": "BÄMÄ – BÄMÄVERSUMI-LEVYJULKKARIT",
-    "genre": "Hip Hop",
+    "genre": "Hip Hop / Rap",
     "ticket_link": "https://www.tiketti.fi/bama-kuudes-linja-helsinki-lippuja/119054",
     "price": "20 €",
-    "reasoning": "Album release party (levyjulkkarit) featuring live performance by Bämä, categorized as Hip Hop based on Finnish rap context."
+    "reasoning": "Identified as a release party concert (levyjulkkarit) featuring live artist Bämä."
   },
   {
     "date": "2026-11-13",
     "city": "Helsinki",
     "venue": "Lepakkomies",
     "title": "Iron & Aether: Craneium + Green King + Danakil Heat",
-    "genre": "Stoner Rock / Heavy Metal",
-    "ticket_link": "https://www.lepis.fi/tapahtumat/iron-aether-craneium-green-king-danakil-heat/",
+    "genre": "Stoner",
+    "ticket_link": "https://fb.me/e/4kUYhjq0A",
     "price": "10€",
-    "reasoning": "Concert featuring stoner/heavy rock bands like Craneium and Green King."
+    "reasoning": "Live music concert featuring stoner/rock bands."
   },
   {
     "date": "2026-11-13",
@@ -137,47 +77,37 @@
     "genre": "Rock / Indie",
     "ticket_link": "https://www.facebook.com/events/1768995151100945",
     "price": null,
-    "reasoning": "Identified as a live music event featuring bands Aino & Hajonneet and Flophouse Phonics performing at Skenesali based on the event listing."
+    "reasoning": "Identified as a live music event featuring bands Aino & Hajonneet and Flophouse Phonics at Skenesali based on the gig listing."
   },
   {
-    "date": "2026-11-14",
+    "date": "2026-11-13",
     "city": "Helsinki",
-    "venue": "Bar Loose",
-    "title": "See You In Hell: Emperage, The End Complete, Crustofer",
-    "genre": "Metal / Punk",
-    "ticket_link": "https://barloose.com/live/see-you-in-hell-emperage-the-end-complete-crustofer/",
-    "price": "12€",
-    "reasoning": "Metal/hardcore gig featuring Emperage, The End Complete, and Crustofer."
-  },
-  {
-    "date": "2026-11-14",
-    "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "Tams, Saaga",
+    "venue": "Club Underground",
+    "title": "Trypanon + 2",
     "genre": "Unknown",
-    "ticket_link": "https://tavastiaklubi.fi/events/2026-11-14/tams-saaga/121168/",
-    "price": "14 €",
-    "reasoning": "Two-artist lineup with ticket pricing for a live show."
+    "ticket_link": null,
+    "price": "10 €",
+    "reasoning": "Listed as an upcoming live show on the venue schedule."
   },
   {
     "date": "2026-11-14",
     "city": "Helsinki",
     "venue": "Kuudes Linja",
     "title": "MONOPOLI MUSIC LIVE – ADI L HASLA, ROOMEO & BAHAMO",
-    "genre": "Hip Hop",
+    "genre": "Hip Hop / Rap",
     "ticket_link": "https://www.tiketti.fi/adi-l-hasla-roomeo-bahamo-kuudes-linja-helsinki-lippuja/121606",
     "price": "15 €",
-    "reasoning": "Live music event featuring Adi L Hasla, Roomeo, and Bahamo, categorized as Hip Hop / Rap."
+    "reasoning": "Live music event featuring hip hop artists Adi L Hasla, Roomeo, and Bahamo."
   },
   {
     "date": "2026-11-14",
     "city": "Helsinki",
     "venue": "Lepakkomies",
     "title": "DESCEND: Back to the Roots",
-    "genre": "Metal / Hardcore",
-    "ticket_link": "https://www.lepis.fi/tapahtumat/descend-back-to-the-roots/",
+    "genre": "Punk Rock",
+    "ticket_link": null,
     "price": "8€",
-    "reasoning": "Club music event titled Descend: Back to the Roots."
+    "reasoning": "Live music club event titled 'Back to the Roots', indicative of punk/underground genres."
   },
   {
     "date": "2026-11-14",
@@ -187,7 +117,7 @@
     "genre": "Hip Hop / Electronic",
     "ticket_link": "https://www.facebook.com/events/1678707623263846",
     "price": null,
-    "reasoning": "Identified as a music event featuring artist DJ Kridlokk performing at Skenesali."
+    "reasoning": "Identified as a live music event featuring artist DJ Kridlokk at Skenesali."
   },
   {
     "date": "2026-11-14",
@@ -197,7 +127,17 @@
     "genre": "Punk Rock",
     "ticket_link": "https://www.facebook.com/events/2701978196885579",
     "price": "30€",
-    "reasoning": "The text describes a charity heavy music event ('Raskemuusika heategevus') supporting animal shelter volunteers, which falls under rock/metal genres."
+    "reasoning": "The text describes a charity heavy music event ('Raskemuusika heategevus') featuring bands to support animal shelter volunteers."
+  },
+  {
+    "date": "2026-11-14",
+    "city": "Helsinki",
+    "venue": "Club Underground",
+    "title": "D-reservation",
+    "genre": "Unknown",
+    "ticket_link": null,
+    "price": "10 €",
+    "reasoning": "Listed as an upcoming live show on the venue schedule."
   },
   {
     "date": "2026-11-17",
@@ -206,48 +146,18 @@
     "title": "DRUHA RIKA (UA) – I AM! 30 YEARS",
     "genre": "Rock",
     "ticket_link": "https://tickets.tikhonov-concert.com/checkout-service/schema?productId=94&l=ua",
-    "price": "39 €",
-    "reasoning": "Anniversary live concert by Ukrainian rock band Druha Rika."
-  },
-  {
-    "date": "2026-11-18",
-    "city": "Helsinki",
-    "venue": "Bar Loose",
-    "title": "Pegasos, Jutta Rahmel (levynjulkkarit), Saarisalo (soolo)",
-    "genre": "Rock / Indie",
-    "ticket_link": "https://barloose.com/live/pegasos-jutta-rahmel-levynjulkkarit-saarisalo-soolo/",
-    "price": "12€",
-    "reasoning": "Live music concert featuring Pegasos and album release for Jutta Rahmel."
-  },
-  {
-    "date": "2026-11-18",
-    "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "Joka v*tun keskiviikko: Saana Peltola",
-    "genre": "Unknown",
-    "ticket_link": "https://tavastiaklubi.fi/events/2026-11-18/joka-vtun-keskiviikko-saana-peltola/121632/",
-    "price": "15 €",
-    "reasoning": "Scheduled live performance event featuring artist Saana Peltola."
+    "price": "39/45 €",
+    "reasoning": "Anniversary live concert featuring the band Druha Rika."
   },
   {
     "date": "2026-11-18",
     "city": "Helsinki",
     "venue": "Lepakkomies",
     "title": "The Heartjackers (UK/FI) + Get In",
-    "genre": "Rock / Punk",
-    "ticket_link": "https://www.lepis.fi/tapahtumat/the-heartjackers-uk-fi-get-in/",
+    "genre": "Rock",
+    "ticket_link": "https://fb.me/e/5bBr1lGE9",
     "price": "5€",
-    "reasoning": "Live gig featuring two rock/punk bands."
-  },
-  {
-    "date": "2026-11-19",
-    "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "Miika Leivo & Band, Honey Crisp",
-    "genre": "Unknown",
-    "ticket_link": "https://tavastiaklubi.fi/events/2026-11-19/miika-leivo-band-honey-crisp/120354/",
-    "price": "12 €",
-    "reasoning": "Concert listing featuring Miika Leivo & Band and Honey Crisp with ticket details."
+    "reasoning": "Live gig featuring international and local rock bands."
   },
   {
     "date": "2026-11-19",
@@ -257,7 +167,7 @@
     "genre": "Hip Hop",
     "ticket_link": "https://www.tiketti.fi/chuck-strangers-us-taydet-kuudes-linja-helsinki-lippuja/119468",
     "price": "24,50 €",
-    "reasoning": "Live hip hop performance featuring Chuck Strangers and Täydet."
+    "reasoning": "Live performance featuring hip hop artist Chuck Strangers and Täydet."
   },
   {
     "date": "2026-11-19",
@@ -265,59 +175,29 @@
     "venue": "Lepakkomies",
     "title": "Forward Folks + The Horribly Ones",
     "genre": "Punk Rock",
-    "ticket_link": "https://www.lepis.fi/tapahtumat/forward-folks-the-horribly-ones/",
+    "ticket_link": null,
     "price": "10€",
-    "reasoning": "Live concert featuring two punk/rock bands."
-  },
-  {
-    "date": "2026-11-20",
-    "city": "Helsinki",
-    "venue": "Bar Loose",
-    "title": "Häiriköt (levynjulkkarit) w/ Desperate Measures (NZ/UK)",
-    "genre": "Punk Rock",
-    "ticket_link": "https://barloose.com/live/harikot-levynjulkkarit-w-desperate-measures-nz-uk/",
-    "price": "14€",
-    "reasoning": "Punk rock album release show for Häiriköt with Desperate Measures."
-  },
-  {
-    "date": "2026-11-20",
-    "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "TINA (Levyjulkkarit)",
-    "genre": "Indie Pop",
-    "ticket_link": "https://tavastiaklubi.fi/events/2026-11-20/tina-levyjulkkarit/121418/",
-    "price": "16 €",
-    "reasoning": "Album release show ('Levyjulkkarit') for artist TINA."
+    "reasoning": "Live underground music show featuring two bands."
   },
   {
     "date": "2026-11-20",
     "city": "Helsinki",
     "venue": "Kuudes Linja",
     "title": "GIGI MASIN (IT) + OTTO TAIMELA",
-    "genre": "Ambient",
+    "genre": "Ambient / Electronic",
     "ticket_link": "https://www.tiketti.fi/gigi-masin-ita-kuudes-linja-helsinki-lippuja/119752",
     "price": "35 €",
-    "reasoning": "Live concert featuring ambient/electronic pioneer Gigi Masin and Otto Taimela."
+    "reasoning": "Early evening live concert featuring ambient pioneer Gigi Masin and Otto Taimela."
   },
   {
     "date": "2026-11-20",
     "city": "Helsinki",
     "venue": "Lepakkomies",
     "title": "Monsternaut + Mount Palatine + Astral Sleep",
-    "genre": "Stoner Rock / Doom Metal",
-    "ticket_link": "https://www.lepis.fi/tapahtumat/monsternaut-mount-palatine-astral-sleep/",
+    "genre": "Stoner",
+    "ticket_link": "https://fb.me/e/6y9uisMpQ",
     "price": "12€",
-    "reasoning": "Concert featuring stoner rock and doom/ambient metal bands."
-  },
-  {
-    "date": "2026-11-21",
-    "city": "Helsinki",
-    "venue": "Bar Loose",
-    "title": "The Return of Cobralife w/ Rock-Criminals",
-    "genre": "Rock",
-    "ticket_link": "https://barloose.com/live/the-return-of-cobralife-w-rock-criminals/",
-    "price": "12€",
-    "reasoning": "Live rock concert featuring Cobralife and Rock-Criminals."
+    "reasoning": "Live music event featuring stoner rock and metal acts."
   },
   {
     "date": "2026-11-21",
@@ -327,7 +207,17 @@
     "genre": "Hip Hop",
     "ticket_link": "https://www.tiketti.fi/kingfish-10v-kuudes-linja-helsinki-lippuja/121340",
     "price": "15 €",
-    "reasoning": "Live anniversary concert featuring rap artist Kingfish."
+    "reasoning": "Live concert celebrating the 10th anniversary of artist Kingfish."
+  },
+  {
+    "date": "2026-11-21",
+    "city": "Helsinki",
+    "venue": "Kuudes Linja",
+    "title": "HOT GIRL CLUB",
+    "genre": "Club / Electronic",
+    "ticket_link": "https://www.eventu.al/en/event/9340/finland/helsinki/hot-girl-club",
+    "price": "10 €",
+    "reasoning": "Late night club event featuring live performances by Miss Lioness & Sspicy J alongside DJs."
   },
   {
     "date": "2026-11-21",
@@ -335,19 +225,19 @@
     "venue": "Lepakkomies",
     "title": "Ongelma + Katujen Äänet + Karanneet Käärmeet + Villit Nautinnot",
     "genre": "Punk Rock",
-    "ticket_link": "https://www.lepis.fi/tapahtumat/ongelma-katujen-aanet-karanneet-kaarmeet-villit-nautinnot/",
+    "ticket_link": "https://fb.me/e/2RzYoasMVl",
     "price": "10€",
-    "reasoning": "Punk rock club event featuring a multi-band lineup."
+    "reasoning": "Live music event featuring prominent Finnish punk and alternative rock bands."
   },
   {
     "date": "2026-11-21",
     "city": "Helsinki",
     "venue": "Olarin Panimo",
-    "title": "Oksennus, Clactonian, Loputon Suo & Lähdön Aika",
+    "title": "OKSENNUS, CLACTONIAN, LOPUTON SUO & LÄHDÖN AIKA",
     "genre": "Metal / Underground",
     "ticket_link": "https://olarinpanimo.fi/tapahtuma/oksennus-clactonian-loputon-suo-lahdon-aika-olarin-panimo-21-11-hki/",
     "price": null,
-    "reasoning": "Concert event featuring a lineup of underground extreme/metal bands."
+    "reasoning": "A lineup of underground bands performing live at the brewery venue."
   },
   {
     "date": "2026-11-21",
@@ -357,117 +247,107 @@
     "genre": "Rock / Metal",
     "ticket_link": "https://www.facebook.com/events/1054856607352826",
     "price": null,
-    "reasoning": "Identified as a live concert featuring multiple performing rock/metal bands at Skenesali."
+    "reasoning": "Identified as a live music event featuring multiple performing bands at Skenesali."
   },
   {
-    "date": "2026-11-25",
+    "date": "2026-11-21",
     "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "Joka v*tun keskiviikko: Jukka Lindström",
-    "genre": "Comedy / Spoken Word",
-    "ticket_link": "https://tavastiaklubi.fi/events/2026-11-25/joka-vtun-keskiviikko-jukka-lindstrom/121635/",
-    "price": null,
-    "reasoning": "Event featuring Jukka Lindström marked as sold out."
+    "venue": "Club Underground",
+    "title": "West Helsinki death metal club: Absent fear (SWE), Concrete Icon, Gorekaust",
+    "genre": "Death Metal",
+    "ticket_link": null,
+    "price": "10 €",
+    "reasoning": "Explicitly labeled as 'West Helsinki death metal club' featuring death metal bands."
   },
   {
     "date": "2026-11-25",
     "city": "Helsinki",
     "venue": "Lepakkomies",
     "title": "Nättinassut + Nick Cavea suomeksi",
-    "genre": "Alternative Rock",
-    "ticket_link": "https://www.lepis.fi/tapahtumat/nattinassut-nick-cavea-suomeksi/",
+    "genre": "Rock",
+    "ticket_link": null,
     "price": "10€",
-    "reasoning": "Live music event featuring alternative artists performing Nick Cave in Finnish."
-  },
-  {
-    "date": "2026-11-26",
-    "city": "Helsinki",
-    "venue": "Bar Loose",
-    "title": "SPORT, Raskaat Silmät, Outi ja olevaiset",
-    "genre": "Indie Rock",
-    "ticket_link": "https://barloose.com/live/sport-raskaat-silmat-outi-ja-olevaiset/",
-    "price": "10€",
-    "reasoning": "Indie/alternative rock live gig featuring SPORT, Raskaat Silmät, and Outi ja olevaiset."
-  },
-  {
-    "date": "2026-11-26",
-    "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "Röge",
-    "genre": "Unknown",
-    "ticket_link": "https://tavastiaklubi.fi/events/2026-11-26/roge/121193/",
-    "price": "16 €",
-    "reasoning": "Solo artist show listed with ticket links and pricing."
+    "reasoning": "Live music performance featuring tribute/cover music of Nick Cave in Finnish and local acts."
   },
   {
     "date": "2026-11-26",
     "city": "Helsinki",
     "venue": "Lepakkomies",
     "title": "NISKAFLIPPI-TORSTAI: Kokoomus + Myrkytys + Odottaa + Harhaoppi",
-    "genre": "Punk / Hardcore",
-    "ticket_link": "https://www.lepis.fi/tapahtumat/niskaflippi-torstai-kokoomus-myrkytys-odottaa-harhaoppi/",
+    "genre": "HC",
+    "ticket_link": null,
     "price": "5€",
-    "reasoning": "Underground punk/hardcore showcase night."
+    "reasoning": "Live underground hardcore/punk music event."
   },
   {
     "date": "2026-11-27",
     "city": "Helsinki",
     "venue": "Kuudes Linja",
     "title": "DIE OBERHERREN (SE) + DHARMA GUNS + ROB COFFINSHAKER (SE)",
-    "genre": "Garage Rock",
+    "Genre": "Rock / Garage Rock",
     "ticket_link": "https://www.tiketti.fi/die-oberherren-swe-dharma-guns-kuudes-linja-helsinki-lippuja/119403",
     "price": "16 €",
-    "reasoning": "Live rock concert featuring Die Oberherren, Dharma Guns, and Rob Coffinshaker."
+    "reasoning": "Early evening live concert featuring garage rock and alternative artists."
+  },
+  {
+    "date": "2026-11-27",
+    "city": "Helsinki",
+    "venue": "Kuudes Linja",
+    "title": "CONCRETE CLUB VOL. 4",
+    "genre": "Hip Hop / Rap",
+    "ticket_link": "https://www.eventu.al/en/event/9342/finland/helsinki/concrete-club-vol4",
+    "price": "6/8 €",
+    "reasoning": "Club night featuring live sets from Baby Blu and Trebla."
   },
   {
     "date": "2026-11-27",
     "city": "Helsinki",
     "venue": "Lepakkomies",
     "title": "Ceaseless Torment + Mutant Blast + Jewel Throne",
-    "genre": "Thrash Metal / Death Metal",
-    "ticket_link": "https://www.lepis.fi/tapahtumat/ceaseless-torment-mutant-blast-jewel-throne/",
+    "genre": "METAL",
+    "ticket_link": "https://fb.me/e/9bmuFKWKI",
     "price": "10€",
-    "reasoning": "Extreme metal gig featuring thrash and death metal bands."
+    "reasoning": "Live metal music concert featuring extreme metal bands."
   },
   {
-    "date": "2026-11-28",
+    "date": "2026-11-27",
     "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "What Awaits Us, Traitors Among Us, Ashes of Perishing",
-    "genre": "Metal / Hardcore",
-    "ticket_link": "https://tavastiaklubi.fi/events/2026-11-28/what-awaits-us-traitors-among-us-ashes-of-perishing/122061/",
-    "price": "13 €",
-    "reasoning": "Heavy band names strongly suggest a metal/hardcore gig."
+    "venue": "Club Underground",
+    "title": "Eki, Jopa ja onnenonkijat",
+    "genre": "Unknown",
+    "ticket_link": null,
+    "price": "10 €",
+    "reasoning": "Listed as an upcoming live show on the venue schedule."
   },
   {
     "date": "2026-11-28",
     "city": "Helsinki",
     "venue": "Kuudes Linja",
     "title": "LALA SALAMA + HITES",
-    "genre": "Indie Rock",
+    "genre": "Indie / Alternative",
     "ticket_link": "https://www.tiketti.fi/tapahtuma/120892",
     "price": "16 €",
-    "reasoning": "Live concert featuring Lala Salama and Hites."
+    "reasoning": "Early evening live concert featuring bands Lala Salama and Hites."
   },
   {
     "date": "2026-11-28",
     "city": "Helsinki",
     "venue": "Lepakkomies",
     "title": "Yölentoklubi: Jaakko Kulta + Aaro630 + Pihalla",
-    "genre": "Indie Pop / Alternative",
-    "ticket_link": "https://www.lepis.fi/tapahtumat/yolentoklubi-jaakko-kulta-aaro630-pihalla/",
-    "price": null,
-    "reasoning": "Indie/pop club event featuring modern Finnish artists."
+    "genre": "INDIE",
+    "ticket_link": null,
+    "price": "LOPPUUNMYYTY",
+    "reasoning": "Live indie music club event featuring contemporary alternative artists."
   },
   {
     "date": "2026-11-28",
     "city": "Helsinki",
     "venue": "Lepakkomies",
     "title": "LEPISKELMÄ",
-    "genre": "Schlager / Pop",
-    "ticket_link": "https://www.lepis.fi/tapahtumat/lepiskelma/",
+    "genre": "POP",
+    "ticket_link": null,
     "price": "3€",
-    "reasoning": "Late night club event featuring themed music performance."
+    "reasoning": "Late-night music club event focusing on Finnish schlager/pop music."
   },
   {
     "date": "2026-11-28",
@@ -477,67 +357,47 @@
     "genre": "Hip Hop",
     "ticket_link": "https://www.facebook.com/events/1791005278915020",
     "price": null,
-    "reasoning": "Identified as a live hip hop show featuring Kube and VBZ at Skenesali."
+    "reasoning": "Identified as a live music/hip hop show featuring Kube and VBZ at Skenesali."
   },
   {
     "date": "2026-11-28",
     "city": "Vantaa",
     "venue": "Kulttuuritehdas Vernissa",
     "title": "Vernissa Rot Club: Torture Killer, (PSYCHOPARALYSIS) levynjulkkarikeikka, Metempsychos (LT), Whisper",
-    "genre": "Death Metal / Grindcore",
+    "genre": "Death Metal",
     "ticket_link": "https://www.facebook.com/events/1063081126363623",
     "price": null,
-    "reasoning": "Identified as a metal club event featuring Torture Killer, Psychoparalysis, Metempsychos, and Whisper at Kulttuuritehdas Vernissa."
+    "reasoning": "Identified as a metal album release concert event featuring Torture Killer, Psychoparalysis, Metempsychos, and Whisper at Kulttuuritehdas Vernissa."
   },
   {
-    "date": "2026-12-01",
+    "date": "2026-11-28",
     "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "Kuudesta Kymmeneen",
-    "genre": "Unknown",
-    "ticket_link": "https://tavastiaklubi.fi/events/2026-12-01/kuudesta-kymmeneen/120770/",
-    "price": "16,50€",
-    "reasoning": "Recurring live event listing for Kuudesta Kymmeneen."
+    "venue": "Club Underground",
+    "title": "Ramficator, Khaos, Jewel throne",
+    "genre": "Metal",
+    "ticket_link": null,
+    "price": "10 €",
+    "reasoning": "Listed on the venue schedule with typical heavy/extreme metal band names."
   },
   {
     "date": "2026-12-01",
     "city": "Tallinn",
     "venue": "Tapper",
     "title": "MASTER BOOT RECORD (ITA), FULCI (ITA)",
-    "genre": "Electronic Metal",
+    "genre": "Electronic Metal / Death Metal",
     "ticket_link": "https://ticketshop.ee/et/events/107179",
     "price": "22-...€",
-    "reasoning": "The event features Master Boot Record and Fulci, explicitly described as electronic metal and death metal acts."
-  },
-  {
-    "date": "2026-12-02",
-    "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "Joka v*tun keskiviikko: Laura Haimila",
-    "genre": "Unknown",
-    "ticket_link": "https://tavastiaklubi.fi/events/2026-12-02/joka-vtun-keskiviikko-laura-haimila/121637/",
-    "price": "15 €",
-    "reasoning": "Scheduled performance featuring Laura Haimila."
+    "reasoning": "The event explicitly features electronic metal and death metal bands Master Boot Record, Fulci, and arottenbit performing live."
   },
   {
     "date": "2026-12-02",
     "city": "Helsinki",
     "venue": "Lepakkomies",
     "title": "viola + Vera Wall",
-    "genre": "Indie Pop",
+    "genre": "INDIE",
     "ticket_link": "https://www.tiketti.fi/viola-vera-wall-lepakkomies-helsinki-lippuja/121199",
-    "price": "12€/15€",
-    "reasoning": "Live indie music concert featuring viola and Vera Wall."
-  },
-  {
-    "date": "2026-12-03",
-    "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "Club Eternal Flame",
-    "genre": "Electronic / Club",
-    "ticket_link": "https://tavastiaklubi.fi/events/2026-12-03/club-eternal-flame/119867/",
-    "price": "10 €",
-    "reasoning": "Club event with live music elements listed with ticket price."
+    "price": "12€",
+    "reasoning": "Live indie concert featuring Viola and Vera Wall."
   },
   {
     "date": "2026-12-03",
@@ -547,47 +407,37 @@
     "genre": "Metal",
     "ticket_link": "https://gotobeat.com/gig/lavina-live-in-helsinki-Jp/",
     "price": "30,25 €",
-    "reasoning": "Live gig featuring Serbian metal band Lavina."
-  },
-  {
-    "date": "2026-12-04",
-    "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "LEFT",
-    "genre": "Unknown",
-    "ticket_link": "https://tavastiaklubi.fi/events/2026-12-04/left/121556/",
-    "price": "12 €",
-    "reasoning": "Concert event titled 'LEFT' with ticket prices."
+    "reasoning": "Live metal gig featuring touring band Lavina."
   },
   {
     "date": "2026-12-04",
     "city": "Helsinki",
     "venue": "Kuudes Linja",
     "title": "VACUOUS (UK) + DOME RUNNER + THROAT + SISAR",
-    "Genre": "Death Metal",
+    "genre": "Death Metal / Noise Rock",
     "ticket_link": "https://www.tiketti.fi/vacuous-uk-dome-runner-throat-sisar-kuudes-linja-helsinki-lippuja/121140",
     "price": "20 €",
-    "reasoning": "Heavy underground metal lineup featuring Vacuous, Dome Runner, Throat, and Sisar."
+    "reasoning": "Extreme metal and noise rock live concert featuring multiple bands."
   },
   {
     "date": "2026-12-04",
     "city": "Helsinki",
     "venue": "Lepakkomies",
     "title": "Rearviewmirror – A Tribute to Pearl Jam",
-    "genre": "Grunge / Rock",
+    "genre": "ROCK",
     "ticket_link": "https://www.tiketti.fi/rearviewmirror-a-tribute-to-pearl-jam-lepakkomies-helsinki-lippuja/121669",
-    "price": "12€/14€",
-    "reasoning": "Live tribute band concert dedicated to Pearl Jam."
+    "price": "12€",
+    "reasoning": "Live tribute rock concert dedicated to Pearl Jam."
   },
   {
     "date": "2026-12-04",
     "city": "Helsinki",
     "venue": "Olarin Panimo",
     "title": "Echo Is Your Love, Silver Falcons, Ciao Babes",
-    "genre": "Indie Rock",
+    "genre": "Indie / Alternative Rock",
     "ticket_link": "https://olarinpanimo.fi/tapahtuma/echo-is-your-love-silver-falcons-ciao-babes/",
     "price": null,
-    "reasoning": "Live gig event featuring a lineup of three rock/indie bands."
+    "reasoning": "Concert event featuring three indie/alternative music acts."
   },
   {
     "date": "2026-12-04",
@@ -597,17 +447,37 @@
     "genre": "Modern Metal",
     "ticket_link": "https://fienta.com/storm-over-tallinn",
     "price": "20€-...",
-    "reasoning": "This is a metal festival featuring modern metal, melodic death, and folk metal bands like Lavina, Bloody Falls, Numento, and Ampest."
+    "reasoning": "This is a metal festival featuring modern metal, death metal, and folk metal bands including Lavina, Bloody Falls, Numento, and Ampest."
   },
   {
-    "date": "2026-12-09",
+    "date": "2026-12-04",
     "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "Joka v*tun keskiviikko: Teemu Vesterinen",
+    "venue": "Club Underground",
+    "title": "West Helsinki hard rock club: Rylos, TBA, TBA",
+    "genre": "Hard Rock",
+    "ticket_link": null,
+    "price": "10 €",
+    "reasoning": "Explicitly labeled as 'West Helsinki hard rock club'."
+  },
+  {
+    "date": "2026-12-05",
+    "city": "Vantaa",
+    "venue": "Kulttuuritehdas Vernissa",
+    "title": "December Doom: Diablerie, Disgrave, Forever Failures",
+    "genre": "Doom Metal",
+    "ticket_link": "https://www.facebook.com/events/1667008508410079",
+    "price": null,
+    "reasoning": "Identified as a doom metal festival/gig event titled December Doom featuring Diablerie, Disgrave, and Forever Failures at Kulttuuritehdas Vernissa. Note: December 2025 is prior to current date Nov 2026, but following strict parsing rules from text without explicit year it uses the nearest logical past or future; assuming 2025 or 2026 based on context, but given current date is Nov 2026, December 2025 has passed, so it should technically be 2026 if upcoming. Let's adjust to 2026-12-05 since it's upcoming relative to Nov 9 2026."
+  },
+  {
+    "date": "2026-12-05",
+    "city": "Helsinki",
+    "venue": "Club Underground",
+    "title": "D-reservation",
     "genre": "Unknown",
-    "ticket_link": "https://tavastiaklubi.fi/events/2026-12-09/joka-vtun-keskiviikko-teemu-vesterinen/121640/",
-    "price": "15 €",
-    "reasoning": "Performance event featuring Teemu Vesterinen."
+    "ticket_link": null,
+    "price": "10 €",
+    "reasoning": "Listed as an upcoming live show on the venue schedule."
   },
   {
     "date": "2026-12-10",
@@ -617,17 +487,17 @@
     "genre": "Punk / Hardcore",
     "ticket_link": "https://olarinpanimo.fi/tapahtuma/aivolavistys-teresa-banks-tackle-dk/",
     "price": null,
-    "reasoning": "Live music show featuring punk/hardcore acts."
+    "reasoning": "Live gig featuring punk and hardcore bands."
   },
   {
     "date": "2026-12-11",
     "city": "Helsinki",
     "venue": "Kuudes Linja",
     "title": "VILLE1000000 + R1",
-    "genre": "Indie Pop",
+    "genre": "Indie / Electronic",
     "ticket_link": "https://www.tiketti.fi/ville1000000-r1-kuudes-linja-helsinki-lippuja/121416",
     "price": "14 €",
-    "reasoning": "Live concert featuring indie acts ville1000000 and r1."
+    "reasoning": "Early evening live concert featuring ville1000000 and r1."
   },
   {
     "date": "2026-12-11",
@@ -637,27 +507,27 @@
     "genre": "Punk Rock",
     "ticket_link": "https://www.facebook.com/events/1355100016439358",
     "price": null,
-    "reasoning": "Identified as a live punk rock gig featuring Nyrkkitappelu and Rustopora at Skenesali."
+    "reasoning": "Identified as a live punk rock event featuring Nyrkkitappelu and Rustopora at Skenesali."
   },
   {
     "date": "2026-12-12",
     "city": "Helsinki",
     "venue": "Kuudes Linja",
     "title": "JESS BY THE LAKE (LEVYJULKKARIT) + POHJOLAN ILMARI (LP-JULKKARIT)",
-    "genre": "Doom Metal",
+    "genre": "Metal / Folk",
     "ticket_link": "https://www.tiketti.fi/jess-by-the-lake-pohjolan-ilmari-kuudes-linja-helsinki-lippuja/121023",
     "price": "20 €",
-    "reasoning": "Double album release concert featuring Jess By The Lake and Pohjolan Ilmari."
+    "reasoning": "Album release live concert featuring Jess By The Lake and Pohjolan Ilmari."
   },
   {
     "date": "2026-12-12",
     "city": "Vantaa",
     "venue": "Skenesali",
     "title": "Aatulove + Jemina",
-    "genre": "Alternative / Pop",
+    "genre": "Pop / Indie",
     "ticket_link": "https://www.facebook.com/events/1051509883899209",
     "price": null,
-    "reasoning": "Identified as a live music performance by Aatulove and Jemina at Skenesali."
+    "reasoning": "Identified as a live music event featuring Aatulove and Jemina at Skenesali."
   },
   {
     "date": "2026-12-18",
@@ -667,17 +537,17 @@
     "genre": "Rock",
     "ticket_link": "https://www.tiketti.fi/luxury-toys-levyjulkkarit-kuudes-linja-helsinki-lippuja/118661",
     "price": "14 €",
-    "reasoning": "Album release rock concert featuring Luxury Toys and Jann Wilde & The Neon Comets."
+    "reasoning": "Album release live rock concert."
   },
   {
     "date": "2026-12-19",
     "city": "Helsinki",
     "venue": "Kuudes Linja",
-    "title": "T.JARVA & THE DARK PLACE",
+    "title": "T.JARVA & THE DARK PLACE (JULKKARIT & KAHDEN SETIN ERIKOISKEIKKA)",
     "genre": "Rock",
     "ticket_link": "https://www.tiketti.fi/t-jarva-the-dark-place-kuudes-linja-helsinki-lippuja/121337",
     "price": "18 €",
-    "reasoning": "Special two-set live gig featuring T.Jarva & The Dark Place."
+    "reasoning": "Special two-set live album release concert by T.Jarva & The Dark Place."
   },
   {
     "date": "2026-12-19",
@@ -687,57 +557,27 @@
     "genre": "Death Metal / Doom Metal",
     "ticket_link": "https://olarinpanimo.fi/tapahtuma/19-12-death-doom-night-scumripper-kahtia-mutant-hekatoxen/",
     "price": null,
-    "reasoning": "Explicitly labeled as a death/doom metal night featuring multiple metal bands."
+    "reasoning": "A themed extreme metal gig event featuring multiple death and doom metal bands."
   },
   {
     "date": "2026-12-19",
     "city": "Vantaa",
     "venue": "Skenesali",
     "title": "Koukeroisuus on kivaa -klubi vol. 2: Overhead, Misty Mountain Foundation, Featherfoot",
-    "genre": "Progressive Rock / Psychedelic",
+    "genre": "Rock / Prog Rock",
     "ticket_link": "https://www.facebook.com/events/974927712319492",
     "price": null,
-    "reasoning": "Identified as a live club event featuring multiple bands (Overhead, Misty Mountain Foundation, Featherfoot) at Skenesali."
+    "reasoning": "Identified as a club night featuring multiple live bands (Overhead, Misty Mountain Foundation, Featherfoot) at Skenesali."
   },
   {
-    "date": "2026-12-26",
+    "date": "2026-12-19",
     "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "Kosto (EP-julkkarit), Arseeni",
-    "genre": "Punk / Metal",
-    "ticket_link": "https://tavastiaklubi.fi/events/2026-12-26/kosto-ep-julkkarit-arseeni/121117/",
-    "price": "14 €",
-    "reasoning": "EP release show ('EP-julkkarit') for Kosto alongside Arseeni."
-  },
-  {
-    "date": "2027-01-02",
-    "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "Kaikkeus, Vaasa Palaa",
-    "genre": "Rock / Indie",
-    "ticket_link": "https://tavastiaklubi.fi/events/2027-01-02/kaikkeus-vaasa-palaa/121615/",
-    "price": "14 €",
-    "reasoning": "Dual-artist gig listing with ticket pricing."
-  },
-  {
-    "date": "2027-01-07",
-    "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "Muddy Moonshine, Northeast Gale, Psykentucky",
-    "genre": "Country / Blues / Rock",
-    "ticket_link": "https://tavastiaklubi.fi/events/2027-01-07/muddy-moonshine-northeast-gale-psykentucky/121730/",
-    "price": "12 €",
-    "reasoning": "Band names suggest roots/southern rock style music."
-  },
-  {
-    "date": "2027-01-08",
-    "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "Einvigi, The Mist from the Mountains, Venunum Dei",
-    "genre": "Black Metal",
-    "ticket_link": "https://tavastiaklubi.fi/events/2027-01-08/einvigi-the-mist-from-the-mountains-venunum-dei/120784/",
-    "price": "16 €",
-    "reasoning": "Atmospheric/black metal band names indicate a heavy metal gig."
+    "venue": "Club Underground",
+    "title": "Umbraion, Decrowned, Skulled Pork",
+    "genre": "Metal",
+    "ticket_link": null,
+    "price": "10 €",
+    "reasoning": "Listed on the venue schedule with metal-oriented band names."
   },
   {
     "date": "2027-01-08",
@@ -747,44 +587,34 @@
     "genre": "Hard Rock",
     "ticket_link": "https://www.tiketti.fi/peer-gunt-blindbound-kuudes-linja-helsinki-lippuja/121948",
     "price": "30 €",
-    "reasoning": "Live hard rock concert featuring Peer Günt and Blindboünd."
+    "reasoning": "Live hard rock concert featuring legendary band Peer Günt and Blindboünd."
   },
   {
     "date": "2027-01-09",
     "city": "Helsinki",
     "venue": "Kuudes Linja",
     "title": "BAD APPLES PLAYS GUNS N’ ROSES + MUSEO PLAYS MUSE",
-    "genre": "Tribute Rock",
+    "genre": "Tribute / Rock",
     "ticket_link": "https://www.tiketti.fi/bad-apples-plays-guns-n-roses-museo-plays-muse-kuudes-linja-lippuja/121701",
     "price": "14 €",
-    "reasoning": "Tribute band live event featuring Guns N' Roses and Muse covers."
-  },
-  {
-    "date": "2027-01-09",
-    "city": "Helsinki",
-    "venue": "Olarin Panimo",
-    "title": "Rotten Cacophony Vol.I",
-    "genre": "Metal / Extreme Music",
-    "ticket_link": "https://olarinpanimo.fi/tapahtuma/rotten-cacophony-vol-i/",
-    "price": null,
-    "reasoning": "Identified as a music event based on the title and venue context."
+    "reasoning": "Tribute live concert featuring Guns N' Roses and Muse cover acts."
   },
   {
     "date": "2027-01-09",
     "city": "Helsinki",
     "venue": "Club Underground",
     "title": "Unnamed feeling, Primate",
-    "genre": "Live Music",
+    "genre": "Unknown",
     "ticket_link": null,
     "price": "10 €",
-    "reasoning": "Listed under the 2027 section for January 9."
+    "reasoning": "Listed under the 2027 gig schedule section."
   },
   {
     "date": "2027-01-15",
     "city": "Helsinki",
     "venue": "Kuudes Linja",
     "title": "TAMARA LUONTO 10 V-JUHLAT + JONI EKMAN GROUP + ALBERT",
-    "genre": "Indie Rock",
+    "genre": "Punk Rock / Indie",
     "ticket_link": "https://www.tiketti.fi/tamara-luonto-joni-ekman-group-albert-kuudes-linja-helsinki-lippuja/122065",
     "price": "16 €",
     "reasoning": "Anniversary live concert featuring Tamara Luonto, Joni Ekman Group, and Albert."
@@ -794,20 +624,20 @@
     "city": "Helsinki",
     "venue": "Club Underground",
     "title": "Nobody, TBA, TBA",
-    "genre": "Live Music",
+    "genre": "Unknown",
     "ticket_link": null,
     "price": "10 €",
-    "reasoning": "Listed under the 2027 section for January 15."
+    "reasoning": "Listed under the 2027 gig schedule section."
   },
   {
     "date": "2027-01-16",
     "city": "Helsinki",
     "venue": "Kuudes Linja",
     "title": "DEMONIC DEATH JUDGE – SEAWEED 10 YEAR ANNIVERSARY + SUNNIVA + ELEKTRUS EREKTUS",
-    "genre": "Sludge Metal",
+    "genre": "Sludge Metal / Stoner Rock",
     "ticket_link": "https://www.tiketti.fi/demonic-death-judge-sunniva-elektrus-erektus-kuudes-linja-lippuja/121367",
     "price": "15 €",
-    "reasoning": "Anniversary metal gig featuring Demonic Death Judge, Sunniva, and Elektrus Erektus."
+    "reasoning": "Anniversary live metal concert featuring Demonic Death Judge, Sunniva, and Elektrus Erektus."
   },
   {
     "date": "2027-01-16",
@@ -817,7 +647,7 @@
     "genre": "Progressive Rock",
     "ticket_link": null,
     "price": "10 €",
-    "reasoning": "Listed under 2027 section with progressive in the club title."
+    "reasoning": "Explicitly labeled as 'West helsinki progressive' event."
   },
   {
     "date": "2027-01-23",
@@ -827,7 +657,7 @@
     "genre": "Melodic Death Metal",
     "ticket_link": "https://www.facebook.com/events/1680321313513592",
     "price": null,
-    "reasoning": "Identified as a live metal concert featuring the band Whispered at Skenesali. January has passed relative to November 2026, so the year is inferred as 2027."
+    "reasoning": "Identified as a metal concert featuring Whispered at Skenesali; since January has passed in the base date context of Nov 2026, the year is set to 2027."
   },
   {
     "date": "2027-01-23",
@@ -837,17 +667,7 @@
     "genre": "Hardcore",
     "ticket_link": null,
     "price": "10 €",
-    "reasoning": "Listed under 2027 section as a Hardcore club event."
-  },
-  {
-    "date": "2027-01-29",
-    "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "Helsinski (Levyjulkkarit)",
-    "genre": "Unknown",
-    "ticket_link": "https://tavastiaklubi.fi/events/2027-01-29/helsinski-levyjulkkarit/120804/",
-    "price": "14 €",
-    "reasoning": "Album release concert ('Levyjulkkarit')."
+    "reasoning": "Explicitly labeled as 'West Helsinki Hardcore club'."
   },
   {
     "date": "2027-01-29",
@@ -864,20 +684,20 @@
     "city": "Helsinki",
     "venue": "Club Underground",
     "title": "KK + Hellman",
-    "genre": "Live Music",
+    "genre": "Unknown",
     "ticket_link": null,
     "price": "10 €",
-    "reasoning": "Listed under the 2027 section for January 29."
+    "reasoning": "Listed under the 2027 gig schedule section."
   },
   {
     "date": "2027-01-30",
     "city": "Helsinki",
     "venue": "Kuudes Linja",
     "title": "PYRY LAAKSO + IRA",
-    "genre": "Indie Pop",
+    "genre": "Indie / Singer-Songwriter",
     "ticket_link": "https://www.tiketti.fi/pyry-laakso-ira-kuudes-linja-helsinki-lippuja/122066",
     "price": "17 €",
-    "reasoning": "Live indie concert featuring Pyry Laakso and Ira."
+    "reasoning": "Live concert featuring singer-songwriters Pyry Laakso and Ira."
   },
   {
     "date": "2027-01-30",
@@ -887,7 +707,7 @@
     "genre": "Black Metal",
     "ticket_link": "https://www.facebook.com/events/1089862393827667",
     "price": null,
-    "reasoning": "Identified as a live extreme metal event featuring Azgaroth, Karelian Warcry, and Withering Emptiness at Skenesali. Year inferred as 2027."
+    "reasoning": "Identified as an extreme metal gig featuring Azgaroth, Karelian Warcry, and Withering Emptiness at Skenesali for January 2027."
   },
   {
     "date": "2027-01-30",
@@ -897,7 +717,7 @@
     "genre": "Metal",
     "ticket_link": null,
     "price": "10 €",
-    "reasoning": "Listed under the 2027 section for January 30."
+    "reasoning": "Listed on the venue schedule with metal-oriented band names."
   },
   {
     "date": "2027-02-05",
@@ -907,57 +727,47 @@
     "genre": "Hardcore Punk",
     "ticket_link": "https://www.tiketti.fi/terveet-kadet-kuudes-linja-helsinki-lippuja/121702",
     "price": "18 €",
-    "reasoning": "Legendary hardcore punk album release party featuring Terveet Kädet."
+    "reasoning": "Album release live hardcore punk concert featuring legendary band Terveet Kädet."
   },
   {
     "date": "2027-02-05",
     "city": "Vantaa",
     "venue": "Skenesali",
     "title": "Nyrkki-Kyllikki",
-    "genre": "Rock",
+    "genre": "Punk / Rock",
     "ticket_link": "https://www.facebook.com/events/1056990060686367",
     "price": null,
-    "reasoning": "Identified as a live music performance by Nyrkki-Kyllikki at Skenesali. Year inferred as 2027."
+    "reasoning": "Identified as a live music event featuring Nyrkki-Kyllikki at Skenesali for February 2027."
   },
   {
     "date": "2027-02-05",
     "city": "Helsinki",
     "venue": "Club Underground",
     "title": "The foreshadowing (IT), Asphodelus",
-    "genre": "Metal",
+    "genre": "Doom Metal",
     "ticket_link": null,
     "price": "15 €",
-    "reasoning": "Listed under the 2027 section for February 5."
+    "reasoning": "The Foreshadowing is a known gothic/doom metal band."
   },
   {
     "date": "2027-02-06",
     "city": "Helsinki",
     "venue": "Club Underground",
     "title": "Prebooking Artifer + 2",
-    "genre": "Live Music",
+    "genre": "Unknown",
     "ticket_link": null,
     "price": "10 €",
-    "reasoning": "Listed under the 2027 section for February 6."
-  },
-  {
-    "date": "2027-02-12",
-    "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "Aukusti Koivisto",
-    "genre": "Unknown",
-    "ticket_link": "https://tavastiaklubi.fi/events/2027-02-12/aukusti-koivisto/121417/",
-    "price": "22 €",
-    "reasoning": "Solo artist concert listing with ticket pricing."
+    "reasoning": "Listed on the venue schedule."
   },
   {
     "date": "2027-02-13",
     "city": "Helsinki",
     "venue": "Club Underground",
     "title": "Karusalem, TBA, TBA",
-    "genre": "Live Music",
+    "genre": "Unknown",
     "ticket_link": null,
     "price": "10 €",
-    "reasoning": "Listed under the 2027 section for February 13."
+    "reasoning": "Listed on the venue schedule."
   },
   {
     "date": "2027-02-19",
@@ -967,106 +777,76 @@
     "genre": "Metal",
     "ticket_link": null,
     "price": "10 €",
-    "reasoning": "Listed under the 2027 section for February 19."
+    "reasoning": "Listed on the venue schedule with metal-oriented band names."
   },
   {
     "date": "2027-02-20",
     "city": "Helsinki",
     "venue": "Club Underground",
     "title": "Billbord",
-    "genre": "Live Music",
+    "genre": "Unknown",
     "ticket_link": null,
     "price": "10 €",
-    "reasoning": "Listed under the 2027 section for February 20."
-  },
-  {
-    "date": "2027-02-27",
-    "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "MOMO",
-    "genre": "Unknown",
-    "ticket_link": "https://tavastiaklubi.fi/events/2027-02-27/momo/121407/",
-    "price": "15 €",
-    "reasoning": "Live music event featuring MOMO with ticket info."
+    "reasoning": "Listed on the venue schedule."
   },
   {
     "date": "2027-02-27",
     "city": "Helsinki",
     "venue": "Club Underground",
     "title": "Kompost, TBA, TBA",
-    "genre": "Live Music",
+    "genre": "Unknown",
     "ticket_link": null,
     "price": "10 €",
-    "reasoning": "Listed under the 2027 section for February 27."
+    "reasoning": "Listed on the venue schedule."
   },
   {
     "date": "2027-03-06",
     "city": "Helsinki",
     "venue": "Club Underground",
     "title": "BOOT, Ill Geader",
-    "genre": "Live Music",
+    "genre": "Unknown",
     "ticket_link": null,
     "price": "10 €",
-    "reasoning": "Listed under the 2027 section for March 6."
+    "reasoning": "Listed on the venue schedule."
   },
   {
     "date": "2027-03-12",
     "city": "Helsinki",
     "venue": "Club Underground",
     "title": "Reality machine, ARMED, Neverfade",
-    "genre": "Live Music",
+    "genre": "Unknown",
     "ticket_link": null,
     "price": "10 €",
-    "reasoning": "Listed under the 2027 section for March 12."
-  },
-  {
-    "date": "2027-03-13",
-    "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "The Arki",
-    "genre": "Unknown",
-    "ticket_link": "https://tavastiaklubi.fi/events/2027-03-13/the-arki/121626/",
-    "price": "13 €",
-    "reasoning": "Concert event for The Arki with scheduled door times and ticket prices."
+    "reasoning": "Listed on the venue schedule."
   },
   {
     "date": "2027-04-10",
     "city": "Helsinki",
     "venue": "Club Underground",
     "title": "Casket (DE), Ashen tomb",
-    "genre": "Metal",
+    "genre": "Death Metal",
     "ticket_link": null,
     "price": "10 €",
-    "reasoning": "Listed under the 2027 section for April 10."
-  },
-  {
-    "date": "2027-04-20",
-    "city": "Helsinki",
-    "venue": "Semifinal",
-    "title": "Tramhaus (NL)",
-    "genre": "Post-Punk",
-    "ticket_link": "https://tavastiaklubi.fi/events/2027-04-20/tramhaus-nl/119101/",
-    "price": "20 €",
-    "reasoning": "International touring punk band Tramhaus performing live."
+    "reasoning": "Casket is a known German death metal band."
   },
   {
     "date": "2027-05-29",
     "city": "Helsinki",
     "venue": "Club Underground",
     "title": "Caliber orders, TBA, TBA",
-    "genre": "Live Music",
+    "genre": "Unknown",
     "ticket_link": null,
     "price": "10 €",
-    "reasoning": "Listed under the 2027 section for May 29."
+    "reasoning": "Listed on the venue schedule."
   },
   {
     "date": "2027-06-26",
     "city": "Helsinki",
     "venue": "Club Underground",
     "title": "Mururoa Attack (DE), TBA, TBA",
-    "genre": "Live Music",
+    "genre": "Unknown",
     "ticket_link": null,
     "price": "10 €",
-    "reasoning": "Listed under the 2027 section for June 26."
+    "reasoning": "Listed on the venue schedule."
   }
 ]
