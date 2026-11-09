@@ -53,7 +53,19 @@ def run_analyzer():
         try:
             # We expect the Identifier to pass YYYY-MM-DD format
             gig_date = datetime.strptime(date_str, "%Y-%m-%d").date()
-            
+
+            # The AI sometimes guesses the wrong year (e.g. 2025 instead of 2026).
+            # Venue pages rarely list old gigs, so a date more than 30 days in
+            # the past is most likely next year's gig: move it forward one year.
+            if (today - gig_date).days > 30:
+                try:
+                    fixed_date = gig_date.replace(year=gig_date.year + 1)
+                except ValueError:  # 29 February
+                    fixed_date = gig_date.replace(year=gig_date.year + 1, day=28)
+                logging.info(f"Fixed year for '{title}' at {venue}: {date_str} -> {fixed_date}")
+                gig_date = fixed_date
+                gig["date"] = fixed_date.strftime("%Y-%m-%d")
+
             if gig_date < today:
                 logging.info(f"Dropped '{title}' at {venue}: Date {date_str} is in the past.")
                 continue
