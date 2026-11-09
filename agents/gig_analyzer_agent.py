@@ -44,6 +44,13 @@ def run_analyzer():
             logging.info(f"Dropped gig at {venue}: Missing title.")
             continue
         
+        # Check 1b: Not live music (the AI labels each event; gigs without a label,
+        # e.g. kept from an older run, are allowed through)
+        event_type = gig.get("event_type")
+        if event_type and event_type != "live_music":
+            logging.info(f"Dropped '{title}' at {venue}: Not live music ({event_type}).")
+            continue
+
         # Check 2: Missing Date
         if not date_str:
             logging.info(f"Dropped '{title}' at {venue}: Missing date.")
