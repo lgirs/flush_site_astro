@@ -52,11 +52,12 @@ JSON is fussy: keep commas and quotes exactly in the same pattern as the existin
 - Runs via GitHub Action `.github/workflows/run_venue_tracker.yml` — **Mon, Wed, Sat at 04:00 UTC**, or by hand (Actions → Run Venue Tracker Agents → Run workflow).
 - One run, in order: find gigs → save `src/data/venue_gigs.json` (bot commits it with `[skip ci]`) → trigger Netlify rebuild.
 - `main_workflow.py` runs two steps in `agents/`:
-  - **Identifier** (`gig_identifier_agent.py`): reads each venue page and asks Google Gemini to list the gigs. Model: `gemini-3.5-flash-lite` (free tier: 500 requests/day; one request per venue, plus retries). Retries up to 5 times when the AI is busy (503). If a venue fails, it keeps that venue's gigs from the previous run. Each gig gets a `source_venue` field.
-  - **Analyzer** (`gig_analyzer_agent.py`): plain Python, no AI. Drops gigs without title/date and past gigs. The AI often guesses one year too early, so a date more than 30 days in the past is moved forward one year.
+  - **Identifier** (`gig_identifier_agent.py`): reads each venue page and asks Google Gemini to list the gigs. Model: `gemini-3.5-flash-lite` (free tier: 500 requests/day; one request per venue, plus retries). Retries up to 5 times when the AI is busy (503). If a venue suddenly returns 0 events but had gigs last time, it asks once more. If a venue fails, it keeps that venue's gigs from the previous run. Each gig gets a `source_venue` field.
+  - The AI lists every event and labels it with `event_type`: `live_music`, `comedy`, `dj_club_night` (all DJ events), `private_booking` or `other`. The prompt explains Finnish music words, since many pages show only the title.
+  - **Analyzer** (`gig_analyzer_agent.py`): plain Python, no AI. Keeps only `live_music` (gigs without a label are kept). Drops gigs without title/date and past gigs. The AI often guesses one year too early, so a date more than 30 days in the past is moved forward one year.
 - Venue list: `config/gig_venues.json`. AI instructions: `config/identifier_prompt.txt`.
 - Secrets in **GitHub Secrets** (never in the code): `GEMINI_API_KEY`, `NETLIFY_BUILD_HOOK`.
-- Open issues: Hard Rock House returns 0 gigs (page may load gigs in a way the tracker can't read); non-gigs like "D-reservation"/"Prebooking" are not filtered out yet.
+- Open issues: Hard Rock House's website often doesn't respond to the tracker (timeout) or gives 0 gigs. Vernissa always gives 0 (its gigs appear via Skenesali's page). A word-based filter for non-gigs was considered but isn't needed while the AI labeling works.
 - A run that ends with GitHub's "Internal server error" is GitHub's problem — just re-run it.
 
 ## Notes
