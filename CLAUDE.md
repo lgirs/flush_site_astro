@@ -16,7 +16,8 @@ Website for the band **Flush** — live at https://flush.rocks
 - Code lives on **GitHub** (branch `main`). **Netlify** is connected to it.
 - Every change pushed to `main` → Netlify builds and publishes the site automatically.
 - Netlify settings: `netlify.toml` (runs `npm run build`, publishes the `dist` folder, Node 20).
-- A daily GitHub Action (`.github/workflows/daily-build.yml`) triggers a Netlify rebuild at 05:00 UTC.
+- There is **no separate daily rebuild**. The Venue Tracker (below) triggers a Netlify rebuild on Mon/Wed/Sat. That rebuild also moves past shows on the Gigs page from "upcoming" to "past".
+- Claude cannot push from this computer (no GitHub login). Claude commits locally; the owner pushes with **GitHub Desktop** ("Push origin"). Before starting new work, pull the latest from GitHub — the tracker bot adds its own commits.
 
 ## What the site is built with
 
@@ -48,12 +49,15 @@ JSON is fussy: keep commas and quotes exactly in the same pattern as the existin
 ## Venue Tracker (Python + AI)
 
 - Finds upcoming gigs at Helsinki venues and shows them on `/venue-tracker`.
-- Runs via GitHub Action `.github/workflows/run_venue_tracker.yml` (Mon & Fri, 04:00 UTC).
-- `main_workflow.py` runs two steps in `agents/`: identifier (scrapes venues + Google Gemini AI) → analyzer (cleans/filters).
+- Runs via GitHub Action `.github/workflows/run_venue_tracker.yml` — **Mon, Wed, Sat at 04:00 UTC**, or by hand (Actions → Run Venue Tracker Agents → Run workflow).
+- One run, in order: find gigs → save `src/data/venue_gigs.json` (bot commits it with `[skip ci]`) → trigger Netlify rebuild.
+- `main_workflow.py` runs two steps in `agents/`:
+  - **Identifier** (`gig_identifier_agent.py`): reads each venue page and asks Google Gemini to list the gigs. Model: `gemini-3.5-flash-lite` (free tier: 500 requests/day; one request per venue, plus retries). Retries up to 5 times when the AI is busy (503). If a venue fails, it keeps that venue's gigs from the previous run. Each gig gets a `source_venue` field.
+  - **Analyzer** (`gig_analyzer_agent.py`): plain Python, no AI. Drops gigs without title/date and past gigs. The AI often guesses one year too early, so a date more than 30 days in the past is moved forward one year.
 - Venue list: `config/gig_venues.json`. AI instructions: `config/identifier_prompt.txt`.
-- Uses the `GEMINI_API_KEY` stored in **GitHub Secrets** — never in the code.
-- The bot commits updated `src/data/venue_gigs.json` itself.
-- Status: the venue-tracker page currently shows a "temporarily out of order" message.
+- Secrets in **GitHub Secrets** (never in the code): `GEMINI_API_KEY`, `NETLIFY_BUILD_HOOK`.
+- Open issues: Hard Rock House returns 0 gigs (page may load gigs in a way the tracker can't read); non-gigs like "D-reservation"/"Prebooking" are not filtered out yet.
+- A run that ends with GitHub's "Internal server error" is GitHub's problem — just re-run it.
 
 ## Notes
 
