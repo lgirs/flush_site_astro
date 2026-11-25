@@ -1,17 +1,5 @@
 [
   {
-    "date": "2026-11-24",
-    "city": "Helsinki",
-    "venue": "Bar Loose",
-    "title": "PJK Klubi: Backrooms, Soft Guys, Visio",
-    "genre": "Rock",
-    "ticket_link": "https://barloose.com/live/pjk-klubi-backrooms-soft-guys-visio/",
-    "price": "Vapaa pääsy!",
-    "event_type": "live_music",
-    "reasoning": "The event features named live bands (Backrooms, Soft Guys, Visio) performing at a rock venue, categorized as live music.",
-    "source_venue": "Bar Loose"
-  },
-  {
     "date": "2026-11-25",
     "city": "Helsinki",
     "venue": "Bar Loose",
@@ -28,11 +16,11 @@
     "city": "Helsinki",
     "venue": "Lepakkomies",
     "title": "Nättinassut + Nick Cavea suomeksi",
-    "genre": "Alternative Rock",
-    "ticket_link": null,
+    "genre": "Rock",
+    "ticket_link": "https://www.lepis.fi/tapahtumat/nattinassut-nick-cavea-suomeksi/",
     "price": "10€",
     "event_type": "live_music",
-    "reasoning": "Live music performance featuring artists playing covers/music in Finnish.",
+    "reasoning": "Live bands performing music.",
     "source_venue": "Lepakkomies"
   },
   {
@@ -65,10 +53,10 @@
     "venue": "Lepakkomies",
     "title": "NISKAFLIPPI-TORSTAI: Kokoomus + Myrkytys + Odottaa + Harhaoppi",
     "genre": "Punk Rock",
-    "ticket_link": null,
+    "ticket_link": "https://www.lepis.fi/tapahtumat/niskaflippi-torstai-kokoomus-myrkytys-odottaa-harhaoppi/",
     "price": "5€",
     "event_type": "live_music",
-    "reasoning": "Multiple live bands performing on a Thursday night gig.",
+    "reasoning": "Multiple live bands performing.",
     "source_venue": "Lepakkomies"
   },
   {
@@ -100,11 +88,11 @@
     "city": "Helsinki",
     "venue": "Lepakkomies",
     "title": "Ceaseless Torment + Mutant Blast + Jewel Throne",
-    "genre": "Death Metal / Thrash Metal",
-    "ticket_link": null,
+    "genre": "Metal",
+    "ticket_link": "https://www.lepis.fi/tapahtumat/ceaseless-torment-mutant-blast-jewel-throne/",
     "price": "10€",
     "event_type": "live_music",
-    "reasoning": "Lineup of metal bands performing live.",
+    "reasoning": "Metal bands performing live.",
     "source_venue": "Lepakkomies"
   },
   {
@@ -116,7 +104,7 @@
     "ticket_link": "https://olarinpanimo.fi/tapahtuma/making-damage-vol-1-27-11-2026/",
     "price": null,
     "event_type": "live_music",
-    "reasoning": "Event series likely featuring live bands or performances based on venue context.",
+    "reasoning": "Implied live music event based on typical venue show naming conventions.",
     "source_venue": "Olarin Panimo"
   },
   {
@@ -173,10 +161,10 @@
     "venue": "Lepakkomies",
     "title": "Yölentoklubi: Jaakko Kulta + Aaro630 + Pihalla",
     "genre": "Indie Pop",
-    "ticket_link": null,
+    "ticket_link": "https://www.lepis.fi/tapahtumat/yolentoklubi-jaakko-kulta-aaro630-pihalla/",
     "price": "LOPPUUNMYYTY",
     "event_type": "live_music",
-    "reasoning": "Club night featuring named live music acts/artists.",
+    "reasoning": "Club event featuring live artists.",
     "source_venue": "Lepakkomies"
   },
   {
@@ -184,11 +172,11 @@
     "city": "Helsinki",
     "venue": "Olarin Panimo",
     "title": "Cats of Transnistria, Pink Chameleons & Cave Moss",
-    "genre": "Indie / Alternative",
+    "genre": "Indie Rock",
     "ticket_link": "https://olarinpanimo.fi/tapahtuma/cats-of-transnistria-pink-chameleons-cave-moss/",
     "price": null,
     "event_type": "live_music",
-    "reasoning": "Multiple indie/alternative band names performing.",
+    "reasoning": "Features multiple live bands performing.",
     "source_venue": "Olarin Panimo"
   },
   {
@@ -196,23 +184,23 @@
     "city": "Vantaa",
     "venue": "Skenesali",
     "title": "Kube + VBZ",
-    "genre": "Rap / Hip Hop",
+    "genre": "Rap/Hip-Hop",
     "ticket_link": "https://www.facebook.com/events/1791005278915020",
     "price": null,
     "event_type": "live_music",
-    "reasoning": "Musical artists performing live at the venue.",
+    "reasoning": "Artists performing live music concert. Genre estimated as rap/hip-hop based on the artist Kube.",
     "source_venue": "Skenesali"
   },
   {
     "date": "2026-11-28",
     "city": "Vantaa",
-    "venue": "Tikkurilan Kulttuuritehdas Vernissa",
+    "venue": "Kulttuuritehdas Vernissa",
     "title": "Vernissa Rot Club: Torture Killer, (PSYCHOPARALYSIS) levynjulkkarikeikka, Metempsychos (LT), Whisper",
     "genre": "Death Metal",
     "ticket_link": "https://www.facebook.com/events/1063081126363623",
     "price": null,
     "event_type": "live_music",
-    "reasoning": "Metal club night featuring multiple live bands and an album release show ('levynjulkkarikeikka').",
+    "reasoning": "Metal club night and album release gig (levynjulkkarikeikka) featuring multiple live bands.",
     "source_venue": "Skenesali"
   },
   {
@@ -242,13 +230,13 @@
   {
     "date": "2026-12-01",
     "city": "Tallinn",
-    "venue": "Tapper",
+    "venue": "Klubi Tapper",
     "title": "MASTER BOOT RECORD (ITA), FULCI (ITA)",
     "genre": "Electronic Metal / Death Metal",
     "ticket_link": "https://ticketshop.ee/et/events/107179",
     "price": "22-...€",
     "event_type": "live_music",
-    "reasoning": "The event features live music performances by bands Master Boot Record, Fulci, and arottenbit. The genre is explicitly mentioned as electronic metal and death metal in the description.",
+    "reasoning": "The event features live performances by musical bands Master Boot Record and Fulci, classified as live_music based on the concert description.",
     "source_venue": "Tapper"
   },
   {
@@ -256,19 +244,19 @@
     "city": "Helsinki",
     "venue": "Lepakkomies",
     "title": "viola + Vera Wall",
-    "genre": "Indie Pop",
-    "ticket_link": "https://www.tiketti.fi/viola-vera-wall-lepakkomies-helsinki-lippuja/121199",
+    "genre": "Indie",
+    "ticket_link": "https://www.lepis.fi/tapahtumat/viola-vera-wall/",
     "price": "12€/15€",
     "event_type": "live_music",
-    "reasoning": "Concert featuring two musical acts.",
+    "reasoning": "Live music artists performing.",
     "source_venue": "Lepakkomies"
   },
   {
     "date": "2026-12-02",
     "city": "Helsinki",
     "venue": "Olarin Panimo",
-    "title": "Säädöt, Tabloited (EST), V-Osasto",
-    "genre": "Punk / Rock",
+    "title": "SÄÄDÖT, TABLOITED (EST), V-OSASTO",
+    "genre": "Punk Rock",
     "ticket_link": "https://olarinpanimo.fi/tapahtuma/saadot-tabloited-est-saadot/",
     "price": null,
     "event_type": "live_music",
@@ -305,10 +293,10 @@
     "venue": "Lepakkomies",
     "title": "Sir Liselot Band + Levoton Elämä + Stinkbird",
     "genre": "Rock",
-    "ticket_link": null,
+    "ticket_link": "https://www.lepis.fi/tapahtumat/sir-liselot-band-levoton-elama-stinkbird/",
     "price": "6-10€",
     "event_type": "live_music",
-    "reasoning": "Multiple bands playing live.",
+    "reasoning": "Live bands performing.",
     "source_venue": "Lepakkomies"
   },
   {
@@ -352,11 +340,11 @@
     "city": "Helsinki",
     "venue": "Lepakkomies",
     "title": "Rearviewmirror – A Tribute to Pearl Jam",
-    "genre": "Grunge / Rock",
-    "ticket_link": "https://www.tiketti.fi/rearviewmirror-a-tribute-to-pearl-jam-lepakkomies-helsinki-lippuja/121669",
+    "genre": "Grunge Rock",
+    "ticket_link": "https://www.lepis.fi/tapahtumat/rearviewmirror-a-tribute-to-pearl-jam/",
     "price": "12€/14€",
     "event_type": "live_music",
-    "reasoning": "Tribute band concert performing Pearl Jam music.",
+    "reasoning": "Pearl Jam tribute band.",
     "source_venue": "Lepakkomies"
   },
   {
@@ -364,7 +352,7 @@
     "city": "Helsinki",
     "venue": "Olarin Panimo",
     "title": "Echo Is Your Love, Silver Falcons, Ciao Babes",
-    "genre": "Indie Rock / Alternative",
+    "genre": "Alternative Rock",
     "ticket_link": "https://olarinpanimo.fi/tapahtuma/echo-is-your-love-silver-falcons-ciao-babes/",
     "price": null,
     "event_type": "live_music",
@@ -374,13 +362,13 @@
   {
     "date": "2026-12-04",
     "city": "Tallinn",
-    "venue": "Tapper",
+    "venue": "Klubi Tapper",
     "title": "STORM OVER TALLINN METAL FESTIVAL",
     "genre": "Modern Metal / Progressive Metal",
     "ticket_link": "https://fienta.com/storm-over-tallinn",
     "price": "20€-...",
     "event_type": "live_music",
-    "reasoning": "This is a metal festival event featuring multiple live bands (Lavina, Bloody Falls, Numento, Ampest). The genre is explicitly modern and progressive metal.",
+    "reasoning": "This is a metal festival featuring multiple live bands (Lavina, Bloody Falls, Numento, Ampest), clearly classified as live_music.",
     "source_venue": "Tapper"
   },
   {
@@ -424,23 +412,23 @@
     "city": "Helsinki",
     "venue": "Lepakkomies",
     "title": "TOXIC CLUB VOL. 100: Kryptareflat + Refusal + Kantamus + Surya",
-    "genre": "Metal / Hardcore",
-    "ticket_link": null,
+    "Genre": "Metal",
+    "ticket_link": "https://www.lepis.fi/tapahtumat/toxic-club-vol-100-kryptareflat-refusal-kantamus-surya/",
     "price": "10€",
     "event_type": "live_music",
-    "reasoning": "Club event featuring multiple heavy metal and hardcore live bands.",
+    "reasoning": "Club night featuring multiple live metal bands.",
     "source_venue": "Lepakkomies"
   },
   {
     "date": "2026-12-05",
     "city": "Vantaa",
-    "venue": "Tikkurilan Kulttuuritehdas Vernissa",
+    "venue": "Kulttuuritehdas Vernissa",
     "title": "December Doom: Diablerie, Disgrave, Forever Failures",
-    "genre": "Doom Metal",
+    "genre": "Doom Metal / Metal",
     "ticket_link": "https://www.facebook.com/events/1667008508410079",
     "price": null,
     "event_type": "live_music",
-    "reasoning": "Doom metal event featuring multiple live metal bands.",
+    "reasoning": "Metal concert event series featuring Diablerie, Disgrave, and Forever Failures.",
     "source_venue": "Skenesali"
   },
   {
@@ -473,10 +461,10 @@
     "venue": "Lepakkomies",
     "title": "Rebo + Rattleshake + Tiny Sequoia",
     "genre": "Rock",
-    "ticket_link": null,
+    "ticket_link": "https://www.lepis.fi/tapahtumat/rebo-rattleshake-tiny-sequoia/",
     "price": "5€",
     "event_type": "live_music",
-    "reasoning": "Live music concert featuring three acts.",
+    "reasoning": "Live bands performing.",
     "source_venue": "Lepakkomies"
   },
   {
@@ -484,11 +472,11 @@
     "city": "Helsinki",
     "venue": "Lepakkomies",
     "title": "Hulda Huima 15v. Juhlakeikka + Poni",
-    "genre": "Indie Rock",
-    "ticket_link": null,
+    "genre": "Alternative",
+    "ticket_link": "https://www.lepis.fi/tapahtumat/hulda-huima-15v-juhlakeikka-poni/",
     "price": "10-20€",
     "event_type": "live_music",
-    "reasoning": "Anniversary gig ('juhlakeikka') with live musical acts.",
+    "reasoning": "Anniversary gig featuring live artists.",
     "source_venue": "Lepakkomies"
   },
   {
@@ -532,11 +520,11 @@
     "city": "Helsinki",
     "venue": "Lepakkomies",
     "title": "Piritori Debauchery: Hoc est Bellum + Aamutähti + Hautaveri + Earthly Form",
-    "genre": "Black Metal / Crust Punk",
-    "ticket_link": null,
+    "genre": "Hardcore Punk",
+    "ticket_link": "https://www.lepis.fi/tapahtumat/piritori-debauchery-hoc-est-bellum-aamutahti-hautaveri-earthly-form/",
     "price": "10€",
     "event_type": "live_music",
-    "reasoning": "Underground club event featuring multiple live extreme music bands.",
+    "reasoning": "Live hardcore/punk bands.",
     "source_venue": "Lepakkomies"
   },
   {
@@ -544,11 +532,11 @@
     "city": "Helsinki",
     "venue": "Lepakkomies",
     "title": "Destination Hardcore: Derailment",
-    "genre": "Hardcore Punk",
-    "ticket_link": null,
+    "genre": "Hardcore",
+    "ticket_link": "https://www.lepis.fi/tapahtumat/destination-hardcore-derailment/",
     "price": "10€",
     "event_type": "live_music",
-    "reasoning": "Late night hardcore punk club event featuring live acts.",
+    "reasoning": "Hardcore club event with live acts.",
     "source_venue": "Lepakkomies"
   },
   {
@@ -560,7 +548,7 @@
     "ticket_link": "https://www.facebook.com/events/1355100016439358",
     "price": null,
     "event_type": "live_music",
-    "reasoning": "Punk rock bands performing live.",
+    "reasoning": "Live music concert featuring punk bands Nyrkkitappelu and Rustopora.",
     "source_venue": "Skenesali"
   },
   {
@@ -592,11 +580,11 @@
     "city": "Helsinki",
     "venue": "Lepakkomies",
     "title": "FI/LV METAL MADNESS: Iron Wings (LV) + Barrel + Ratbreed",
-    "genre": "Heavy Metal",
-    "ticket_link": null,
+    "genre": "Metal",
+    "ticket_link": "https://www.lepis.fi/tapahtumat/fi-lv-metal-madness-iron-wings-lv-barrel-ratbreed/",
     "price": "10€",
     "event_type": "live_music",
-    "reasoning": "Metal music event featuring international and local metal bands.",
+    "reasoning": "Metal bands performing live.",
     "source_venue": "Lepakkomies"
   },
   {
@@ -628,11 +616,11 @@
     "city": "Helsinki",
     "venue": "Olarin Panimo",
     "title": "Turbojugend Pohjois-Haaga 10-vuotta",
-    "genre": "Rock / Punk",
+    "genre": "Rock",
     "ticket_link": "https://olarinpanimo.fi/tapahtuma/turbojugend-pohjois-haaga-10-vuotta/",
     "price": null,
     "event_type": "live_music",
-    "reasoning": "Anniversary party of a fan club/chapter, typically featuring live music or DJ performances in a bar setting.",
+    "reasoning": "An anniversary party for a music fan club (Turbojugend) featuring music/celebration.",
     "source_venue": "Olarin Panimo"
   },
   {
@@ -652,11 +640,11 @@
     "city": "Helsinki",
     "venue": "Olarin Panimo",
     "title": "DEATH DOOM NIGHT: Scumripper, Kahtia, Mutant & Hekatoxen",
-    "genre": "Death Doom Metal",
+    "genre": "Death Metal / Doom Metal",
     "ticket_link": "https://olarinpanimo.fi/tapahtuma/19-12-death-doom-night-scumripper-kahtia-mutant-hekatoxen/",
     "price": null,
     "event_type": "live_music",
-    "reasoning": "Metal club night featuring multiple live bands.",
+    "reasoning": "A metal club night featuring multiple live bands.",
     "source_venue": "Olarin Panimo"
   },
   {
@@ -664,11 +652,11 @@
     "city": "Vantaa",
     "venue": "Skenesali",
     "title": "Koukeroisuus on kivaa -klubi vol. 2: Overhead, Misty Mountain Foundation, Featherfoot",
-    "genre": "Progressive Rock / Psychedelic Rock",
+    "genre": "Progressive Rock / Metal",
     "ticket_link": "https://www.facebook.com/events/974927712319492",
     "price": null,
     "event_type": "live_music",
-    "reasoning": "A club event featuring multiple live bands.",
+    "reasoning": "Club night featuring multiple live bands (Overhead, Misty Mountain Foundation, Featherfoot).",
     "source_venue": "Skenesali"
   },
   {
@@ -772,11 +760,11 @@
     "city": "Helsinki",
     "venue": "Olarin Panimo",
     "title": "The High Tydes (Levyjulkkarit), Röökipaikka",
-    "genre": "Rock / Indie",
+    "genre": "Indie Rock",
     "ticket_link": "https://olarinpanimo.fi/tapahtuma/the-high-tydes-levyjulkkarit-rookipaikka/",
     "price": null,
     "event_type": "live_music",
-    "reasoning": "Album release show (levyjulkkarit) with live bands.",
+    "reasoning": "An album release show (levyjulkkarit) featuring live bands.",
     "source_venue": "Olarin Panimo"
   },
   {
@@ -808,11 +796,11 @@
     "city": "Helsinki",
     "venue": "Olarin Panimo",
     "title": "Rotten Cacophony Vol.I",
-    "genre": "Metal / Extreme Metal",
+    "genre": "Metal / Extreme Music",
     "ticket_link": "https://olarinpanimo.fi/tapahtuma/rotten-cacophony-vol-i/",
     "price": null,
     "event_type": "live_music",
-    "reasoning": "Extreme metal music event series.",
+    "reasoning": "An extreme music festival/event volume title indicating live underground music.",
     "source_venue": "Olarin Panimo"
   },
   {
@@ -891,12 +879,12 @@
     "date": "2027-01-23",
     "city": "Vantaa",
     "venue": "Skenesali",
-    "title": "Whispered",
-    "genre": "Melodic Death Metal",
+    "title": "Whispered, Torchia",
+    "genre": "Melodic Metal",
     "ticket_link": "https://www.facebook.com/events/1680321313513592",
     "price": null,
     "event_type": "live_music",
-    "reasoning": "Metal band performing a live show.",
+    "reasoning": "Live metal concert featuring Whispered and Torchia.",
     "source_venue": "Skenesali"
   },
   {
@@ -968,7 +956,7 @@
     "ticket_link": "https://www.facebook.com/events/1089862393827667",
     "price": null,
     "event_type": "live_music",
-    "reasoning": "Extreme metal bands performing live.",
+    "reasoning": "Live extreme metal concert featuring multiple bands.",
     "source_venue": "Skenesali"
   },
   {
@@ -999,12 +987,12 @@
     "date": "2027-02-05",
     "city": "Vantaa",
     "venue": "Skenesali",
-    "title": "Nyrkki-Kyllikki",
+    "title": "Nyrkki-Kyllikki + TOKOLA666",
     "genre": "Punk / Rock",
     "ticket_link": "https://www.facebook.com/events/1056990060686367",
     "price": null,
     "event_type": "live_music",
-    "reasoning": "Live music performance by an artist/band.",
+    "reasoning": "Live music concert featuring underground bands.",
     "source_venue": "Skenesali"
   },
   {
@@ -1020,6 +1008,18 @@
     "source_venue": "Club Underground"
   },
   {
+    "date": "2027-02-06",
+    "city": "Vantaa",
+    "venue": "Skenesali",
+    "title": "Grisforum, Whisper, Enragement, Intubation",
+    "genre": "Death Metal / Grindcore",
+    "ticket_link": "https://www.facebook.com/events/1119327424342537",
+    "price": null,
+    "event_type": "live_music",
+    "reasoning": "Live extreme metal gig with multiple bands.",
+    "source_venue": "Skenesali"
+  },
+  {
     "date": "2027-02-12",
     "city": "Helsinki",
     "venue": "Semifinal",
@@ -1030,6 +1030,18 @@
     "event_type": "live_music",
     "reasoning": "Solo artist concert performance.",
     "source_venue": "Semifinal"
+  },
+  {
+    "date": "2027-02-13",
+    "city": "Vantaa",
+    "venue": "Skenesali",
+    "title": "Samuell",
+    "genre": "Unknown",
+    "ticket_link": "https://www.facebook.com/events/1371931448207513",
+    "price": null,
+    "event_type": "live_music",
+    "reasoning": "Live music performance by artist Samuell.",
+    "source_venue": "Skenesali"
   },
   {
     "date": "2027-02-13",
